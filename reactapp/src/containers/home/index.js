@@ -1,5 +1,6 @@
 import React from 'react'
 import { push } from 'connected-react-router'
+import { Link } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import {
@@ -8,10 +9,16 @@ import {
   decrement,
   decrementAsync
 } from '../../modules/counter'
+import * as routes from '../../routes'
 
 const Home = props => (
   <div>
     <h1>Home</h1>
+
+    <Link to={routes.login}>Login</Link>
+    <Link to={routes.logout}>Logout</Link>
+    <Link to={routes.signup}>SignUp</Link>
+
     <p>Count: {props.count}</p>
 
     <p>
