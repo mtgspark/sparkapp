@@ -37,14 +37,19 @@ const Home = props => (
     <textarea>
       {JSON.stringify(props.lists)}
     </textarea>
+
+    <textarea>
+      {JSON.stringify(props.analytics)}
+    </textarea>
   </div>
 )
 
-const mapStateToProps = ({ counter, lists }) => ({
+const mapStateToProps = ({ counter, lists, analytics }) => ({
   count: counter.count,
   isIncrementing: counter.isIncrementing,
   isDecrementing: counter.isDecrementing,
-  lists
+  lists,
+  analytics
 })
 
 const mapDispatchToProps = dispatch =>
