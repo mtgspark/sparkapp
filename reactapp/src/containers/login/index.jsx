@@ -1,27 +1,16 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
+import { push } from 'connected-react-router'
 import * as routes from '../../routes'
 import LoginForm from '../../components/login-form'
+import withRedirectOnAuth from '../../hocs/withRedirectOnAuth'
 
-const Login = ({ auth, history: { push } }) => {
-  useEffect(() => {
-    if (auth.uid) {
-      push(routes.home)
-    }
-  })
+const Login = ({ push }) => (
+  <>
+    <h1>Login</h1>
+    <LoginForm onSuccess={() => push(routes.home)} />
+  </>
+)
 
-  if (auth.uid) {
-    return null
-  }
-  
-  return (
-    <>
-      <h1>Login</h1>
-      <LoginForm onSuccess={() => push(routes.home)} />
-    </>
-  )
-}
+export default connect(null, { push })(withRedirectOnAuth(Login))
 
-const mapStateToProps = ({ firebase: { auth } }) => ({ auth })
-
-export default connect(mapStateToProps)(Login)
