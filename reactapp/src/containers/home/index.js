@@ -33,13 +33,18 @@ const Home = props => (
         Go to about page via redux
       </button>
     </p>
+
+    <textarea>
+      {JSON.stringify(props.lists)}
+    </textarea>
   </div>
 )
 
-const mapStateToProps = ({ counter }) => ({
+const mapStateToProps = ({ counter, lists }) => ({
   count: counter.count,
   isIncrementing: counter.isIncrementing,
-  isDecrementing: counter.isDecrementing
+  isDecrementing: counter.isDecrementing,
+  lists
 })
 
 const mapDispatchToProps = dispatch =>
