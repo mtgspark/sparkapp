@@ -15,6 +15,8 @@
     "react-scripts": "2.1.8"
   },
   "dependencies": {
+    "@material-ui/core": "^4.0.1",
+    "@material-ui/icons": "^4.0.1",
     "@redux-beacon/google-tag-manager": "^1.0.1",
     "connected-react-router": "4.5.0",
     "firebase": "^6.1.0",

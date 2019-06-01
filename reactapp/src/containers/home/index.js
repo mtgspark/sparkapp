@@ -1,45 +1,21 @@
 import React from 'react'
-import { push } from 'connected-react-router'
-import { Link } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import {
-  increment,
-  incrementAsync,
-  decrement,
-  decrementAsync
-} from '../../modules/counter'
-import * as routes from '../../routes'
+// import {
+//   Paper,
+//   InputBase,
+//   Divider,
+//   IconButton
+// } from '@material-ui/core'
+import Searchbar from '../../components/searchbar';
+import { toggleMenu } from '../../modules/app';
+// import * as routes from '../../routes'
 
-const Home = props => (
-  <div>
+const Home = ({ app: { isMenuOpen }, toggleMenu, ...props }) => (
+  <>
     <h1>Home</h1>
 
-    <Link to={routes.login}>Login</Link>
-    <Link to={routes.logout}>Logout</Link>
-    <Link to={routes.signup}>SignUp</Link>
-
-    <p>Count: {props.count}</p>
-
-    <p>
-      <button onClick={props.increment}>Increment</button>
-      <button onClick={props.incrementAsync} disabled={props.isIncrementing}>
-        Increment Async
-      </button>
-    </p>
-
-    <p>
-      <button onClick={props.decrement}>Decrement</button>
-      <button onClick={props.decrementAsync} disabled={props.isDecrementing}>
-        Decrement Async
-      </button>
-    </p>
-
-    <p>
-      <button onClick={() => props.changePage()}>
-        Go to about page via redux
-      </button>
-    </p>
+    <Searchbar />
 
     <textarea>
       {JSON.stringify(props.lists)}
@@ -48,28 +24,21 @@ const Home = props => (
     <textarea>
       {JSON.stringify(props.analytics)}
     </textarea>
-  </div>
+  </>
 )
 
-const mapStateToProps = ({ counter, lists, analytics }) => ({
-  count: counter.count,
-  isIncrementing: counter.isIncrementing,
-  isDecrementing: counter.isDecrementing,
+const mapStateToProps = ({ app, lists, analytics }) => ({
+  app,
   lists,
   analytics
 })
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      increment,
-      incrementAsync,
-      decrement,
-      decrementAsync,
-      changePage: () => push('/about-us')
-    },
-    dispatch
-  )
+const mapDispatchToProps = dispatch => bindActionCreators(
+  {
+    toggleMenu 
+  },
+  dispatch
+)
 
 export default connect(
   mapStateToProps,

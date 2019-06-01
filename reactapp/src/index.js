@@ -24,9 +24,7 @@ render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <ReactReduxFirebaseProvider {...rrfProps}>
-        <div>
-          <App />
-        </div>
+        <App />
       </ReactReduxFirebaseProvider>
     </ConnectedRouter>
   </Provider>,
