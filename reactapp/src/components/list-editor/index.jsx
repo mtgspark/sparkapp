@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import TextField from '@material-ui/core/TextField'
 import Chip from '@material-ui/core/Chip'
+import Button from '@material-ui/core/Button'
+import InputLabel from '@material-ui/core/InputLabel'
 import { editableFields, fieldTypes } from '../../resources/lists'
 
 const CardRow = ({ cardId }) => (
@@ -8,98 +10,109 @@ const CardRow = ({ cardId }) => (
     <figure className="card-wrapper text-center" align="center">
       <img src="https://via.placeholder.com/400x560" alt="mtg card" />
     </figure>
-    <TextField name="" label="Card name" />
+    <TextField label="Card name" />
+    <br />
+    <TextField label="Card ranking" type="number" min={1} max={20} />
   </div>
 )
 
-const FieldFormInput = ({ label, name, value, onChange }) => {
-  const field = editableFields[name]
+const objectify = (obj, [k, v]) => ({ ...obj, [k]: v })
 
-  switch (field.type) {
-    case fieldTypes.string:
-      return (
-        <TextField
-          label={label}
-          name={name}
-          defaultValue={value}
-          onChange={onChange}
-        />
-      )
-    case fieldTypes.multiline:
-      return (
-        <TextField
-          label={label}
-          name={name}
-          defaultValue={value}
-          onChange={onChange}
-          multiline
-        />
-      )
-    case fieldTypes.date:
-      return (
-        <TextField label={label} type="date" name={name} defaultValue={value} />
-      )
-    case fieldTypes.array:
-      return value.map(subValue => {
-        if (name === editableFields.cards.name) {
-          return <CardRow {...subValue} />
-        } else {
-          return 'Unknown array type'
+const ArrayInput = ({ name, meta, onChange }) => (
+  <div>
+    {meta.value.map(arrayItem => {
+      switch (name) {
+        case editableFields.cards.name:
+          return <CardRow />
+        default:
+          return 'Unknown field for array input'
+      }
+    })}
+  </div>
+)
+
+const ListEditor = ({ listId, fieldsFromServer = {}, saveList }) => {
+  const [formFields, setFormFields] = useState(
+    Object.entries(editableFields)
+      .map(([name, fieldDetails]) => [
+        name,
+        {
+          ...fieldDetails,
+          value: fieldsFromServer.name || fieldDetails.initialValue || null
         }
-      })
-    case fieldTypes.checkboxes:
-      return (
-        <span>
-          {label}
-          {field.options.map(optionValue => (
-            <Chip
-              key={optionValue}
-              label={optionValue}
-              color={value && value.contains(optionValue)}
-              onClick={() => null}
-            />
-          ))}
-        </span>
-      )
-    default:
-      return <span>Unknown type: {name}</span>
-  }
-}
-
-const ListEditor = ({ listId, fields = {}, saveList }) => {
-  const [values, setValues] = useState({})
+      ])
+      .reduce(objectify, {})
+  )
 
   const handleSubmit = event => {
-    if (event) event.preventDefault()
-    saveList(values)
+    event.preventDefault()
+    alert('Submit!')
   }
 
-  const handleChange = event => {
-    event.persist()
-    setValues(values => ({
-      ...values,
-      [event.target.name]: event.target.value
-    }))
+  const handleFieldUpdate = (name, newValue) => {
+    const newFormFields = {
+      ...formFields,
+      [name]: newValue
+    }
+
+    setFormFields(newFormFields)
   }
 
   return (
     <form>
-      {Object.entries(editableFields)
-        .filter(([name]) => name !== 'cards')
-        .map(([name, { label, type }]) => (
-          <label key={name}>
-            <FieldFormInput
-              label={label}
-              name={name}
-              value={fields[name]}
-              onChange={handleChange}
-            />
-            <br />
-          </label>
-        ))}
-      <button onClick={handleSubmit}>
+      {Object.entries(formFields).map(([name, formFieldMeta]) => {
+        switch (formFieldMeta.type) {
+          case fieldTypes.string:
+          case fieldTypes.multiline:
+            return (
+              <>
+                <TextField
+                  label={formFieldMeta.label}
+                  onChange={event =>
+                    handleFieldUpdate(name, event.target.value)
+                  }
+                  multiline={formFieldMeta.type === fieldTypes.multiline}
+                />
+                <hr />
+              </>
+            )
+          case fieldTypes.checkboxes:
+            return (
+              <>
+                <InputLabel>{formFieldMeta.label}</InputLabel>
+                {formFieldMeta.options
+                  ? formFieldMeta.options.map(optionValue => (
+                      <Chip
+                        key={optionValue}
+                        label={optionValue}
+                        color={
+                          formFieldMeta.value &&
+                          formFieldMeta.value.includes(optionValue)
+                            ? 'primary'
+                            : ''
+                        }
+                        onClick={() => handleFieldUpdate(name, optionValue)}
+                      />
+                    ))
+                  : null}
+                <hr />
+              </>
+            )
+          case fieldTypes.array:
+            return (
+              <>
+                <InputLabel>{formFieldMeta.label}</InputLabel>
+                <ArrayInput name={name} meta={formFieldMeta} />
+                <hr />
+              </>
+            )
+          default:
+            return 'Unknown field type'
+        }
+      })}
+      <Button onClick={handleSubmit}>
         {listId ? 'Update List' : 'Create List'}
-      </button>
+      </Button>
     </form>
   )
 }
