@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import firebase from 'firebase'
 
 const secondsToDate = seconds => {
@@ -51,10 +51,6 @@ export default (collectionName, documentId = null, searchTerm = '') => {
   const [results, setResults] = useState(documentId ? null : [])
 
   const getData = async () => {
-    // if (isLoading) {
-    //   return
-    // }
-
     setIsLoading(true)
 
     try {
@@ -74,16 +70,12 @@ export default (collectionName, documentId = null, searchTerm = '') => {
 
       setIsLoading(false)
 
-      console.log('QUERY:', query)
-
       const docs = query.docs
         .map(doc => ({ ...doc.data(), id: doc.id }))
         .map(mapDates)
       const docsWithReferences = await Promise.all(docs.map(mapReferences))
 
       setResults(docsWithReferences)
-
-      // todo: narrow deeper with doc id or search clause
     } catch (err) {
       setIsErrored(true)
       setIsLoading(false)

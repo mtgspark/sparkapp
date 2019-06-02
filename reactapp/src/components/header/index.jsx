@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Link, Switch } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { toggleMenu } from '../../modules/app'
@@ -10,12 +10,7 @@ import {
   Button,
   List,
   ListItem,
-  ListItemIcon,
-  ListItemText,
-  Paper,
-  InputBase,
-  Divider,
-  IconButton
+  ListItemText
 } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
 import * as routes from '../../routes'

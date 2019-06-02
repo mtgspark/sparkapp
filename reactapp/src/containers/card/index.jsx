@@ -1,13 +1,9 @@
 import React from 'react'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-import { Paper, Container, Grid, Button } from '@material-ui/core'
+import { Container, Grid, Button } from '@material-ui/core'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import Searchbar from '../../components/searchbar'
-import { toggleMenu } from '../../modules/app'
-// import * as routes from '../../routes'
 
-const Card = ({ app: { isMenuOpen }, toggleMenu, ...props }) => (
+const Card = () => (
   <>
     <Searchbar />
 
@@ -51,21 +47,4 @@ const Card = ({ app: { isMenuOpen }, toggleMenu, ...props }) => (
   </>
 )
 
-const mapStateToProps = ({ app, lists, analytics }) => ({
-  app,
-  lists,
-  analytics
-})
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      toggleMenu
-    },
-    dispatch
-  )
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Card)
+export default Card
