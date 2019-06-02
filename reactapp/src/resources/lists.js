@@ -14,13 +14,15 @@ export const allFields = {
     name: 'title',
     type: fieldTypes.string,
     isEditable: true,
-    label: 'Title'
+    label: 'Title',
+    isRequired: true
   },
   description: {
     name: 'description',
     type: fieldTypes.multiline,
     isEditable: true,
-    label: 'Description'
+    label: 'Description',
+    isRequired: true
   },
   cards: {
     name: 'cards',
@@ -29,18 +31,25 @@ export const allFields = {
       cardId: fieldTypes.string
     },
     isEditable: true,
-    label: 'Cards'
+    label: 'Cards',
+    isRequired: true,
+    initialValue: [
+      {
+        cardId: '123'
+      }
+    ]
   },
   keywords: {
     name: 'keywords',
     type: fieldTypes.array,
-    arrayOf: fieldTypes.string
+    arrayOf: fieldTypes.string,
+    initialValue: []
   },
   labels: {
     name: 'labels',
     type: fieldTypes.checkboxes,
     options: [
-      'edh',
+      'edh', // todo: store in firestore
       'modern',
       'standard',
       'legacy',
@@ -49,7 +58,8 @@ export const allFields = {
       'casual'
     ],
     isEditable: true,
-    label: 'Labels'
+    label: 'Labels',
+    initialValue: []
   }
 }
 
