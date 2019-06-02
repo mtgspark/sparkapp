@@ -14,6 +14,7 @@ import {
 } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
 import * as routes from '../../routes'
+import { red } from '@material-ui/core/colors'
 
 const navItems = [
   {
@@ -33,22 +34,32 @@ const navItems = [
 const PageHeader = ({ app: { isMenuOpen }, toggleMenu }) => {
   const useStyles = makeStyles({
     header: {
-      // padding: '2px 2px 2px 24px',
-      // borderRadius: '3rem',
-      // margin: '1rem auto',
-      // display: 'flex',
-      // alignItems: 'center',
-      // maxWidth: 600,
+      padding: '1rem 2rem'
+    },
+    logo: {
+      fontSize: '1.5rem',
+      fontWeight: '600',
+      lineHeight: '1',
+      textDecoration: 'none !important',
+      color: 'black'
+    },
+    logoSmall: {
+      display: 'block',
+      fontSize: '1rem',
+      textTransform: 'uppercase'
     }
   })
 
   const classes = useStyles()
 
   return (
-    <header className="header">
+    <header className={classes.header}>
       <Grid container>
         <Grid item xs={6} align="left">
-          <Link to={routes.home}>[spark]</Link>
+          <Link to={routes.home} className={classes.logo}>
+            Spark
+            <small className={classes.logoSmall}>MTG Card Rating</small>
+          </Link>
         </Grid>
         <Grid item xs={6} align="right">
           <Button onClick={() => toggleMenu()}>
