@@ -1,7 +1,6 @@
 import React from 'react'
 import { Container, Grid, Button, CircularProgress } from '@material-ui/core'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
-import Searchbar from '../../components/searchbar'
 
 const Card = () => (
   <>

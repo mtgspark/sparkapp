@@ -7,8 +7,6 @@ import Lists from '../lists'
 import Card from '../card'
 import PageHeader from '../../components/header'
 import PageFooter from '../../components/footer'
-import Searchbar from '../../components/searchbar'
-import SearchResults from '../../components/search-results'
 import CreateList from '../create-list'
 import EditList from '../edit-list'
 import { Container } from '@material-ui/core'
@@ -19,8 +17,6 @@ const App = () => (
     <PageHeader />
     <main className="main">
       <Container maxWidth="lg">
-        <Searchbar />
-        <SearchResults />
         <Switch>
           <Route exact path={routes.home} component={Home} />
           <Route exact path={routes.login} component={Login} />
