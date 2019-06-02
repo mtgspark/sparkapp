@@ -45,23 +45,38 @@ const mapReferences = async doc => {
   return newDoc
 }
 
-export default (collectionName, documentId = null, searchClauses = {}) => {
+export default (collectionName, documentId = null, searchTerm = '') => {
   const [isLoading, setIsLoading] = useState(false)
   const [isErrored, setIsErrored] = useState(false)
   const [results, setResults] = useState(documentId ? null : [])
 
   const getData = async () => {
+    // if (isLoading) {
+    //   return
+    // }
+
     setIsLoading(true)
 
     try {
-      const collection = await firebase
-        .firestore()
-        .collection(collectionName)
-        .get()
+      const collection = firebase.firestore().collection(collectionName)
+
+      let query
+
+      if (documentId) {
+        query = await collection.get(documentId)
+      } else if (searchTerm) {
+        query = await collection
+          .where('keywords', 'array-contains', searchTerm)
+          .get()
+      } else {
+        query = await collection.get()
+      }
 
       setIsLoading(false)
 
-      const docs = collection.docs
+      console.log('QUERY:', query)
+
+      const docs = query.docs
         .map(doc => ({ ...doc.data(), id: doc.id }))
         .map(mapDates)
       const docsWithReferences = await Promise.all(docs.map(mapReferences))
@@ -78,7 +93,7 @@ export default (collectionName, documentId = null, searchClauses = {}) => {
 
   useEffect(() => {
     getData()
-  }, [collectionName, documentId])
+  }, [searchTerm])
 
   return [isLoading, isErrored, results]
 }

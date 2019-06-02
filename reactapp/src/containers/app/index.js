@@ -27,10 +27,14 @@ import {
 } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
 import * as routes from '../../routes'
+import SearchResults from '../../components/search-results'
+import Searchbar from '../../components/searchbar'
 
 const App = ({ app: { isMenuOpen }, toggleMenu }) => (
   <>
     <PageHeader />
+    <Searchbar />
+    <SearchResults />
     <main className="main">
       <Switch>
         <Route exact path={routes.home} component={Home} />
