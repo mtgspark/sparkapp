@@ -8,7 +8,9 @@ const ListResults = ({ lists }) => (
   <Paper>
     <Table>
       <TableBody>
-        {lists.map(list => <ListResultsItem key={list.id} {...list} />)}
+        {lists.map(list => (
+          <ListResultsItem key={list.id} {...list} />
+        ))}
       </TableBody>
     </Table>
   </Paper>

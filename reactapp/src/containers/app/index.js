@@ -11,7 +11,7 @@ import PageHeader from '../../components/header'
 import PageFooter from '../../components/footer'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { toggleMenu } from '../../modules/app';
+import { toggleMenu } from '../../modules/app'
 import {
   Grid,
   Drawer,
@@ -25,12 +25,10 @@ import {
   Divider,
   IconButton
 } from '@material-ui/core'
-import MenuIcon from '@material-ui/icons/Menu';
+import MenuIcon from '@material-ui/icons/Menu'
 import * as routes from '../../routes'
 
-
 const App = ({ app: { isMenuOpen }, toggleMenu }) => (
-
   <>
     <PageHeader />
     <main className="main">
@@ -54,6 +52,4 @@ const mapStateToProps = ({ app, lists, analytics }) => ({
   analytics
 })
 
-export default connect(
-  mapStateToProps
-)(App)
+export default connect(mapStateToProps)(App)

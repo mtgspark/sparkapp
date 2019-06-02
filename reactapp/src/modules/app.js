@@ -17,8 +17,6 @@ export default (state = initialState, action) => {
   }
 }
 
-export const toggleMenu = () => (
-  {
-    type: TOGGLE_MENU
-  }
-)
+export const toggleMenu = () => ({
+  type: TOGGLE_MENU
+})

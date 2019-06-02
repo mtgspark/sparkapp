@@ -1,10 +1,10 @@
 // Source: https://raw.githubusercontent.com/the-road-to-react-with-firebase/react-redux-firebase-authentication/master/src/components/SignUp/index.js
 
-import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import React, { Component } from 'react'
+import { Link, withRouter } from 'react-router-dom'
 
-import { withFirebase } from 'react-redux-firebase';
-import * as ROUTES from '../../routes';
+import { withFirebase } from 'react-redux-firebase'
+import * as ROUTES from '../../routes'
 
 import { auth as firebase, roles as ROLES } from '../../firebase'
 
@@ -14,10 +14,10 @@ const INITIAL_STATE = {
   passwordOne: '',
   passwordTwo: '',
   isAdmin: false,
-  error: null,
-};
+  error: null
+}
 
-const ERROR_CODE_ACCOUNT_EXISTS = 'auth/email-already-in-use';
+const ERROR_CODE_ACCOUNT_EXISTS = 'auth/email-already-in-use'
 
 const ERROR_MSG_ACCOUNT_EXISTS = `
   An account with this E-Mail address already exists.
@@ -25,21 +25,21 @@ const ERROR_MSG_ACCOUNT_EXISTS = `
   account is already used from one of the social logins, try
   to sign in with one of them. Afterward, associate your accounts
   on your personal account page.
-`;
+`
 
 class SignUpFormBase extends Component {
   constructor(props) {
-    super(props);
+    super(props)
 
-    this.state = { ...INITIAL_STATE };
+    this.state = { ...INITIAL_STATE }
   }
 
   onSubmit = event => {
-    const { username, email, passwordOne, isAdmin } = this.state;
-    const roles = {};
+    const { username, email, passwordOne, isAdmin } = this.state
+    const roles = {}
 
     if (isAdmin) {
-      roles[ROLES.ADMIN] = ROLES.ADMIN;
+      roles[ROLES.ADMIN] = ROLES.ADMIN
     }
 
     firebase
@@ -49,35 +49,35 @@ class SignUpFormBase extends Component {
         return firebase.user(authUser.user.uid).set({
           username,
           email,
-          roles,
-        });
+          roles
+        })
       })
       .then(() => {
-        return firebase.doSendEmailVerification();
+        return firebase.doSendEmailVerification()
       })
       .then(() => {
-        this.setState({ ...INITIAL_STATE });
-        this.props.history.push(ROUTES.home);
+        this.setState({ ...INITIAL_STATE })
+        this.props.history.push(ROUTES.home)
       })
       .catch(error => {
         if (error.code === ERROR_CODE_ACCOUNT_EXISTS) {
-          error.message = ERROR_MSG_ACCOUNT_EXISTS;
+          error.message = ERROR_MSG_ACCOUNT_EXISTS
         }
 
-        this.setState({ error });
-      });
+        this.setState({ error })
+      })
 
-    event.preventDefault();
-    return false;
-  };
+    event.preventDefault()
+    return false
+  }
 
   onChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
-  };
+    this.setState({ [event.target.name]: event.target.value })
+  }
 
   onChangeCheckbox = event => {
-    this.setState({ [event.target.name]: event.target.checked });
-  };
+    this.setState({ [event.target.name]: event.target.checked })
+  }
 
   render() {
     const {
@@ -86,14 +86,14 @@ class SignUpFormBase extends Component {
       passwordOne,
       passwordTwo,
       isAdmin,
-      error,
-    } = this.state;
+      error
+    } = this.state
 
     const isInvalid =
       passwordOne !== passwordTwo ||
       passwordOne === '' ||
       email === '' ||
-      username === '';
+      username === ''
 
     return (
       <form onSubmit={this.onSubmit}>
@@ -140,7 +140,7 @@ class SignUpFormBase extends Component {
 
         {error && <p>{error.message}</p>}
       </form>
-    );
+    )
   }
 }
 

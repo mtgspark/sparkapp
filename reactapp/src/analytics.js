@@ -13,7 +13,7 @@ const editListEvent = (action, prevState, nextState) => {
 }
 
 const eventsMap = {
-  'EDIT_LIST': editListEvent
+  EDIT_LIST: editListEvent
 }
 
 const gtm = GoogleTagManager(options)

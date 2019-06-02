@@ -13,14 +13,17 @@ const mapDates = doc => {
   const newDoc = entries.reduce((finalDoc, [key, value]) => {
     return {
       ...finalDoc,
-      [key]: value && value.hasOwnProperty('seconds') ? secondsToDate(value.seconds) : value
+      [key]:
+        value && value.hasOwnProperty('seconds')
+          ? secondsToDate(value.seconds)
+          : value
     }
   }, {})
 
   return newDoc
 }
 
-const getDataFromReference = async (record) => {
+const getDataFromReference = async record => {
   const result = await record.get()
   return result.data()
 }
@@ -28,14 +31,16 @@ const getDataFromReference = async (record) => {
 const mapReferences = async doc => {
   const newDoc = { ...doc }
 
-  const results = await Promise.all(Object.entries(newDoc).map(async ([key, value]) => {
-    if (value && value instanceof firebase.firestore.DocumentReference) {
-      return [key, await getDataFromReference(value)]
-    }
-    return [key, await Promise.resolve(value)]
-  }))
-  
-  results.forEach(([key, value]) => newDoc[key] = value)
+  const results = await Promise.all(
+    Object.entries(newDoc).map(async ([key, value]) => {
+      if (value && value instanceof firebase.firestore.DocumentReference) {
+        return [key, await getDataFromReference(value)]
+      }
+      return [key, await Promise.resolve(value)]
+    })
+  )
+
+  results.forEach(([key, value]) => (newDoc[key] = value))
 
   return newDoc
 }
@@ -49,13 +54,18 @@ export default (collectionName, documentId = null, searchClauses = {}) => {
     setIsLoading(true)
 
     try {
-      const collection = await firebase.firestore().collection(collectionName).get()
+      const collection = await firebase
+        .firestore()
+        .collection(collectionName)
+        .get()
 
       setIsLoading(false)
 
-      const docs = collection.docs.map(doc => ({ ...doc.data(), id: doc.id })).map(mapDates)
+      const docs = collection.docs
+        .map(doc => ({ ...doc.data(), id: doc.id }))
+        .map(mapDates)
       const docsWithReferences = await Promise.all(docs.map(mapReferences))
-      
+
       setResults(docsWithReferences)
 
       // todo: narrow deeper with doc id or search clause

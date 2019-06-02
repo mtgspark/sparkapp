@@ -12,5 +12,7 @@ const Login = ({ push }) => (
   </>
 )
 
-export default connect(null, { push })(withRedirectOnAuth(Login))
-
+export default connect(
+  null,
+  { push }
+)(withRedirectOnAuth(Login))

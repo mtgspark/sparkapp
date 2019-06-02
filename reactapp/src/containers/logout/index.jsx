@@ -9,11 +9,7 @@ const Logout = ({ history: { push } }) => {
     setTimeout(() => push(routes.home), 1500)
   }, [push])
 
-  return (
-    <>
-      You are now logged out. Redirecting you to homepage...
-    </>
-  )
+  return <>You are now logged out. Redirecting you to homepage...</>
 }
 
 export default Logout
