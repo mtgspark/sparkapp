@@ -36,14 +36,14 @@ const navItems = [
   }
 ]
 
-const App = ({ app: { isMenuOpen }, toggleMenu, ...props }) => (
+const App = ({ app: { isMenuOpen }, toggleMenu }) => (
 
   <>
     <header className="header">
 
       <Grid container>
         <Grid item xs={6} align="left">
-          [spark]
+          <Link to={routes.home}>[spark]</Link>
         </Grid>
         <Grid item xs={6} align="right">
           <Button onClick={() => toggleMenu() }>
