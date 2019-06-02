@@ -3,6 +3,7 @@ import * as admin from 'firebase-admin'
 import * as firebaseHelper from 'firebase-functions-helper'
 import express from 'express'
 import * as bodyParser from 'body-parser'
+import cors from 'cors'
 
 admin.initializeApp(functions.config().firebase)
 const db = admin.firestore()
@@ -10,9 +11,16 @@ const db = admin.firestore()
 const app = express()
 const main = express()
 
+app.use(cors({
+  origin: ['*']
+}))
+
 main.use('/api/v1', app)
 main.use(bodyParser.json())
 main.use(bodyParser.urlencoded({ extended: false }))
+main.use(cors({
+  origin: ['*']
+}))
 
 app.get('/lists', (req, res) => {
   firebaseHelper.firestore
