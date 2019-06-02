@@ -1,12 +1,13 @@
 import React from 'react'
 import useDatabase from '../../hooks/useDatabase'
+import LoadingIcon from '../../components/loading'
 import ListResults from '../../components/list-results'
 
 const Lists = () => {
   const [isLoading, isErrored, results] = useDatabase('lists')
 
   if (isLoading) {
-    return 'Loading...'
+    return <LoadingIcon />
   }
 
   if (isErrored) {

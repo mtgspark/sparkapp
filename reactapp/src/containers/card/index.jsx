@@ -5,8 +5,6 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 const Card = () => (
   <>
     <Container maxWidth="lg">
-      <CircularProgress />
-
       <p>
         <a href="/" title="">
           <ArrowBackIcon /> back to [xyz]
