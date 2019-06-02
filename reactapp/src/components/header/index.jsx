@@ -24,6 +24,10 @@ const navItems = [
   {
     label: 'Browse Lists',
     url: routes.lists
+  },
+  {
+    label: 'Create List',
+    url: routes.createList
   }
 ]
 

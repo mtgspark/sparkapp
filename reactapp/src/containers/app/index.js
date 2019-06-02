@@ -10,6 +10,8 @@ import PageFooter from '../../components/footer'
 import Searchbar from '../../components/searchbar'
 import SearchResults from '../../components/search-results'
 import * as routes from '../../routes'
+import CreateList from '../create-list'
+import EditList from '../edit-list'
 
 const App = () => (
   <>
@@ -23,6 +25,8 @@ const App = () => (
         <Route exact path={routes.logout} component={Logout} />
         <Route exact path={routes.lists} component={Lists} />
         <Route exact path={routes.card} component={Card} />
+        <Route exact path={routes.createList} component={CreateList} />
+        <Route exact path={routes.editListWithVar} component={EditList} />
       </Switch>
     </main>
     <PageFooter />

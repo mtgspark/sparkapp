@@ -59,8 +59,22 @@ export default (collectionName, documentId = null, searchTerm = '') => {
       let query
 
       if (documentId) {
-        query = await collection.get(documentId)
-      } else if (searchTerm) {
+        const doc = await collection.doc(documentId).get()
+        const data = await doc.data()
+
+        const mappedDoc = await mapReferences(
+          mapDates({
+            ...data,
+            id: data.id
+          })
+        )
+
+        setIsLoading(false)
+        setResults(mappedDoc)
+        return
+      }
+
+      if (searchTerm) {
         query = await collection
           .where('keywords', 'array-contains', searchTerm)
           .get()
