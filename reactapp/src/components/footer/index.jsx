@@ -1,23 +1,23 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
+import Colors from '@material-ui/core/colors'
 import { Paper, InputBase, Divider, IconButton } from '@material-ui/core'
 
 const PageFooter = () => {
   const useStyles = makeStyles({
     footer: {
-      // padding: '2px 2px 2px 24px',
-      // borderRadius: '3rem',
-      // margin: '1rem auto',
-      // display: 'flex',
-      // alignItems: 'center',
-      // maxWidth: 600,
+      margin: '3rem 0 0 0',
+      padding: '1rem 2rem',
+      fontSize: '16px',
+      background: 'hsl(250, 10%, 20%)',
+      color: 'hsl(250, 40%, 70%)'
     }
   })
 
   const classes = useStyles()
 
   return (
-    <footer className="footer" align="center" color="">
+    <footer className={classes.footer} align="right" color="">
       <p className="brand">&copy; Spark</p>
     </footer>
   )
