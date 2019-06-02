@@ -20,6 +20,7 @@
     "@redux-beacon/google-tag-manager": "^1.0.1",
     "connected-react-router": "4.5.0",
     "firebase": "^6.1.0",
+    "moment": "^2.24.0",
     "react": "16.8.6",
     "react-dom": "16.8.6",
     "react-firebaseui": "^3.1.2",
