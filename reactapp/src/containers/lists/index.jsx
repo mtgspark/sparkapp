@@ -1,30 +1,28 @@
-import React, { useEffect } from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { actions as listActions } from '../../resources/lists'
+import React from 'react'
+import useDatabase from '../../hooks/useDatabase'
 
 const ListsResultItem = ({ id, title, description, createdAt, modifiedAt, createdBy, modifiedBy }) => (
   <li>
-    {title} by {createdBy}
+    #{id} - {title}
   </li>
 )
 
-const Lists = ({ lists, fetchLists }) => {
-  console.log(lists, fetchLists)
+const Lists = () => {
+  const [isLoading, isErrored, results] = useDatabase('lists')
 
-  useEffect(() => {
-    fetchLists()
-  }, [])
-
-  if (!lists.length) {
+  if (!results.length) {
     return 'No lists found'
   }
 
-  return lists.map(list => <ListsResultItem key={list.id} {...list} />)
+  if (isLoading) {
+    return 'Loading...'
+  }
+
+  if (isErrored) {
+    return 'Error!'
+  }
+
+  return results.map(list => <ListsResultItem key={list.id} {...list} />)
 }
 
-const mapStateToProps = ({ lists: { items } }) => ({ lists: items })
-
-const mapDispatchToProps = dispatch => bindActionCreators({ fetchLists: listActions.fetchLists }, dispatch)
-
-export default connect(mapStateToProps, mapDispatchToProps)(Lists)
+export default Lists
