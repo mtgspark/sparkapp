@@ -5,11 +5,7 @@ import Searchbar from '../../components/searchbar'
 
 const Card = () => (
   <>
-    <Searchbar />
-
     <Container maxWidth="lg">
-      <CircularProgress />
-
       <p>
         <a href="/" title="">
           <ArrowBackIcon /> back to [xyz]
