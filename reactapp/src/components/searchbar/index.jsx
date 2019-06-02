@@ -12,7 +12,7 @@ const SearchBar = ({ searchTerm, changeSearchTerm }) => {
     root: {
       padding: '2px 2px 2px 24px',
       borderRadius: '3rem',
-      margin: '1rem auto',
+      margin: '0 auto 3rem auto',
       display: 'flex',
       alignItems: 'center',
       maxWidth: 600

@@ -34,7 +34,8 @@ const navItems = [
 const PageHeader = ({ app: { isMenuOpen }, toggleMenu }) => {
   const useStyles = makeStyles({
     header: {
-      padding: '1rem 2rem'
+      padding: '1rem 2rem',
+      marginBottom: '2rem'
     },
     logo: {
       fontSize: '1.5rem',
@@ -47,6 +48,10 @@ const PageHeader = ({ app: { isMenuOpen }, toggleMenu }) => {
       display: 'block',
       fontSize: '1rem',
       textTransform: 'uppercase'
+    },
+    menuIcon: {
+      width: '4rem',
+      height: '3rem'
     }
   })
 
@@ -63,8 +68,8 @@ const PageHeader = ({ app: { isMenuOpen }, toggleMenu }) => {
         </Grid>
         <Grid item xs={6} align="right">
           <Button onClick={() => toggleMenu()}>
-            <MenuIcon />
-            Menu
+            <MenuIcon className={classes.menuIcon} />
+            <span hidden>Menu</span>
           </Button>
         </Grid>
       </Grid>

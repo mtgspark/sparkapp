@@ -11,7 +11,7 @@ const SearchResults = ({ searchTerm }) => {
   if (isLoading || isErrored) return null
 
   if (!results.length) {
-    return 'No lists found matching  your search term'
+    return '<p>No lists found matching your search term</p>'
   }
 
   return <ListResults lists={results} />
