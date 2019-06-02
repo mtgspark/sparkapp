@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import firebase from 'firebase'
 
 const secondsToDate = seconds => {
@@ -45,7 +45,7 @@ const mapReferences = async doc => {
   return newDoc
 }
 
-export default (collectionName, documentId = null, searchClauses = {}) => {
+export default (collectionName, documentId = null, searchTerm = '') => {
   const [isLoading, setIsLoading] = useState(false)
   const [isErrored, setIsErrored] = useState(false)
   const [results, setResults] = useState(documentId ? null : [])
@@ -54,21 +54,28 @@ export default (collectionName, documentId = null, searchClauses = {}) => {
     setIsLoading(true)
 
     try {
-      const collection = await firebase
-        .firestore()
-        .collection(collectionName)
-        .get()
+      const collection = firebase.firestore().collection(collectionName)
+
+      let query
+
+      if (documentId) {
+        query = await collection.get(documentId)
+      } else if (searchTerm) {
+        query = await collection
+          .where('keywords', 'array-contains', searchTerm)
+          .get()
+      } else {
+        query = await collection.get()
+      }
 
       setIsLoading(false)
 
-      const docs = collection.docs
+      const docs = query.docs
         .map(doc => ({ ...doc.data(), id: doc.id }))
         .map(mapDates)
       const docsWithReferences = await Promise.all(docs.map(mapReferences))
 
       setResults(docsWithReferences)
-
-      // todo: narrow deeper with doc id or search clause
     } catch (err) {
       setIsErrored(true)
       setIsLoading(false)
@@ -78,7 +85,7 @@ export default (collectionName, documentId = null, searchClauses = {}) => {
 
   useEffect(() => {
     getData()
-  }, [collectionName, documentId])
+  }, [searchTerm])
 
   return [isLoading, isErrored, results]
 }

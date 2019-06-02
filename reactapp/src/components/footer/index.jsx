@@ -1,7 +1,5 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import Colors from '@material-ui/core/colors'
-import { Paper, InputBase, Divider, IconButton } from '@material-ui/core'
 
 const PageFooter = () => {
   const useStyles = makeStyles({
