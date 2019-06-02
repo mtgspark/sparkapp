@@ -23,6 +23,12 @@ main.main {
   }
 }
 
+/* mana webfont fix */
+.ms:before,
+.ms:after {
+  vertical-align: initial;
+}
+
 button:disabled {
   opacity: 0.5;
 }
