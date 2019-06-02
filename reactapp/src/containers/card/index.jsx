@@ -33,9 +33,16 @@ const Card = () => (
             </p>
           </div>
           <div className="card-props">
-            <p>[cmc cost]</p>
-            <p>[type]</p>
+            <p>
+              [cmc cost]
+              <i class="ms ms-2 ms-cost" />
+              <i class="ms ms-u ms-cost" />
+            </p>
+            <p>
+              <i class="ms ms-planeswalker ms-fw" /> [type]
+            </p>
             <p>[abilities]</p>
+            <p>[x/x]</p>
             <p>[flavour]</p>
             <p>[edition, author, set number]</p>
           </div>

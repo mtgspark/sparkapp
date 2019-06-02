@@ -9,6 +9,7 @@ import App from './containers/app'
 
 import 'sanitize.css/sanitize.css'
 import './index.css'
+import './assets/css/mana.min.css'
 
 const target = document.querySelector('#root')
 
