@@ -1,10 +1,11 @@
 import React from 'react'
-import { Route, Link } from 'react-router-dom'
+import { Route, Link, Switch } from 'react-router-dom'
 import Home from '../home'
 import About from '../about'
 import Login from '../login'
 import Logout from '../logout'
 import SignUp from '../signup'
+import Lists from '../lists'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { toggleMenu } from '../../modules/app';
@@ -54,18 +55,20 @@ const App = ({ app: { isMenuOpen }, toggleMenu, ...props }) => (
         <Link to={routes.signup}>SignUp</Link>
         <Link to="/">Home</Link>
         <Link to="/about-us">About</Link>
+        <Link to={routes.lists}>Browse Lists</Link>
       </Drawer>
       
     </header>
 
     <main className="main">
-      <Route exact path={routes.home} component={Home} />
-      <Route exact path="/about-us" component={About} />
-      <Route exact path={routes.login} component={Login} />
-      <Route exact path={routes.logout} component={Logout} />
-      <Route exact path={routes.signup} component={SignUp} />
-      <Route exact path={routes.lists} component={Lists} />
-      <Route exact path={routes.home} component={Home} />
+      <Switch>
+        <Route exact path={routes.home} component={Home} />
+        <Route exact path="/about-us" component={About} />
+        <Route exact path={routes.login} component={Login} />
+        <Route exact path={routes.logout} component={Logout} />
+        <Route exact path={routes.signup} component={SignUp} />
+        <Route exact path={routes.lists} component={Lists} />
+      </Switch>
     </main>
 
     <footer className="footer" align="center" color="">
