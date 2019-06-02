@@ -35,6 +35,21 @@ export const allFields = {
     name: 'keywords',
     type: fieldTypes.array,
     arrayOf: fieldTypes.string
+  },
+  labels: {
+    name: 'labels',
+    type: fieldTypes.checkboxes,
+    options: [
+      'edh',
+      'modern',
+      'standard',
+      'legacy',
+      'vintage',
+      'competitive',
+      'casual'
+    ],
+    isEditable: true,
+    label: 'Labels'
   }
 }
 

@@ -19,6 +19,7 @@ export default (collectionName, documentId = null) => {
       }
 
       setIsSuccess(true)
+      setIsSaving(false)
     } catch (err) {
       setIsSuccess(false)
       setIsSaving(false)
