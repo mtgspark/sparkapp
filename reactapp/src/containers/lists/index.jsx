@@ -1,18 +1,9 @@
 import React from 'react'
 import useDatabase from '../../hooks/useDatabase'
-
-const ListsResultItem = ({ id, title, description, createdAt, modifiedAt, createdBy, modifiedBy }) => (
-  <li>
-    #{id} - {title}
-  </li>
-)
+import ListResults from '../../components/list-results'
 
 const Lists = () => {
   const [isLoading, isErrored, results] = useDatabase('lists')
-
-  if (!results.length) {
-    return 'No lists found'
-  }
 
   if (isLoading) {
     return 'Loading...'
@@ -22,7 +13,7 @@ const Lists = () => {
     return 'Error!'
   }
 
-  return results.map(list => <ListsResultItem key={list.id} {...list} />)
+  return <ListResults lists={results} />
 }
 
 export default Lists
