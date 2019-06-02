@@ -25,6 +25,17 @@ import {
 import MenuIcon from '@material-ui/icons/Menu';
 import * as routes from '../../routes'
 
+const navItems = [
+  {
+    label: 'Home',
+    url: routes.home
+  },
+  {
+    label: 'Browse Lists',
+    url: routes.lists
+  }
+]
+
 const App = ({ app: { isMenuOpen }, toggleMenu, ...props }) => (
 
   <>
@@ -44,18 +55,16 @@ const App = ({ app: { isMenuOpen }, toggleMenu, ...props }) => (
       
       <Drawer anchor="right" open={isMenuOpen} onClose={() => toggleMenu() }>
         <List>
-          {['Home', 'About', 'Feedback', 'My Account'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+          {
+            navItems.map(({ label, url }) => (
+              <ListItem button key={url}>
+                <Link to={url}>
+                  <ListItemText primary={label} />
+                </Link>
+              </ListItem>
+            ))
+          }
         </List>
-        <Link to={routes.login}>Login</Link>
-        <Link to={routes.logout}>Logout</Link>
-        <Link to={routes.signup}>SignUp</Link>
-        <Link to="/">Home</Link>
-        <Link to="/about-us">About</Link>
-        <Link to={routes.lists}>Browse Lists</Link>
       </Drawer>
       
     </header>
