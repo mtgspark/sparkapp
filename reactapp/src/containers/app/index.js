@@ -6,6 +6,7 @@ import Login from '../login'
 import Logout from '../logout'
 import SignUp from '../signup'
 import Lists from '../lists'
+import Card from '../card'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { toggleMenu } from '../../modules/app';
@@ -68,6 +69,7 @@ const App = ({ app: { isMenuOpen }, toggleMenu, ...props }) => (
         <Route exact path={routes.logout} component={Logout} />
         <Route exact path={routes.signup} component={SignUp} />
         <Route exact path={routes.lists} component={Lists} />
+        <Route exact path={routes.card} component={Card} />
       </Switch>
     </main>
 
