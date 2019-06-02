@@ -7,6 +7,8 @@ import Logout from '../logout'
 import SignUp from '../signup'
 import Lists from '../lists'
 import Card from '../card'
+import PageHeader from '../../components/header'
+import PageFooter from '../../components/footer'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { toggleMenu } from '../../modules/app';
@@ -26,50 +28,11 @@ import {
 import MenuIcon from '@material-ui/icons/Menu';
 import * as routes from '../../routes'
 
-const navItems = [
-  {
-    label: 'Home',
-    url: routes.home
-  },
-  {
-    label: 'Browse Lists',
-    url: routes.lists
-  }
-]
 
 const App = ({ app: { isMenuOpen }, toggleMenu }) => (
 
   <>
-    <header className="header">
-
-      <Grid container>
-        <Grid item xs={6} align="left">
-          <Link to={routes.home}>[spark]</Link>
-        </Grid>
-        <Grid item xs={6} align="right">
-          <Button onClick={() => toggleMenu() }>
-            <MenuIcon />
-            Menu
-          </Button>        
-        </Grid>
-      </Grid>
-      
-      <Drawer anchor="right" open={isMenuOpen} onClose={() => toggleMenu() }>
-        <List>
-          {
-            navItems.map(({ label, url }) => (
-              <ListItem button key={url}>
-                <Link to={url}>
-                  <ListItemText primary={label} />
-                </Link>
-              </ListItem>
-            ))
-          }
-        </List>
-      </Drawer>
-      
-    </header>
-
+    <PageHeader />
     <main className="main">
       <Switch>
         <Route exact path={routes.home} component={Home} />
@@ -81,10 +44,7 @@ const App = ({ app: { isMenuOpen }, toggleMenu }) => (
         <Route exact path={routes.card} component={Card} />
       </Switch>
     </main>
-
-    <footer className="footer" align="center" color="">
-      <p className="brand">&copy; Spark</p>
-    </footer>
+    <PageFooter />
   </>
 )
 
@@ -94,15 +54,6 @@ const mapStateToProps = ({ app, lists, analytics }) => ({
   analytics
 })
 
-const mapDispatchToProps = dispatch => bindActionCreators(
-  {
-    toggleMenu 
-  },
-  dispatch
-)
-
-
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(App)
