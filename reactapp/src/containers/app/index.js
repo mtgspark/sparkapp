@@ -5,18 +5,61 @@ import About from '../about'
 import Login from '../login'
 import Logout from '../logout'
 import SignUp from '../signup'
-import Lists from '../lists'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import { toggleMenu } from '../../modules/app';
+import {
+  Grid,
+  Drawer,
+  Button,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Paper,
+  InputBase,
+  Divider,
+  IconButton
+} from '@material-ui/core'
+import MenuIcon from '@material-ui/icons/Menu';
 import * as routes from '../../routes'
 
-const App = () => (
-  <div>
-    <header>
-      <Link to="/">Home</Link>
-      <Link to="/about-us">About</Link>
-      <Link to={routes.lists}>Lists</Link>
+const App = ({ app: { isMenuOpen }, toggleMenu, ...props }) => (
+
+  <>
+    <header className="header">
+
+      <Grid container>
+        <Grid item xs={6} align="left">
+          [spark]
+        </Grid>
+        <Grid item xs={6} align="right">
+          <Button onClick={() => toggleMenu() }>
+            <MenuIcon />
+            Menu
+          </Button>        
+        </Grid>
+      </Grid>
+      
+      <Drawer anchor="right" open={isMenuOpen} onClose={() => toggleMenu() }>
+        <List>
+          {['Home', 'About', 'Feedback', 'My Account'].map((text, index) => (
+            <ListItem button key={text}>
+              <ListItemText primary={text} />
+            </ListItem>
+          ))}
+        </List>
+        <Link to={routes.login}>Login</Link>
+        <Link to={routes.logout}>Logout</Link>
+        <Link to={routes.signup}>SignUp</Link>
+        <Link to="/">Home</Link>
+        <Link to="/about-us">About</Link>
+      </Drawer>
+      
     </header>
 
-    <main>
+    <main className="main">
+      <Route exact path={routes.home} component={Home} />
       <Route exact path="/about-us" component={About} />
       <Route exact path={routes.login} component={Login} />
       <Route exact path={routes.logout} component={Logout} />
@@ -24,7 +67,28 @@ const App = () => (
       <Route exact path={routes.lists} component={Lists} />
       <Route exact path={routes.home} component={Home} />
     </main>
-  </div>
+
+    <footer className="footer" align="center" color="">
+      <p className="brand">&copy; Spark</p>
+    </footer>
+  </>
 )
 
-export default App
+const mapStateToProps = ({ app, lists, analytics }) => ({
+  app,
+  lists,
+  analytics
+})
+
+const mapDispatchToProps = dispatch => bindActionCreators(
+  {
+    toggleMenu 
+  },
+  dispatch
+)
+
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App)
