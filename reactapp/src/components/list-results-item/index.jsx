@@ -27,7 +27,7 @@ const ListsResultItem = ({
 
   const classes = useStyles()
   return (
-    <TableRow className={classes.tableRow} onClick={() => push(`/list/${id}`)}>
+    <TableRow className={classes.tableRow} onClick={() => push(`/lists/${id}`)}>
       <TableCell>
         <strong>{title}</strong>
       </TableCell>

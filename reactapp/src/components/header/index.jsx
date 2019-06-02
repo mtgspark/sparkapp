@@ -28,6 +28,14 @@ const navItems = [
   {
     label: 'Create List',
     url: routes.createList
+  },
+  {
+    label: 'Login',
+    url: routes.login
+  },
+  {
+    label: 'Logout',
+    url: routes.logout
   }
 ]
 

@@ -9,6 +9,7 @@ import PageHeader from '../../components/header'
 import PageFooter from '../../components/footer'
 import CreateList from '../create-list'
 import EditList from '../edit-list'
+import ViewList from '../view-list'
 import { Container } from '@material-ui/core'
 import * as routes from '../../routes'
 
@@ -23,6 +24,7 @@ const App = () => (
           <Route exact path={routes.logout} component={Logout} />
           <Route exact path={routes.lists} component={Lists} />
           <Route exact path={routes.card} component={Card} />
+          <Route exact path={routes.viewListWithVar} component={ViewList} />
           <Route exact path={routes.createList} component={CreateList} />
           <Route exact path={routes.editListWithVar} component={EditList} />
         </Switch>

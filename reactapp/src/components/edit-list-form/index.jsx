@@ -26,7 +26,7 @@ const EditListForm = ({ listId }) => {
   return (
     <ListEditor
       listId={listId}
-      fields={result}
+      fieldsFromServer={result}
       saveList={newFields => save(newFields)}
     />
   )
