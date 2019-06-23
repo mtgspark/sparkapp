@@ -28,7 +28,8 @@ export const allFields = {
     name: 'cards',
     type: fieldTypes.array,
     arrayOf: {
-      cardId: fieldTypes.string
+      cardId: fieldTypes.string,
+      cardName: fieldTypes.string
     },
     isEditable: true,
     label: 'Cards',

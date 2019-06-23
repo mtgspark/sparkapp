@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button'
 import InputLabel from '@material-ui/core/InputLabel'
 import { editableFields, fieldTypes } from '../../resources/lists'
 
-const CardRow = ({ cardId }) => (
+const CardRow = ({ cardId, cardName, imageUrl, onChange }) => (
   <div>
     <figure className="card-wrapper text-center" align="center">
       <img src="https://via.placeholder.com/400x560" alt="mtg card" />
@@ -23,7 +23,7 @@ const ArrayInput = ({ name, meta, onChange }) => (
     {meta.value.map(arrayItem => {
       switch (name) {
         case editableFields.cards.name:
-          return <CardRow />
+          return <CardRow {...arrayItem} onChange={onChange} />
         default:
           return 'Unknown field for array input'
       }
