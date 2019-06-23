@@ -40,10 +40,11 @@ const ListEditor = ({ listId, fields, saveFieldValue, saveList }) => {
                     handleFieldUpdate(fieldName, event.target.value)
                   }
                   multiline={fieldDetails.type === fieldTypes.multiline}
+                  fullWidth
                   value={fieldDetails.value}
+                  margin="normal"
                 />
                 <span>{fieldDetails.helpText}</span>
-                <hr />
               </React.Fragment>
             )
           case fieldTypes.checkboxes:

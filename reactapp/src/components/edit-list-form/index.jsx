@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import LoadingIcon from '../../components/loading'
 import { populateEditor } from '../../modules/editor'
 import ListEditor from '../list-editor'
 import useDatabase from '../../hooks/useDatabase'
@@ -41,7 +42,7 @@ const EditListForm = ({ listId, populateEditor, fields }) => {
   }, [populateEditor, isLoading, result])
 
   if (isLoading) {
-    return 'Loading...'
+    return <LoadingIcon />
   }
 
   if (isErrored || result === null) {

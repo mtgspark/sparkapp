@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { makeStyles } from '@material-ui/core/styles'
 import { updateEditorFieldValue } from '../../modules/editor'
-import TextField from '@material-ui/core/TextField'
-import Button from '@material-ui/core/Button'
+import { TextField, Button, Paper } from '@material-ui/core'
 import { allFields } from '../../resources/lists'
 
 const getNewCardDetailsInitialState = fieldName =>
@@ -38,39 +38,57 @@ const AddCardForm = ({ field, saveFieldValue }) => {
     saveFieldValue(field.name, field.value.concat([newCardDetails]))
   }
 
+  const useStyles = makeStyles({
+    paper: {
+      padding: '1rem 2rem',
+      margin: '2rem 0'
+    }
+  })
+
+  const classes = useStyles()
+
   return (
-    <div style={{ padding: '1rem', border: '1px solid grey' }}>
+    <Paper className={classes.paper}>
       <strong>Add Card</strong>
-      <hr />
       <TextField
         label="Card name"
         onChange={event => updateFieldData('cardName', event.target.value)}
+        fullWidth
+        gutterBottom
       />
-      <hr />
       <TextField
         label="Scryfall card ID"
         onChange={event =>
           updateFieldData('scryfallCardId', event.target.value)
         }
+        fullWidth
+        gutterBottom
       />
-      <hr />
       <TextField
         label="Image URL"
         onChange={event => updateFieldData('imageUrl', event.target.value)}
+        fullWidth
+        gutterBottom
       />
-      <hr />
       <TextField
-        label="Ranking (out of 10)"
+        label="Ranking (1 to 10)"
         onChange={event => updateFieldData('ranking', event.target.value)}
+        gutterBottom
       />
-      <hr />
       <TextField
         label="Reasons for rank"
         onChange={event => updateFieldData('reason', event.target.value)}
+        fullWidth
+        gutterBottom
       />
-      <hr />
-      <Button onClick={() => onSubmit()}>Add Card</Button>
-    </div>
+      <Button
+        gutterTop
+        variant="contained"
+        color="primary"
+        onClick={() => onSubmit()}>
+        Add Card
+      </Button>
+    </Paper>
   )
 }
 

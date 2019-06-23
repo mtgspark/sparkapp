@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import useDatabase from '../../hooks/useDatabase'
 import { makeStyles } from '@material-ui/core/styles'
+import LoadingIcon from '../../components/loading'
 import {
   Grid,
   List,
@@ -82,7 +83,7 @@ const SingleListView = ({ listId }) => {
   const [isLoading, isErrored, result] = useDatabase('lists', listId)
 
   if (isLoading) {
-    return 'Loading...'
+    return <LoadingIcon />
   }
 
   if (isErrored || result === null) {
