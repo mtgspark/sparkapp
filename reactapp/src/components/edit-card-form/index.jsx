@@ -7,10 +7,9 @@ const SingleCardForm = ({
   cardName,
   imageUrl,
   ranking,
+  reason,
   onChange
 }) => {
-  console.log('SingleCardForm', scryfallCardId, cardName, imageUrl, ranking)
-
   const [fieldData, setFieldData] = useState({})
 
   const updateFieldData = (name, value) => {
@@ -27,11 +26,25 @@ const SingleCardForm = ({
         <img src={imageUrl} alt="mtg card" width="150" />
       </figure>
       <hr />
-      <TextField label="Card name" value={cardName} />
+      <TextField
+        label="Card name"
+        value={cardName}
+        onChange={event => updateFieldData('cardName', event.target.value)}
+      />
       <hr />
-      <TextField label="Image URL" value={imageUrl} />
+      <TextField
+        label="Image URL"
+        value={imageUrl}
+        onChange={event => updateFieldData('imageUrl', event.target.value)}
+      />
       <hr />
-      <TextField label="Scryfall card ID" value={scryfallCardId} />
+      <TextField
+        label="Scryfall card ID"
+        value={scryfallCardId}
+        onChange={event =>
+          updateFieldData('scryfallCardId', event.target.value)
+        }
+      />
       <hr />
       <TextField
         label="Card ranking"
@@ -39,8 +52,16 @@ const SingleCardForm = ({
         min={1}
         max={20}
         value={ranking}
+        onChange={event => updateFieldData('cardRanking', event.target.value)}
       />
-      <span>Number 1 to 10</span>
+      <span>Number 1 to 10</span> <hr />
+      <TextField
+        label="Reason for ranking"
+        type="text"
+        value={reason}
+        onChange={event => updateFieldData('reason', event.target.value)}
+      />
+      <span>Why did you rank the card that number?</span>
       <hr />
       <Button onClick={() => onChange(fieldData)}>Update</Button>
     </div>

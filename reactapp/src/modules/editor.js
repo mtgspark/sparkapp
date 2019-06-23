@@ -3,17 +3,20 @@ const initialState = {
   fields: {}
 }
 
-const updateField = (fields, name, value) => ({
+const setFieldValueInFields = (fields, name, value) => ({
   ...fields,
-  [name]: value
+  [name]: {
+    ...fields[name],
+    value
+  }
 })
 
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case UPDATE_EDITOR_FIELD:
+    case UPDATE_EDITOR_FIELD_VALUE:
       return {
         ...state,
-        fields: updateField(
+        fields: setFieldValueInFields(
           state.fields,
           action.payload.name,
           action.payload.value
@@ -33,9 +36,9 @@ export const reducer = (state = initialState, action) => {
 
 // ACTIONS
 
-const UPDATE_EDITOR_FIELD = 'UPDATE_EDITOR_FIELD'
-export const updateEditorField = (name, value) => ({
-  type: UPDATE_EDITOR_FIELD,
+const UPDATE_EDITOR_FIELD_VALUE = 'UPDATE_EDITOR_FIELD_VALUE'
+export const updateEditorFieldValue = (name, value) => ({
+  type: UPDATE_EDITOR_FIELD_VALUE,
   payload: {
     name,
     value

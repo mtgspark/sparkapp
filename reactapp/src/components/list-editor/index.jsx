@@ -1,7 +1,7 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { updateEditorField } from '../../modules/editor'
+import { updateEditorFieldValue } from '../../modules/editor'
 import TextField from '@material-ui/core/TextField'
 import Chip from '@material-ui/core/Chip'
 import Button from '@material-ui/core/Button'
@@ -18,7 +18,7 @@ const ArrayInput = ({ name, meta, value, onChange }) => {
   return 'Unknown array input'
 }
 
-const ListEditor = ({ listId, fields, updateEditorField, saveList }) => {
+const ListEditor = ({ listId, fields, saveFieldValue, saveList }) => {
   const handleSubmit = event => {
     event.preventDefault()
     alert('Submit!')
@@ -100,7 +100,7 @@ const mapStateToProps = ({ editor: { fields } }) => ({ fields })
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      updateEditorField
+      updateEditorFieldValue
     },
     dispatch
   )
