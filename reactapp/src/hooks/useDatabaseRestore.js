@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import firebase from 'firebase'
+import firebase from 'firebase/app'
+import 'firebase/firestore'
 
 const removeIdFromDocData = docData =>
   Object.entries(docData)
@@ -33,7 +34,6 @@ export default (collectionName, restoreDataJson) => {
     try {
       const restoreData = JSON.parse(restoreDataJson)
 
-      console.log('useDatabaseRestore.start', collectionName, restoreData)
       await Promise.all(
         restoreData.map(async docData => {
           await firebase
@@ -43,8 +43,6 @@ export default (collectionName, restoreDataJson) => {
             .set(removeIdFromDocData(docData), { merge: true })
         })
       )
-
-      console.log('useDatabaseRestore.success', collectionName)
 
       setIsLoading(false)
       setIsErrored(false)

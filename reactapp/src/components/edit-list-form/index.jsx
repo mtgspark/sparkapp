@@ -37,7 +37,7 @@ const EditListForm = ({ listId, populateEditor, fields }) => {
       )
       return
     }
-    console.log('EditListForm.useEffect.populateEditor', result)
+
     populateEditor(mergeInRawFields(result))
   }, [populateEditor, isLoading, result])
 

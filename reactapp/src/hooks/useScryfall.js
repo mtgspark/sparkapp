@@ -34,17 +34,13 @@ const useScryfall = (scryfallCardId = null, cardNameSearchTerm = '') => {
       return
     }
 
-    console.log(`useScryfall ${scryfallCardId} ${cardNameSearchTerm}`)
-
     const onDone = json => {
-      console.log('Scryfall api success', json)
       setResponseJson(json.data[0])
       setIsFetching(false)
       setIsErrored(false)
     }
 
     const onError = err => {
-      console.error('Scryfall api error', err)
       setResponseJson({})
       setIsFetching(false)
       setIsErrored(true)

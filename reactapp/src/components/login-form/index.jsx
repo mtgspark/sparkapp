@@ -1,8 +1,8 @@
 import React from 'react'
 import { withFirebase } from 'react-redux-firebase'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
-import firebase from 'firebase'
-import { auth as firebaseAuth } from '../../firebase'
+import { auth as firebaseAuth } from 'firebase/app'
+import { auth as authInstance } from '../../firebase'
 
 const LoginForm = ({ onSuccess }) => {
   const uiConfig = {
@@ -11,9 +11,9 @@ const LoginForm = ({ onSuccess }) => {
       signInSuccessWithAuthResult: () => onSuccess()
     },
     signInOptions: [
-      firebase.auth.EmailAuthProvider.PROVIDER_ID,
-      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-      firebase.auth.FacebookAuthProvider.PROVIDER_ID
+      firebaseAuth.EmailAuthProvider.PROVIDER_ID,
+      firebaseAuth.GoogleAuthProvider.PROVIDER_ID,
+      firebaseAuth.FacebookAuthProvider.PROVIDER_ID
     ],
     credentialHelper: 'none' // disable redirect on email login
   }
@@ -21,7 +21,7 @@ const LoginForm = ({ onSuccess }) => {
   return (
     <>
       Login form:
-      <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebaseAuth} />
+      <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={authInstance} />
     </>
   )
 }

@@ -49,6 +49,7 @@ const AdminInfo = connect(mapStateToProps)(({ auth }) => {
 const DatabaseBackup = () => {
   const [textFieldValue, setTextFieldValue] = useState('lists')
   const [collectionName, setCollectionName] = useState('')
+  // eslint-disable-next-line no-unused-vars
   const [isFetching, isErrored, isSuccess, result] = useDatabaseBackup(
     collectionName
   )
@@ -72,7 +73,7 @@ const DatabaseBackup = () => {
       <br />
       Backup data:
       <br />
-      <textarea value={result ? JSON.stringify(result) : ''} />
+      <textarea value={result ? JSON.stringify(result) : ''} readOnly />
       <br />
       <Button onClick={() => setCollectionName(textFieldValue)}>
         Perform Backup
@@ -85,7 +86,7 @@ const DatabaseRestore = () => {
   const [textFieldValue, setTextFieldValue] = useState('lists')
   const [databaseRestoreValue, setDatabaseRestoreValue] = useState(null)
   const [collectionName, setCollectionName] = useState('')
-  const [isFetching, isErrored, isSuccess, result] = useDatabaseRestore(
+  const [isFetching, isErrored, isSuccess] = useDatabaseRestore(
     collectionName,
     databaseRestoreValue
   )

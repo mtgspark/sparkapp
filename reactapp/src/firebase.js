@@ -1,4 +1,6 @@
 import firebase from 'firebase/app'
+import 'firebase/auth'
+import 'firebase/firestore'
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -9,13 +11,9 @@ const firebaseConfig = {
   messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID
 }
 
-export const app = firebase.initializeApp(firebaseConfig)
+export const firebaseApp = firebase.initializeApp(firebaseConfig)
 
-export const auth = app.auth()
-
-auth.onAuthStateChanged(user =>
-  console.log('firebase.auth.onAuthStateChanged', user)
-)
+export const auth = firebaseApp.auth()
 
 export const logout = () => auth.signOut()
 

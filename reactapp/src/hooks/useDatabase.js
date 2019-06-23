@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import firebase from 'firebase'
+import { firestore } from 'firebase/app'
 
 const secondsToDate = seconds => {
   const t = new Date(1970, 0, 1) // Epoch
@@ -33,7 +33,7 @@ const mapReferences = async doc => {
 
   const results = await Promise.all(
     Object.entries(newDoc).map(async ([key, value]) => {
-      if (value && value instanceof firebase.firestore.DocumentReference) {
+      if (value && value instanceof firestore.DocumentReference) {
         return [key, await getDataFromReference(value)]
       }
       return [key, await Promise.resolve(value)]
@@ -53,10 +53,8 @@ export default (collectionName, documentId = null, searchTerm = '') => {
   const getData = async () => {
     setIsLoading(true)
 
-    console.log('useDatabase', collectionName, documentId, searchTerm)
-
     try {
-      const collection = firebase.firestore().collection(collectionName)
+      const collection = firestore().collection(collectionName)
 
       let query
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import useDatabase from '../../hooks/useDatabase'
 import { makeStyles } from '@material-ui/core/styles'
@@ -9,8 +9,6 @@ import {
   ListItem,
   ListItemText,
   ListItemAvatar,
-  Avatar,
-  Divider,
   Typography,
   Button
 } from '@material-ui/core/'
@@ -57,8 +55,8 @@ const CardRow = ({ ranking, imageUrl, cardName, reason }) => {
           {cardName}
         </Typography>
         <Typography className={classes.cardRanking} gutterBottom component="p">
-          <span class={classes.cardRankingValue}>{ranking}</span>
-          <span class={classes.cardRankingTotal}>/10</span>
+          <span className={classes.cardRankingValue}>{ranking}</span>
+          <span className={classes.cardRankingTotal}>/10</span>
         </Typography>
         {reason ? (
           <Typography className={classes.reason} component="p" variant="h6">
@@ -96,10 +94,8 @@ const SingleListView = ({ listId }) => {
     <>
       <Grid container className={classes.root} spacing={2}>
         <Grid item xs={8} align="left">
-          <Typography component="h1" variant="">
-            {title}
-          </Typography>
-          <Typography gutterBottom="true" component="p" variant="">
+          <Typography component="h1">{title}</Typography>
+          <Typography gutterBottom={true} component="p">
             {description}
           </Typography>
         </Grid>
@@ -112,7 +108,7 @@ const SingleListView = ({ listId }) => {
       {/* list cards in list */}
       <List className={classes.root}>
         {cards.map((card, idx) => (
-          <CardRow {...card} entryId={idx + 1} />
+          <CardRow key={card.scryfallCardId} {...card} entryId={idx + 1} />
         ))}
       </List>
     </>

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import firebase from 'firebase'
+import firebase from 'firebase/app'
+import 'firebase/firestore'
 
 export default collectionName => {
   const [isLoading, setIsLoading] = useState(null)
@@ -18,20 +19,12 @@ export default collectionName => {
     setIsSuccess(null)
 
     try {
-      console.log('useDatabaseBackup.backup.start', collectionName)
-
       const result = await firebase
         .firestore()
         .collection(collectionName)
         .get()
 
       const resultDocs = result.docs.map(doc => ({ ...doc.data(), id: doc.id }))
-
-      console.log(
-        'useDatabaseBackup.backup.success',
-        collectionName,
-        resultDocs
-      )
 
       setIsLoading(false)
       setIsErrored(false)
