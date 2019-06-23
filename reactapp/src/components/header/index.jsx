@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { toggleMenu } from '../../modules/app'
+import { toggleMenu, closeMenu } from '../../modules/app'
 import { makeStyles } from '@material-ui/core/styles'
 import {
   Grid,
@@ -42,38 +42,45 @@ const navItems = [
   }
 ]
 
-const PageHeader = ({ app: { isMenuOpen }, toggleMenu }) => {
-  const useStyles = makeStyles({
-    header: {
-      padding: '1rem 2rem',
-      marginBottom: '2rem'
-    },
-    logo: {
-      fontSize: '1.5rem',
-      fontWeight: '600',
-      lineHeight: '1',
-      textDecoration: 'none !important',
-      color: 'black'
-    },
-    logoSmall: {
-      display: 'block',
-      fontSize: '1rem',
-      textTransform: 'uppercase'
-    },
-    menuToggleIcon: {
-      width: '4rem',
-      height: '3rem'
-    },
-    menuList: {
-      width: '280px'
-    },
-    menuListLink: {
-      color: 'inherit',
-      textDecoration: 'none'
-      // todo: fix appearance if link in menu
-    }
-  })
+const NavigationLink = props => (
+  <Link
+    {...props}
+    style={{ display: 'block', width: '100%', height: '100%' }}
+  />
+)
 
+const useStyles = makeStyles({
+  header: {
+    padding: '1rem 2rem',
+    marginBottom: '2rem'
+  },
+  logo: {
+    fontSize: '1.5rem',
+    fontWeight: '600',
+    lineHeight: '1',
+    textDecoration: 'none !important',
+    color: 'black'
+  },
+  logoSmall: {
+    display: 'block',
+    fontSize: '1rem',
+    textTransform: 'uppercase'
+  },
+  menuToggleIcon: {
+    width: '4rem',
+    height: '3rem'
+  },
+  menuList: {
+    width: '280px'
+  },
+  menuListLink: {
+    color: 'inherit',
+    textDecoration: 'none'
+    // todo: fix appearance if link in menu
+  }
+})
+
+const PageHeader = ({ app: { isMenuOpen }, toggleMenu, closeMenu }) => {
   const classes = useStyles()
 
   return (
@@ -93,26 +100,26 @@ const PageHeader = ({ app: { isMenuOpen }, toggleMenu }) => {
         </Grid>
       </Grid>
 
-      <Drawer anchor="right" open={isMenuOpen} onClose={() => toggleMenu()}>
+      <Drawer anchor="right" open={isMenuOpen} onClose={() => closeMenu()}>
         <MenuList className={classes.menuList}>
           <MenuItem>MTG Card Rank</MenuItem>
         </MenuList>
         <Divider />
         <MenuList className={classes.menuList}>
           {navItems.map(({ label, url }) => (
-            <MenuItem button key={url}>
-              <Typography component="div">
-                <Link
-                  className={classes.menuListLink}
-                  color="primary"
-                  variant="inherit"
-                  to={url}>
+            <MenuItem button key={url} onClick={() => closeMenu()}>
+              <NavigationLink
+                className={classes.menuListLink}
+                color="primary"
+                variant="inherit"
+                to={url}>
+                <Typography component="div">
                   <ListItemIcon>
                     <ChevronRightIcon />
                   </ListItemIcon>
                   {label}
-                </Link>
-              </Typography>
+                </Typography>
+              </NavigationLink>
             </MenuItem>
           ))}
         </MenuList>
@@ -130,7 +137,8 @@ const mapStateToProps = ({ app, lists, analytics }) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      toggleMenu
+      toggleMenu,
+      closeMenu
     },
     dispatch
   )

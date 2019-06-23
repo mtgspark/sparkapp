@@ -13,7 +13,7 @@ export default Component =>
     mapStateToProps,
     mapDispatchToProps
   )(
-    withRouter(({ auth, push }) => {
+    withRouter(({ auth, push, ...otherProps }) => {
       useEffect(() => {
         if (auth.uid) {
           push(routes.home)
@@ -24,6 +24,6 @@ export default Component =>
         return null
       }
 
-      return <Component />
+      return <Component {...otherProps} />
     })
   )

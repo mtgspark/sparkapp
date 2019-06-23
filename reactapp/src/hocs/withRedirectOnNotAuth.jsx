@@ -13,10 +13,9 @@ export default Component =>
     mapStateToProps,
     mapDispatchToProps
   )(
-    withRouter(({ auth, push }) => {
+    withRouter(({ auth, push, ...otherProps }) => {
       useEffect(() => {
         if (!auth.uid) {
-          console.log('withRedirectOnNotAuth', auth.uid)
           push(routes.login)
         }
       }, [auth, push])
@@ -25,6 +24,6 @@ export default Component =>
         return null
       }
 
-      return <Component />
+      return <Component {...otherProps} />
     })
   )
