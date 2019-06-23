@@ -8,18 +8,25 @@ import {
   Grid,
   Drawer,
   Button,
-  List,
-  ListItem,
-  ListItemText
+  ListItemIcon,
+  Menu,
+  MenuItem,
+  MenuList,
+  Typography,
+  Divider
 } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
+import ChevronRightIcon from '@material-ui/icons/ChevronRight'
+import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered'
+import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd'
 import * as routes from '../../routes'
 import { red } from '@material-ui/core/colors'
 
 const navItems = [
   {
     label: 'Home',
-    url: routes.home
+    url: routes.home,
+    icon: ''
   },
   {
     label: 'Browse Lists',
@@ -57,9 +64,17 @@ const PageHeader = ({ app: { isMenuOpen }, toggleMenu }) => {
       fontSize: '1rem',
       textTransform: 'uppercase'
     },
-    menuIcon: {
+    menuToggleIcon: {
       width: '4rem',
       height: '3rem'
+    },
+    menuList: {
+      width: '280px'
+    },
+    menuListLink: {
+      color: 'inherit',
+      textDecoration: 'none'
+      // todo: fix appearance if link in menu
     }
   })
 
@@ -76,22 +91,35 @@ const PageHeader = ({ app: { isMenuOpen }, toggleMenu }) => {
         </Grid>
         <Grid item xs={6} align="right">
           <Button onClick={() => toggleMenu()}>
-            <MenuIcon className={classes.menuIcon} />
+            <MenuIcon className={classes.menuToggleIcon} />
             <span hidden>Menu</span>
           </Button>
         </Grid>
       </Grid>
 
       <Drawer anchor="right" open={isMenuOpen} onClose={() => toggleMenu()}>
-        <List>
+        <MenuList className={classes.menuList}>
+          <MenuItem>MTG Card Rank</MenuItem>
+        </MenuList>
+        <Divider />
+        <MenuList className={classes.menuList}>
           {navItems.map(({ label, url }) => (
-            <ListItem button key={url}>
-              <Link to={url}>
-                <ListItemText primary={label} />
-              </Link>
-            </ListItem>
+            <MenuItem button key={url} onClick={url}>
+              <Typography>
+                <Link
+                  className={classes.menuListLink}
+                  color="primary"
+                  variant="inherit"
+                  to={url}>
+                  <ListItemIcon>
+                    <ChevronRightIcon />
+                  </ListItemIcon>
+                  {label}
+                </Link>
+              </Typography>
+            </MenuItem>
           ))}
-        </List>
+        </MenuList>
       </Drawer>
     </header>
   )
