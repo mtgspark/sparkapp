@@ -1,5 +1,4 @@
 import React from 'react'
-import { Route, Switch, Link } from 'react-router-dom'
 import { push } from 'connected-react-router'
 import { connect } from 'react-redux'
 import TableCell from '@material-ui/core/TableCell'
@@ -13,9 +12,7 @@ const ListsResultItem = ({
   id,
   title,
   description,
-  createdAt,
   modifiedAt,
-  createdBy,
   modifiedBy,
   push
 }) => {

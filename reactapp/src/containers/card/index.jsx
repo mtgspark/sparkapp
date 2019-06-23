@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Grid, Button, CircularProgress } from '@material-ui/core'
+import { Container, Grid, Button } from '@material-ui/core'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 
 const Card = () => (

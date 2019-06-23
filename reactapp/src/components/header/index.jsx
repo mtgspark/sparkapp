@@ -9,7 +9,6 @@ import {
   Drawer,
   Button,
   ListItemIcon,
-  Menu,
   MenuItem,
   MenuList,
   Typography,
@@ -17,10 +16,7 @@ import {
 } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
-import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered'
-import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd'
 import * as routes from '../../routes'
-import { red } from '@material-ui/core/colors'
 
 const navItems = [
   {
@@ -104,8 +100,8 @@ const PageHeader = ({ app: { isMenuOpen }, toggleMenu }) => {
         <Divider />
         <MenuList className={classes.menuList}>
           {navItems.map(({ label, url }) => (
-            <MenuItem button key={url} onClick={url}>
-              <Typography>
+            <MenuItem button key={url}>
+              <Typography component="div">
                 <Link
                   className={classes.menuListLink}
                   color="primary"
