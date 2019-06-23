@@ -3,8 +3,6 @@ const initialState = {
   fields: {}
 }
 
-const UPDATE_EDITOR_FIELD = 'UPDATE_EDITOR_FIELD'
-
 const updateField = (fields, name, value) => ({
   ...fields,
   [name]: value
@@ -22,16 +20,33 @@ export const reducer = (state = initialState, action) => {
         )
       }
 
+    case POPULATE_EDITOR:
+      return {
+        ...state,
+        fields: action.payload.fields
+      }
+
     default:
       return state
   }
 }
 
+// ACTIONS
+
+const UPDATE_EDITOR_FIELD = 'UPDATE_EDITOR_FIELD'
 export const updateEditorField = (name, value) => ({
   type: UPDATE_EDITOR_FIELD,
   payload: {
     name,
     value
+  }
+})
+
+const POPULATE_EDITOR = 'POPULATE_EDITOR'
+export const populateEditor = fields => ({
+  type: POPULATE_EDITOR,
+  payload: {
+    fields
   }
 })
 

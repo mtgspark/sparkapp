@@ -2,7 +2,9 @@ export const fieldTypes = {
   string: 'string',
   date: 'date',
   array: 'array',
-  multiline: 'multiline'
+  multiline: 'multiline',
+  object: 'object',
+  number: 'number'
 }
 
 export const allFields = {
@@ -27,24 +29,28 @@ export const allFields = {
   cards: {
     name: 'cards',
     type: fieldTypes.array,
-    arrayOf: {
-      cardId: fieldTypes.string,
-      cardName: fieldTypes.string
-    },
+    arrayOf: [
+      fieldTypes.object,
+      {
+        scryfallCardId: fieldTypes.string,
+        cardName: fieldTypes.string,
+        imageUrl: fieldTypes.string,
+        ranking: fieldTypes.number,
+        reason: fieldTypes.string
+      }
+    ],
     isEditable: true,
     label: 'Cards',
     isRequired: true,
-    initialValue: [
-      {
-        cardId: '123'
-      }
-    ]
+    initialValue: []
   },
   keywords: {
     name: 'keywords',
     type: fieldTypes.array,
     arrayOf: fieldTypes.string,
-    initialValue: []
+    initialValue: [],
+    helpText:
+      'Enter in a keyword that is used for searching. eg. "time" and "warp" for Time Warp'
   },
   labels: {
     name: 'labels',
@@ -60,7 +66,8 @@ export const allFields = {
     ],
     isEditable: true,
     label: 'Labels',
-    initialValue: []
+    initialValue: [],
+    helpText: 'Click on a label to add it to your list'
   }
 }
 
