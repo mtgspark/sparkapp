@@ -14,26 +14,29 @@ import Admin from '../admin'
 import { Container } from '@material-ui/core'
 import * as routes from '../../routes'
 
-const App = () => (
-  <>
-    <PageHeader />
-    <main className="main">
-      <Container maxWidth="lg">
-        <Switch>
-          <Route exact path={routes.home} component={Home} />
-          <Route exact path={routes.login} component={Login} />
-          <Route exact path={routes.logout} component={Logout} />
-          <Route exact path={routes.lists} component={Lists} />
-          <Route exact path={routes.card} component={Card} />
-          <Route exact path={routes.createList} component={CreateList} />
-          <Route exact path={routes.viewListWithVar} component={ViewList} />
-          <Route exact path={routes.editListWithVar} component={EditList} />
-          <Route exact path={routes.admin} component={Admin} />
-        </Switch>
-      </Container>
-    </main>
-    <PageFooter />
-  </>
-)
+const App = () =>
+  window.location.href.includes('mtgcardrank') ? (
+    <div>Coming soon...</div>
+  ) : (
+    <>
+      <PageHeader />
+      <main className="main">
+        <Container maxWidth="lg">
+          <Switch>
+            <Route exact path={routes.home} component={Home} />
+            <Route exact path={routes.login} component={Login} />
+            <Route exact path={routes.logout} component={Logout} />
+            <Route exact path={routes.lists} component={Lists} />
+            <Route exact path={routes.card} component={Card} />
+            <Route exact path={routes.createList} component={CreateList} />
+            <Route exact path={routes.viewListWithVar} component={ViewList} />
+            <Route exact path={routes.editListWithVar} component={EditList} />
+            <Route exact path={routes.admin} component={Admin} />
+          </Switch>
+        </Container>
+      </main>
+      <PageFooter />
+    </>
+  )
 
 export default App

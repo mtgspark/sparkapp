@@ -1,19 +1,17 @@
 import GoogleTagManager from '@redux-beacon/google-tag-manager'
 import { createMetaReducer, createMiddleware } from 'redux-beacon'
 
-const options = {
-  dataLayerName: 'my-data-layer'
-}
+const options = {}
 
-const editListEvent = (action, prevState, nextState) => {
+const locationChangeEvent = (action, prevState, nextState) => {
   return {
-    event: 'edit-list',
-    listId: action.payload.listId
+    event: 'location-change',
+    payload: action.payload
   }
 }
 
 const eventsMap = {
-  EDIT_LIST: editListEvent
+  '@@router/LOCATION_CHANGE': locationChangeEvent
 }
 
 const gtm = GoogleTagManager(options)
