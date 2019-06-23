@@ -4,11 +4,6 @@ import useDatabase from '../../hooks/useDatabase'
 import { makeStyles } from '@material-ui/core/styles'
 import {
   Grid,
-  Card,
-  CardActionArea,
-  CardActions,
-  CardContent,
-  CardMedia,
   List,
   ListItem,
   ListItemText,
@@ -18,7 +13,6 @@ import {
   Typography,
   Button
 } from '@material-ui/core/'
-import StarRateIcon from '@material-ui/icons/StarRate'
 
 const CardRow = ({ ranking, imageUrl, cardName, reason }) => {
   const useStyles = makeStyles({
@@ -41,9 +35,9 @@ const CardRow = ({ ranking, imageUrl, cardName, reason }) => {
       fontSize: '3rem'
       // fontWeight: '600'
     },
-
     reason: {
-      margin: '2rem 0'
+      margin: '2rem 0',
+      fontStyle: 'italic'
     },
     divider: {
       marginTop: 'auto  '
@@ -75,49 +69,6 @@ const CardRow = ({ ranking, imageUrl, cardName, reason }) => {
         {/* <Divider className={classes.divider} /> */}
       </ListItemText>
     </ListItem>
-
-    // <Divider variant="inset" component="li" />
-    // <li>
-    //   <Card className={classes.card}>
-    //     <CardMedia
-    //       className={classes.media}
-    //       image={imageUrl}
-    //       title={cardName}
-    //     />
-    //     <CardContent>
-    //       <Typography gutterBottom variant="h5" component="h2">
-    //         {cardName}
-    //       </Typography>
-    //       {reason ? (
-    //         <Typography component="p" variant="body2" color="textSecondary">
-    //           {reason}
-    //         </Typography>
-    //       ) : (
-    //         ''
-    //       )}
-    //     </CardContent>
-    //   </Card>
-
-    //   <Grid container className="" spacing={2}>
-    //     <Grid item xs={6}>
-    //       <figure className="card-wrapper text-center" align="center">
-    //         <img
-    //           className={classes.cardImage}
-    //           src={imageUrl}
-    //           alt="{cardName}"
-    //         />
-    //       </figure>
-    //     </Grid>
-    //     <Grid item xs={6}>
-    //       <p className={classes.cardRanking}>
-    //         <span class={classes.cardRankingValue}>{ranking}</span>
-    //         <span class={classes.cardRankingTotal}>/10</span>
-    //       </p>
-    //       <h2 className="card-name">{cardName}</h2>
-    //       {reason ? <p>{reason}</p> : ''}
-    //     </Grid>
-    //   </Grid>
-    // </li>
   )
 }
 
@@ -142,16 +93,27 @@ const SingleListView = ({ listId }) => {
 
   return (
     <>
-      <h2>{title}</h2>
-      <p>{description}</p>
+      <Grid container className={classes.root} spacing={2}>
+        <Grid item xs={8} align="left">
+          <Typography component="h1" variant="">
+            {title}
+          </Typography>
+          <Typography gutterBottom="true" component="p" variant="">
+            {description}
+          </Typography>
+        </Grid>
+        <Grid item xs={4} align="right">
+          <Link to={`/lists/${listId}/edit`}>
+            <Button color="primary">Edit List</Button>
+          </Link>
+        </Grid>
+      </Grid>
+      {/* list cards in list */}
       <List className={classes.root}>
         {cards.map((card, idx) => (
           <CardRow {...card} entryId={idx + 1} />
         ))}
       </List>
-      <Link to={`/lists/${listId}/edit`}>
-        <Button>Edit List</Button>
-      </Link>
     </>
   )
 }
