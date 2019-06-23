@@ -9,9 +9,7 @@ const PageFooter = ({ auth }) => {
     footer: {
       margin: '3rem 0 0 0',
       padding: '1rem 2rem',
-      fontSize: '16px',
-      background: 'hsl(250, 10%, 20%)',
-      color: 'hsl(250, 40%, 70%)'
+      fontSize: '16px'
     }
   })
 
@@ -19,7 +17,12 @@ const PageFooter = ({ auth }) => {
 
   return (
     <footer className={classes.footer} align="right" color="">
-      {auth.uid ? `You are logged in as ${auth.uid}` : 'You are not logged in'}
+      {!auth.isLoaded
+        ? null
+        : auth.uid
+        ? `You are logged in`
+        : 'You are not logged in'}
+      <br />
       <Link to={routes.admin}>&copy; Spark</Link>
     </footer>
   )

@@ -17,6 +17,7 @@ import {
 import MenuIcon from '@material-ui/icons/Menu'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import * as routes from '../../routes'
+import withAuthProfile from '../../hocs/withAuthProfile'
 
 const navItems = [
   {
@@ -30,15 +31,18 @@ const navItems = [
   },
   {
     label: 'Create List',
-    url: routes.createList
+    url: routes.createList,
+    requiresAuth: true
   },
   {
     label: 'Login',
-    url: routes.login
+    url: routes.login,
+    requiresNotAuth: true
   },
   {
     label: 'Logout',
-    url: routes.logout
+    url: routes.logout,
+    requiresAuth: true
   }
 ]
 
@@ -80,6 +84,40 @@ const useStyles = makeStyles({
   }
 })
 
+const DrawerContainer = withAuthProfile(({ auth, isMenuOpen, closeMenu }) => {
+  const classes = useStyles()
+  const isLoggedIn = auth.isLoaded ? !!auth.uid : null
+  return (
+    <Drawer anchor="right" open={isMenuOpen} onClose={() => closeMenu()}>
+      <MenuList className={classes.menuList}>
+        <MenuItem>MTG Card Rank</MenuItem>
+      </MenuList>
+      <Divider />
+      <MenuList className={classes.menuList}>
+        {navItems.map(({ label, url, requiresAuth, requiresNotAuth }) =>
+          (requiresAuth === true && !isLoggedIn) ||
+          (requiresNotAuth === true && isLoggedIn) ? null : (
+            <MenuItem button key={url} onClick={() => closeMenu()}>
+              <NavigationLink
+                className={classes.menuListLink}
+                color="primary"
+                variant="inherit"
+                to={url}>
+                <Typography component="div">
+                  <ListItemIcon>
+                    <ChevronRightIcon />
+                  </ListItemIcon>
+                  {label}
+                </Typography>
+              </NavigationLink>
+            </MenuItem>
+          )
+        )}
+      </MenuList>
+    </Drawer>
+  )
+})
+
 const PageHeader = ({ app: { isMenuOpen }, toggleMenu, closeMenu }) => {
   const classes = useStyles()
 
@@ -99,31 +137,7 @@ const PageHeader = ({ app: { isMenuOpen }, toggleMenu, closeMenu }) => {
           </Button>
         </Grid>
       </Grid>
-
-      <Drawer anchor="right" open={isMenuOpen} onClose={() => closeMenu()}>
-        <MenuList className={classes.menuList}>
-          <MenuItem>MTG Card Rank</MenuItem>
-        </MenuList>
-        <Divider />
-        <MenuList className={classes.menuList}>
-          {navItems.map(({ label, url }) => (
-            <MenuItem button key={url} onClick={() => closeMenu()}>
-              <NavigationLink
-                className={classes.menuListLink}
-                color="primary"
-                variant="inherit"
-                to={url}>
-                <Typography component="div">
-                  <ListItemIcon>
-                    <ChevronRightIcon />
-                  </ListItemIcon>
-                  {label}
-                </Typography>
-              </NavigationLink>
-            </MenuItem>
-          ))}
-        </MenuList>
-      </Drawer>
+      <DrawerContainer closeMenu={closeMenu} isMenuOpen={isMenuOpen} />
     </header>
   )
 }
