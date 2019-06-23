@@ -1,7 +1,10 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
+import withAuthProfile from '../../hocs/withAuthProfile'
+import * as routes from '../../routes'
 
-const PageFooter = () => {
+const PageFooter = ({ auth }) => {
   const useStyles = makeStyles({
     footer: {
       margin: '3rem 0 0 0',
@@ -16,9 +19,10 @@ const PageFooter = () => {
 
   return (
     <footer className={classes.footer} align="right" color="">
-      <p className="brand">&copy; Spark</p>
+      {auth.uid ? `You are logged in as ${auth.uid}` : 'You are not logged in'}
+      <Link to={routes.admin}>&copy; Spark</Link>
     </footer>
   )
 }
 
-export default PageFooter
+export default withAuthProfile(PageFooter)

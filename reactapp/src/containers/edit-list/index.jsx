@@ -1,6 +1,7 @@
 import React from 'react'
 import CardLookupForm from '../../components/card-lookup-form'
 import EditListForm from '../../components/edit-list-form'
+import withRedirectOnNotAuth from '../../hocs/withRedirectOnNotAuth'
 
 const EditList = ({ match: { params } }) => (
   <>
@@ -10,4 +11,4 @@ const EditList = ({ match: { params } }) => (
   </>
 )
 
-export default EditList
+export default withRedirectOnNotAuth(EditList)

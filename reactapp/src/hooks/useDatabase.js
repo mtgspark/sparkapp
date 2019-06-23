@@ -53,6 +53,8 @@ export default (collectionName, documentId = null, searchTerm = '') => {
   const getData = async () => {
     setIsLoading(true)
 
+    console.log('useDatabase', collectionName, documentId, searchTerm)
+
     try {
       const collection = firebase.firestore().collection(collectionName)
 

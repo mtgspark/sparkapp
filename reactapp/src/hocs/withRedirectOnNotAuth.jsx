@@ -16,6 +16,7 @@ export default Component =>
     withRouter(({ auth, push }) => {
       useEffect(() => {
         if (!auth.uid) {
+          console.log('withRedirectOnNotAuth', auth.uid)
           push(routes.login)
         }
       }, [auth, push])

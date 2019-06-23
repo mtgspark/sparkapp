@@ -1,6 +1,7 @@
 import React from 'react'
 import CreateListForm from '../../components/create-list-form'
 import CardLookupForm from '../../components/card-lookup-form'
+import withRedirectOnNotAuth from '../../hocs/withRedirectOnNotAuth'
 
 const CreateList = () => (
   <>
@@ -10,4 +11,4 @@ const CreateList = () => (
   </>
 )
 
-export default CreateList
+export default withRedirectOnNotAuth(CreateList)
