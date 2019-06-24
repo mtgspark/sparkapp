@@ -21,10 +21,11 @@ const ArrayInput = ({ name, meta, value, onChange }) => {
 const ListEditor = ({ listId, fields, saveFieldValue, saveList }) => {
   const handleSubmit = event => {
     event.preventDefault()
-    alert('Submit!')
+    saveList(fields)
+    console.log('ListEditor.handleSubmit', fields)
   }
 
-  const handleFieldUpdate = () => null
+  console.log('ListEditor.fields', fields)
 
   return (
     <form>
@@ -37,7 +38,7 @@ const ListEditor = ({ listId, fields, saveFieldValue, saveList }) => {
                 <TextField
                   label={fieldDetails.label}
                   onChange={event =>
-                    handleFieldUpdate(fieldName, event.target.value)
+                    saveFieldValue(fieldName, event.target.value)
                   }
                   multiline={fieldDetails.type === fieldTypes.multiline}
                   fullWidth
@@ -63,9 +64,7 @@ const ListEditor = ({ listId, fields, saveFieldValue, saveList }) => {
                             ? 'primary'
                             : 'default'
                         }
-                        onClick={() =>
-                          handleFieldUpdate(fieldName, optionValue)
-                        }
+                        onClick={() => saveFieldValue(fieldName, optionValue)}
                       />
                     ))
                   : null}
@@ -80,7 +79,7 @@ const ListEditor = ({ listId, fields, saveFieldValue, saveList }) => {
                   name={fieldName}
                   meta={fieldDetails}
                   value={fieldDetails.value}
-                  onChange={value => handleFieldUpdate(fieldName, value)}
+                  onChange={value => saveFieldValue(fieldName, value)}
                 />
                 <hr />
               </React.Fragment>
@@ -101,7 +100,7 @@ const mapStateToProps = ({ editor: { fields } }) => ({ fields })
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      updateEditorFieldValue
+      saveFieldValue: updateEditorFieldValue
     },
     dispatch
   )

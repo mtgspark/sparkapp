@@ -25,6 +25,17 @@ const mergeInRawFields = fields =>
       {}
     )
 
+const convertFieldsIntoFirebaseDoc = fields =>
+  Object.entries(fields)
+    .map(([fieldName, fieldDetails]) => [fieldName, fieldDetails.value])
+    .reduce(
+      (newObj, [fieldName, fieldValue]) => ({
+        ...newObj,
+        [fieldName]: fieldValue
+      }),
+      {}
+    )
+
 const EditListForm = ({ listId, populateEditor, fields }) => {
   const [isLoading, isErrored, result] = useDatabase('lists', listId)
   const [isSaving, isSuccess, save] = useDatabaseSave('lists', listId)
@@ -65,7 +76,7 @@ const EditListForm = ({ listId, populateEditor, fields }) => {
     <ListEditor
       listId={listId}
       fieldsFromServer={result}
-      saveList={newFields => save(newFields)}
+      saveList={newFields => save(convertFieldsIntoFirebaseDoc(newFields))}
     />
   )
 }
