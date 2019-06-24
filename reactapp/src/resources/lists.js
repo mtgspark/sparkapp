@@ -68,6 +68,26 @@ export const allFields = {
     label: 'Labels',
     initialValue: [],
     helpText: 'Click on a label to add it to your list'
+  },
+  createdAt: {
+    name: 'createdAt',
+    type: fieldTypes.date,
+    isEditable: false
+  },
+  modifiedAt: {
+    name: 'modifiedAt',
+    type: fieldTypes.date,
+    isEditable: false
+  },
+  createdBy: {
+    name: 'createdBy',
+    type: fieldTypes.string,
+    isEditable: false
+  },
+  modifiedBy: {
+    name: 'modifiedBy',
+    type: fieldTypes.string,
+    isEditable: false
   }
 }
 
