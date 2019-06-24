@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { updateEditorFieldValue } from '../../modules/editor'
 import { TextField, Button, Paper } from '@material-ui/core'
 import { allFields } from '../../resources/lists'
+import useScryfall from '../../hooks/useScryfall'
 
 const getNewCardDetailsInitialState = fieldName =>
   Object.keys(allFields[fieldName].arrayOf[1]).reduce(
@@ -12,16 +13,43 @@ const getNewCardDetailsInitialState = fieldName =>
     {}
   )
 
+const useStyles = makeStyles({
+  paper: {
+    padding: '1rem 2rem',
+    margin: '2rem 0'
+  }
+})
+
 const AddCardForm = ({ field, saveFieldValue }) => {
   const [newCardDetails, setNewCardDetails] = useState(
     getNewCardDetailsInitialState(field.name)
   )
+  const [searchTerm, setSearchTerm] = useState('')
+  const [isFetching, isErrored, responseJson] = useScryfall(null, searchTerm)
 
   const updateFieldData = (name, value) => {
+    if (typeof name !== 'string') {
+      setNewCardDetails({
+        ...newCardDetails,
+        ...name
+      })
+      return
+    }
+
     setNewCardDetails({
       ...newCardDetails,
       [name]: value
     })
+  }
+
+  if (responseJson.id) {
+    if (responseJson.id !== newCardDetails.scryfallCardId) {
+      updateFieldData({
+        cardName: responseJson.name,
+        scryfallCardId: responseJson.id,
+        imageUrl: responseJson.image_uris.normal
+      })
+    }
   }
 
   const onSubmit = () => {
@@ -38,54 +66,27 @@ const AddCardForm = ({ field, saveFieldValue }) => {
     saveFieldValue(field.name, field.value.concat([newCardDetails]))
   }
 
-  const useStyles = makeStyles({
-    paper: {
-      padding: '1rem 2rem',
-      margin: '2rem 0'
-    }
-  })
-
   const classes = useStyles()
 
   return (
     <Paper className={classes.paper}>
       <strong>Add Card</strong>
+      <img src={newCardDetails.imageUrl} width="100" />
       <TextField
-        label="Card name"
-        onChange={event => updateFieldData('cardName', event.target.value)}
+        label="Card name search"
+        onChange={event => setSearchTerm(event.target.value)}
         fullWidth
-        gutterBottom
-      />
-      <TextField
-        label="Scryfall card ID"
-        onChange={event =>
-          updateFieldData('scryfallCardId', event.target.value)
-        }
-        fullWidth
-        gutterBottom
-      />
-      <TextField
-        label="Image URL"
-        onChange={event => updateFieldData('imageUrl', event.target.value)}
-        fullWidth
-        gutterBottom
       />
       <TextField
         label="Ranking (1 to 10)"
         onChange={event => updateFieldData('ranking', event.target.value)}
-        gutterBottom
       />
       <TextField
         label="Reasons for rank"
         onChange={event => updateFieldData('reason', event.target.value)}
         fullWidth
-        gutterBottom
       />
-      <Button
-        gutterTop
-        variant="contained"
-        color="primary"
-        onClick={() => onSubmit()}>
+      <Button variant="contained" color="primary" onClick={() => onSubmit()}>
         Add Card
       </Button>
     </Paper>

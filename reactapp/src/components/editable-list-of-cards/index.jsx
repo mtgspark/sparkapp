@@ -12,7 +12,7 @@ const EditableListOfCards = ({ field, saveFieldValue }) =>
     <>
       {field.value.map(card => (
         <EditCardForm
-          key={card.id}
+          key={card.scryfallCardId}
           {...card}
           onChange={cardDetails =>
             saveFieldValue(

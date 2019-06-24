@@ -2,6 +2,13 @@ import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { TextField, Button, Paper, Grid } from '@material-ui/core'
 
+const useStyles = makeStyles({
+  paper: {
+    padding: '1rem 2rem',
+    margin: '2rem 0'
+  }
+})
+
 const SingleCardForm = ({
   scryfallCardId,
   cardName,
@@ -18,12 +25,6 @@ const SingleCardForm = ({
       [name]: value
     })
   }
-  const useStyles = makeStyles({
-    paper: {
-      padding: '1rem 2rem',
-      margin: '2rem 0'
-    }
-  })
 
   const classes = useStyles()
 
@@ -34,13 +35,12 @@ const SingleCardForm = ({
         <img src={imageUrl} alt="mtg card" width="150" />
       </figure>
       <Grid container className={classes.root} spacing={2}>
-        <Grid item xs={6}>
+        <Grid item>
           <TextField
             label="Card name"
             value={cardName}
             onChange={event => updateFieldData('cardName', event.target.value)}
             fullWidth
-            gutterBottom
           />
           <TextField
             label="Card ranking"
@@ -51,7 +51,6 @@ const SingleCardForm = ({
             onChange={event =>
               updateFieldData('cardRanking', event.target.value)
             }
-            gutterBottom
           />
           <span>Number 1 to 10</span>
           <TextField
@@ -60,27 +59,8 @@ const SingleCardForm = ({
             value={reason}
             onChange={event => updateFieldData('reason', event.target.value)}
             fullWidth
-            gutterBottom
             multiline
             placeholder="Why did you rank the card that number?"
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <TextField
-            label="Image URL"
-            value={imageUrl}
-            onChange={event => updateFieldData('imageUrl', event.target.value)}
-            fullWidth
-            gutterBottom
-          />
-          <TextField
-            label="Scryfall card ID"
-            value={scryfallCardId}
-            onChange={event =>
-              updateFieldData('scryfallCardId', event.target.value)
-            }
-            fullWidth
-            gutterBottom
           />
         </Grid>
       </Grid>
