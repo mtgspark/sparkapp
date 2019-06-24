@@ -11,52 +11,55 @@ import {
   ListItemAvatar,
   Typography,
   Button
-} from '@material-ui/core/'
+} from '@material-ui/core'
+
+const useCardRowStyles = makeStyles({
+  media: {},
+  listText: {
+    display: 'flex',
+    flexDirection: 'column',
+    minWidth: '200px',
+    padding: '2rem'
+  },
+  cardImage: {
+    maxWidth: '100%',
+    height: 'auto'
+  },
+  cardRanking: {
+    fontSize: '1rem',
+    lineHeight: '1'
+  },
+  cardRankingValue: {
+    fontSize: '3rem'
+  },
+  reason: {
+    margin: '2rem 0',
+    fontStyle: 'italic'
+  },
+  divider: {
+    marginTop: 'auto'
+  }
+})
 
 const CardRow = ({ ranking, imageUrl, cardName, reason }) => {
-  const useStyles = makeStyles({
-    media: {},
-    listText: {
-      display: 'flex',
-      flexDirection: 'column',
-      minWidth: '200px',
-      padding: '2rem'
-    },
-    cardImage: {
-      maxWidth: '100%',
-      height: 'auto'
-    },
-    cardRanking: {
-      fontSize: '1rem',
-      lineHeight: '1'
-    },
-    cardRankingValue: {
-      fontSize: '3rem'
-      // fontWeight: '600'
-    },
-    reason: {
-      margin: '2rem 0',
-      fontStyle: 'italic'
-    },
-    divider: {
-      marginTop: 'auto  '
-    }
-  })
-
-  const classes = useStyles()
+  const classes = useCardRowStyles()
 
   return (
     <ListItem alignItems="flex-start">
       <ListItemAvatar>
-        <img className={classes.media} src={imageUrl} alt={cardName} />
+        <img
+          className={classes.media}
+          src={imageUrl}
+          alt={cardName}
+          width="300"
+        />
       </ListItemAvatar>
       <ListItemText className={classes.listText}>
         <Typography gutterBottom component="h2" variant="h3">
           {cardName}
         </Typography>
         <Typography className={classes.cardRanking} gutterBottom component="p">
-          <span className={classes.cardRankingValue}>{ranking}</span>
-          <span className={classes.cardRankingTotal}>/10</span>
+          <span className={classes.cardRankingValue}>#{ranking}</span>
         </Typography>
         {reason ? (
           <Typography className={classes.reason} component="p" variant="h6">
@@ -65,18 +68,17 @@ const CardRow = ({ ranking, imageUrl, cardName, reason }) => {
         ) : (
           ''
         )}
-        {/* <Divider className={classes.divider} /> */}
       </ListItemText>
     </ListItem>
   )
 }
 
-const SingleListView = ({ listId }) => {
-  const useStyles = makeStyles({
-    media: {}
-  })
+const useSingleListViewStyles = makeStyles({
+  media: {}
+})
 
-  const classes = useStyles()
+const SingleListView = ({ listId }) => {
+  const classes = useSingleListViewStyles()
 
   const [isLoading, isErrored, result] = useDatabase('lists', listId)
 
@@ -105,7 +107,6 @@ const SingleListView = ({ listId }) => {
           </Link>
         </Grid>
       </Grid>
-      {/* list cards in list */}
       <List className={classes.root}>
         {cards.map((card, idx) => (
           <CardRow key={card.scryfallCardId} {...card} entryId={idx + 1} />
