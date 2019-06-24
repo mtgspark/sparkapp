@@ -15,17 +15,9 @@ const SingleCardForm = ({
   imageUrl,
   ranking,
   reason,
-  onChange
+  onChangeCardDetail,
+  onRemoveCard
 }) => {
-  const [fieldData, setFieldData] = useState({})
-
-  const updateFieldData = (name, value) => {
-    setFieldData({
-      ...fieldData,
-      [name]: value
-    })
-  }
-
   const classes = useStyles()
 
   return (
@@ -37,19 +29,13 @@ const SingleCardForm = ({
       <Grid container className={classes.root} spacing={2}>
         <Grid item>
           <TextField
-            label="Card name"
-            value={cardName}
-            onChange={event => updateFieldData('cardName', event.target.value)}
-            fullWidth
-          />
-          <TextField
             label="Card ranking"
             type="number"
             min={1}
             max={10}
             value={ranking}
             onChange={event =>
-              updateFieldData('cardRanking', event.target.value)
+              onChangeCardDetail('ranking', event.target.value)
             }
           />
           <span>Number 1 to 10</span>
@@ -57,15 +43,17 @@ const SingleCardForm = ({
             label="Reason for ranking"
             type="text"
             value={reason}
-            onChange={event => updateFieldData('reason', event.target.value)}
+            onChange={event => onChangeCardDetail('reason', event.target.value)}
             fullWidth
             multiline
             placeholder="Why did you rank the card that number?"
           />
+          <br />
+          <Button onClick={() => onRemoveCard({ scryfallCardId })}>
+            Delete
+          </Button>
         </Grid>
       </Grid>
-
-      <Button onClick={() => onChange(fieldData)}>Update</Button>
     </Paper>
   )
 }

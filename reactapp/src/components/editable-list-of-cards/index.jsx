@@ -14,17 +14,30 @@ const EditableListOfCards = ({ field, saveFieldValue }) =>
         <EditCardForm
           key={card.scryfallCardId}
           {...card}
-          onChange={cardDetails =>
+          onChangeCardDetail={(fieldName, fieldValue) =>
             saveFieldValue(
               field.name,
               field.value.map(cardUnderTest => {
-                if (cardUnderTest.id === cardDetails.id) {
+                if (cardUnderTest.scryfallCardId === card.scryfallCardId) {
                   return {
                     ...cardUnderTest,
-                    ...cardDetails
+                    [fieldName]: fieldValue
                   }
                 }
                 return cardUnderTest
+              })
+            )
+          }
+          onRemoveCard={cardDetails =>
+            saveFieldValue(
+              field.name,
+              field.value.filter(cardUnderTest => {
+                if (
+                  cardUnderTest.scryfallCardId === cardDetails.scryfallCardId
+                ) {
+                  return false
+                }
+                return true
               })
             )
           }
@@ -41,7 +54,7 @@ const mapStateToProps = ({ editor: { fields } }, { fieldName }) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      updateEditorFieldValue
+      saveFieldValue: updateEditorFieldValue
     },
     dispatch
   )
