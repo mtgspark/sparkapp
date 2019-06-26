@@ -45,7 +45,12 @@ const mapReferences = async doc => {
   return newDoc
 }
 
-export default (collectionName, documentId = null, searchTerm = '') => {
+export default (
+  collectionName,
+  documentId = null,
+  searchTerm = '',
+  useRefs = true
+) => {
   const [isLoading, setIsLoading] = useState(false)
   const [isErrored, setIsErrored] = useState(false)
   const [results, setResults] = useState(documentId ? null : [])
@@ -62,12 +67,14 @@ export default (collectionName, documentId = null, searchTerm = '') => {
         const doc = await collection.doc(documentId).get()
         const data = await doc.data()
 
-        const mappedDoc = await mapReferences(
-          mapDates({
-            ...data,
-            id: data.id
-          })
-        )
+        const docsWithDates = mapDates({
+          ...data,
+          id: data.id
+        })
+
+        const mappedDoc = useRefs
+          ? await mapReferences(docsWithDates)
+          : docsWithDates
 
         setIsLoading(false)
         setResults(mappedDoc)
@@ -87,7 +94,9 @@ export default (collectionName, documentId = null, searchTerm = '') => {
       const docs = query.docs
         .map(doc => ({ ...doc.data(), id: doc.id }))
         .map(mapDates)
-      const docsWithReferences = await Promise.all(docs.map(mapReferences))
+      const docsWithReferences = useRefs
+        ? await Promise.all(docs.map(mapReferences))
+        : docs
 
       setResults(docsWithReferences)
     } catch (err) {
