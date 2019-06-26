@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { TextField, Button, Paper, Grid } from '@material-ui/core'
 
@@ -33,7 +33,7 @@ const SingleCardForm = ({
             type="number"
             min={1}
             max={10}
-            value={ranking}
+            value={ranking || ''}
             onChange={event =>
               onChangeCardDetail('ranking', event.target.value)
             }
@@ -42,7 +42,7 @@ const SingleCardForm = ({
           <TextField
             label="Reason for ranking"
             type="text"
-            value={reason}
+            value={reason || ''}
             onChange={event => onChangeCardDetail('reason', event.target.value)}
             fullWidth
             multiline

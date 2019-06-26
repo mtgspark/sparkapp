@@ -67,7 +67,7 @@ const DatabaseBackup = () => {
       <h2>Database Backup</h2>
       <TextField
         label="Collection name (eg. lists)"
-        value={textFieldValue}
+        value={textFieldValue || ''}
         onChange={event => setTextFieldValue(event.target.value)}
       />
       <br />
@@ -108,7 +108,7 @@ const DatabaseRestore = () => {
       <h2>Database Restore</h2>
       <TextField
         label="Collection name (eg. lists)"
-        value={textFieldValue}
+        value={textFieldValue || ''}
         onChange={event => setTextFieldValue(event.target.value)}
       />
       <br />

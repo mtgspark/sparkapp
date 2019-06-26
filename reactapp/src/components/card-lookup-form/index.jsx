@@ -26,9 +26,12 @@ const CardLookupForm = () => {
       {responseJson.id ? (
         <>
           <hr />
-          <TextField label="Card name" value={responseJson.name} />
-          <TextField label="Scryfall ID" value={responseJson.id} />
-          <TextField label="Image URL" value={responseJson.image_uris.normal} />
+          <TextField label="Card name" value={responseJson.name || ''} />
+          <TextField label="Scryfall ID" value={responseJson.id || ''} />
+          <TextField
+            label="Image URL"
+            value={responseJson.image_uris.normal || ''}
+          />
         </>
       ) : null}
     </div>

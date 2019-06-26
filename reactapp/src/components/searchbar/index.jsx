@@ -32,7 +32,7 @@ const SearchBar = ({ searchTerm, changeSearchTerm }) => {
         autoFocus={true}
         autoComplete="false"
         onChange={event => changeSearchTerm(event.target.value)}
-        defaultValue={searchTerm}
+        defaultValue={searchTerm || ''}
       />
     </Paper>
   )

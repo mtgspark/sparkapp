@@ -25,7 +25,7 @@ const AddCardForm = ({ field, saveFieldValue }) => {
     getNewCardDetailsInitialState(field.name)
   )
   const [searchTerm, setSearchTerm] = useState('')
-  const [isFetching, isErrored, responseJson] = useScryfall(null, searchTerm)
+  const responseJson = useScryfall(null, searchTerm)[2]
 
   const updateFieldData = (name, value) => {
     if (typeof name !== 'string') {
@@ -71,7 +71,11 @@ const AddCardForm = ({ field, saveFieldValue }) => {
   return (
     <Paper className={classes.paper}>
       <strong>Add Card</strong>
-      <img src={newCardDetails.imageUrl} width="100" />
+      <img
+        src={newCardDetails.imageUrl}
+        width="100"
+        alt="Add card form search result"
+      />
       <TextField
         label="Card name search"
         onChange={event => setSearchTerm(event.target.value)}

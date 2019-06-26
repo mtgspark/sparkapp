@@ -1,31 +1,102 @@
-import React, { useEffect } from 'react'
+import React from 'react'
+import { amber, green } from '@material-ui/core/colors'
+import { makeStyles } from '@material-ui/core/styles'
+import Snackbar from '@material-ui/core/Snackbar'
 import LoadingIcon from '../../components/loading'
 import ListEditor from '../list-editor'
 import useDatabase from '../../hooks/useDatabase'
 import useDatabaseSave from '../../hooks/useDatabaseSave'
 
-const EditListForm = ({ listId }) => {
-  const [isLoading, isErrored, result] = useDatabase('lists', listId)
-  const [isSaving, isSuccess, save] = useDatabaseSave('lists', listId)
+const useStyles = makeStyles(theme => ({
+  success: {
+    backgroundColor: green[600]
+  },
+  error: {
+    backgroundColor: theme.palette.error.dark
+  },
+  info: {
+    backgroundColor: theme.palette.primary.main
+  },
+  warning: {
+    backgroundColor: amber[700]
+  }
+}))
 
-  if (isLoading) {
-    return <LoadingIcon />
+const EditListFormStatus = ({
+  isFetching,
+  didFetchFail,
+  isSaving,
+  didSavingFail,
+  didSavingSucceed
+}) => {
+  const classes = useStyles()
+
+  let isVisible = false
+  let message
+  let variant
+
+  const showSnackbarIfNeeded = () => {
+    isVisible = true
   }
 
-  if (isErrored || result === null) {
-    return 'Error!'
+  if (isFetching) {
+    message = 'Fetching list...'
+    variant = 'info'
+    showSnackbarIfNeeded()
   }
 
   if (isSaving) {
-    return 'Saving...'
+    message = 'Saving list...'
+    variant = 'info'
+    showSnackbarIfNeeded()
   }
 
-  if (isSuccess) {
-    return 'Saved successfully!'
+  if (didFetchFail) {
+    message = 'Failed to retrieve list data. Please refresh the page'
+    variant = 'error'
+    showSnackbarIfNeeded()
+  }
+
+  if (didSavingFail) {
+    message = 'Failed to edit the list. Please try again'
+    variant = 'error'
+    showSnackbarIfNeeded()
+  }
+
+  if (didSavingSucceed) {
+    message = 'List edited successfully!'
+    variant = 'success'
+    showSnackbarIfNeeded()
+  }
+
+  if (!isVisible) {
+    return null
   }
 
   return (
-    <ListEditor listId={listId} fieldsFromServer={result} saveList={save} />
+    <Snackbar open={isVisible} message={message} className={classes[variant]} />
+  )
+}
+
+const EditListForm = ({ listId }) => {
+  const [isFetching, didFetchFail, result] = useDatabase('lists', listId)
+  const [isSaving, isSuccessOrFail, save] = useDatabaseSave('lists', listId)
+
+  return (
+    <>
+      <EditListFormStatus
+        isFetching={isFetching}
+        didFetchFail={didFetchFail === true}
+        isSaving={isSaving}
+        didSavingSucceed={isSuccessOrFail === true}
+        didSavingFail={isSuccessOrFail === false}
+      />
+      {isFetching ? (
+        <LoadingIcon />
+      ) : (
+        <ListEditor listId={listId} fieldsFromServer={result} saveList={save} />
+      )}
+    </>
   )
 }
 

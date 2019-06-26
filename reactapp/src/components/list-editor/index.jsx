@@ -103,8 +103,6 @@ const ListEditor = ({
     event.preventDefault()
   }
 
-  console.log('ListEditor.fields', fields)
-
   return (
     <form>
       {Object.entries(fields).map(([fieldName, fieldDetails]) => {
@@ -120,7 +118,7 @@ const ListEditor = ({
                   }
                   multiline={fieldDetails.type === fieldTypes.multiline}
                   fullWidth
-                  value={fieldDetails.value}
+                  value={fieldDetails.value || ''}
                   margin="normal"
                 />
                 <span>{fieldDetails.helpText}</span>
@@ -133,7 +131,7 @@ const ListEditor = ({
                 <ArrayInput
                   name={fieldName}
                   meta={fieldDetails}
-                  value={fieldDetails.value}
+                  value={fieldDetails.value || ''}
                   onChange={value => saveFieldValue(fieldName, value)}
                 />
                 <hr />

@@ -32,20 +32,14 @@ const useScryfall = (scryfallCardId = null, cardNameSearchTerm = '') => {
     }
 
     if (cardNameSearchTerm in cardCacheBySearchTerm) {
-      console.log(`Card name ${cardNameSearchTerm} is in cache`)
       setResponseJson(cardCacheBySearchTerm[cardNameSearchTerm])
       return
     }
 
     if (scryfallCardId in cardCacheById) {
-      console.log(`Card ID ${scryfallCardId} is in cache`)
       setResponseJson(cardCacheById[scryfallCardId])
       return
     }
-
-    console.log(
-      `Card ID ${scryfallCardId} or name ${cardNameSearchTerm} not in cache - fetching`
-    )
 
     const doFetch = () => {
       const onDone = json => {
@@ -55,8 +49,6 @@ const useScryfall = (scryfallCardId = null, cardNameSearchTerm = '') => {
         if (cardNameSearchTerm) {
           cardCacheBySearchTerm[cardNameSearchTerm] = bestSearchResult
         }
-
-        console.log('useScryfall.fetch.done', bestSearchResult.name)
 
         setResponseJson(bestSearchResult)
         setIsFetching(false)
