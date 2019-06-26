@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { updateEditorFieldValue } from '../../modules/editor'
@@ -8,6 +8,40 @@ import Button from '@material-ui/core/Button'
 import InputLabel from '@material-ui/core/InputLabel'
 import { fieldTypes } from '../../resources/lists'
 import EditableListOfCards from '../editable-list-of-cards'
+import { editableFields } from '../../resources/lists'
+import { populateEditor } from '../../modules/editor'
+
+const mergeInRawFields = (fields = null) =>
+  Object.entries(editableFields)
+    .map(([fieldName, fieldDetails]) => [
+      fieldName,
+      {
+        ...fieldDetails,
+        value: fields
+          ? fields[fieldName]
+          : fieldDetails.type === fieldTypes.array
+          ? []
+          : null
+      }
+    ])
+    .reduce(
+      (newObj, [fieldName, fieldDetails]) => ({
+        ...newObj,
+        [fieldName]: fieldDetails
+      }),
+      {}
+    )
+
+const convertFieldsIntoFirebaseDoc = fields =>
+  Object.entries(fields)
+    .map(([fieldName, fieldDetails]) => [fieldName, fieldDetails.value])
+    .reduce(
+      (newObj, [fieldName, fieldValue]) => ({
+        ...newObj,
+        [fieldName]: fieldValue
+      }),
+      {}
+    )
 
 const ArrayInput = ({ name, meta, value, onChange }) => {
   if (meta.arrayOf instanceof Array) {
@@ -18,11 +52,21 @@ const ArrayInput = ({ name, meta, value, onChange }) => {
   return 'Unknown array input'
 }
 
-const ListEditor = ({ listId, fields, saveFieldValue, saveList }) => {
+const ListEditor = ({
+  fields,
+  listId,
+  fieldsFromServer = null,
+  saveFieldValue,
+  populateEditor,
+  saveList
+}) => {
+  useEffect(() => {
+    populateEditor(mergeInRawFields(fieldsFromServer))
+  }, [fieldsFromServer])
+
   const handleSubmit = event => {
+    saveList(convertFieldsIntoFirebaseDoc(fields))
     event.preventDefault()
-    saveList(fields)
-    console.log('ListEditor.handleSubmit', fields)
   }
 
   console.log('ListEditor.fields', fields)
@@ -100,7 +144,8 @@ const mapStateToProps = ({ editor: { fields } }) => ({ fields })
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      saveFieldValue: updateEditorFieldValue
+      saveFieldValue: updateEditorFieldValue,
+      populateEditor
     },
     dispatch
   )

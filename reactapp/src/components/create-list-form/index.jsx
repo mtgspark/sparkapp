@@ -13,7 +13,7 @@ const CreateListForm = () => {
     return 'List created successfully!'
   }
 
-  return <ListEditor saveList={newFields => save(newFields)} />
+  return <ListEditor saveList={save} />
 }
 
 export default CreateListForm
