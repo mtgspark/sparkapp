@@ -37,10 +37,8 @@ const ListsResultItem = ({
           ? labels.map(label => <Chip key={label} label={label} />)
           : '(none)'}
       </TableCell>
-      <TableCell>{modifiedBy || createdBy}</TableCell>
-      <TableCell align="right">
-        {Moment(modifiedAt || createdAt).fromNow()}
-      </TableCell>
+      <TableCell>{createdBy ? createdBy.username : '(unknown)'}</TableCell>
+      <TableCell align="right">{Moment(createdAt).fromNow()}</TableCell>
     </TableRow>
   )
 }

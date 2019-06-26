@@ -15,7 +15,7 @@ const ListResults = ({ lists }) => (
           <TableCell>Title</TableCell>
           <TableCell>Labels</TableCell>
           <TableCell>Author</TableCell>
-          <TableCell>Last edit</TableCell>
+          <TableCell>Created At</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>

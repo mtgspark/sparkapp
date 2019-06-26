@@ -78,7 +78,8 @@ export const allFields = {
   modifiedAt: {
     name: 'modifiedAt',
     type: fieldTypes.date,
-    isEditable: false
+    isEditable: false,
+    defaultValue: null
   },
   createdBy: {
     name: 'createdBy',
@@ -88,10 +89,15 @@ export const allFields = {
   modifiedBy: {
     name: 'modifiedBy',
     type: fieldTypes.string,
-    isEditable: false
+    isEditable: false,
+    defaultValue: null
   }
 }
 
 export const editableFields = Object.entries(allFields)
   .filter(([name, { isEditable }]) => isEditable)
+  .reduce((newFields, [name, value]) => ({ ...newFields, [name]: value }), {})
+
+export const nonEditableFields = Object.entries(allFields)
+  .filter(([name, { isEditable }]) => !isEditable)
   .reduce((newFields, [name, value]) => ({ ...newFields, [name]: value }), {})

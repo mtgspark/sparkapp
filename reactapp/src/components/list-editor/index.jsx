@@ -10,6 +10,8 @@ import { fieldTypes } from '../../resources/lists'
 import EditableListOfCards from '../editable-list-of-cards'
 import { editableFields } from '../../resources/lists'
 import { populateEditor } from '../../modules/editor'
+import withAuthProfile from '../../hocs/withAuthProfile'
+import useDatabaseDocument from '../../hooks/useDatabaseDocument'
 
 const mergeInRawFields = (fields = null) =>
   Object.entries(editableFields)
@@ -42,6 +44,27 @@ const convertFieldsIntoFirebaseDoc = fields =>
       }),
       {}
     )
+
+const appendNonEditableFields = (fields, listId, userDocument) => ({
+  ...fields,
+  ...(!listId
+    ? {
+        createdAt: {
+          value: new Date()
+        },
+        createdBy: {
+          value: userDocument
+        }
+      }
+    : {
+        modifiedBy: {
+          value: userDocument
+        }
+      }),
+  modifiedAt: {
+    value: new Date()
+  }
+})
 
 const addOrRemoveOptionFromFieldValue = (currentValue, clickedValue) => {
   if (currentValue.includes(clickedValue)) {
@@ -92,14 +115,21 @@ const ListEditor = ({
   fieldsFromServer = null,
   saveFieldValue,
   populateEditor,
-  saveList
+  saveList,
+  auth
 }) => {
   useEffect(() => {
     populateEditor(mergeInRawFields(fieldsFromServer))
   }, [fieldsFromServer])
 
+  const [userDocument] = useDatabaseDocument('users', auth.uid)
+
   const handleSubmit = event => {
-    saveList(convertFieldsIntoFirebaseDoc(fields))
+    saveList(
+      convertFieldsIntoFirebaseDoc(
+        appendNonEditableFields(fields, listId, userDocument)
+      )
+    )
     event.preventDefault()
   }
 
@@ -162,4 +192,4 @@ const mapDispatchToProps = dispatch =>
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ListEditor)
+)(withAuthProfile(ListEditor))

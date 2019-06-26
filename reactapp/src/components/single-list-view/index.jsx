@@ -92,7 +92,16 @@ const SingleListView = ({ listId }) => {
     return 'Error!'
   }
 
-  const { title, description, cards, createdAt, createdBy, labels } = result
+  const {
+    title,
+    description,
+    cards,
+    createdAt,
+    createdBy,
+    labels,
+    modifiedAt,
+    modifiedBy
+  } = result
 
   return (
     <>
@@ -102,8 +111,16 @@ const SingleListView = ({ listId }) => {
             {title}
           </Typography>
           <Typography component="p" style={{ margin: '1rem 0' }}>
-            Created on {moment(createdAt).toLocaleString()} by {createdBy}
+            Created on{' '}
+            {createdAt ? moment(createdAt).toLocaleString() : '(unknown)'} by{' '}
+            {createdBy ? createdBy.username : '(unknown)'}
           </Typography>
+          {modifiedBy && (
+            <Typography component="p" style={{ margin: '1rem 0' }}>
+              Last modified on {moment(modifiedAt).toLocaleString()} by{' '}
+              {modifiedBy ? modifiedBy.username : '(unknown)'}
+            </Typography>
+          )}
           <Typography gutterBottom={true} component="p">
             {description}
           </Typography>
