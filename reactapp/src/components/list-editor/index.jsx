@@ -19,11 +19,7 @@ const mergeInRawFields = (fields = null) =>
       fieldName,
       {
         ...fieldDetails,
-        value: fields
-          ? fields[fieldName]
-          : fieldDetails.type === fieldTypes.array
-          ? []
-          : null
+        value: fields ? fields[fieldName] : fieldDetails.defaultValue
       }
     ])
     .reduce(
@@ -75,6 +71,11 @@ const addOrRemoveOptionFromFieldValue = (currentValue, clickedValue) => {
   return currentValue.concat([clickedValue])
 }
 
+const convertTextareaValueToOptions = textareaVal => textareaVal.split('\n')
+
+const convertArrayOfValuesIntoTextareaVal = (arrayOfVals = []) =>
+  arrayOfVals.join('\n')
+
 const ArrayInput = ({ name, meta, value, onChange }) => {
   if (meta.arrayOf instanceof Array) {
     if (meta.arrayOf[0] === fieldTypes.object) {
@@ -104,6 +105,15 @@ const ArrayInput = ({ name, meta, value, onChange }) => {
             : null}
           <hr />
         </div>
+      )
+    } else {
+      return (
+        <textarea
+          value={convertArrayOfValuesIntoTextareaVal(meta.value)}
+          onChange={event =>
+            onChange(convertTextareaValueToOptions(event.target.value))
+          }
+        />
       )
     }
   }
@@ -158,6 +168,7 @@ const ListEditor = ({
             return (
               <React.Fragment key={fieldName}>
                 <InputLabel>{fieldDetails.label}</InputLabel>
+                <InputLabel>{fieldDetails.helpText}</InputLabel>
                 <ArrayInput
                   name={fieldName}
                   meta={fieldDetails}

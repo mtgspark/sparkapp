@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
@@ -12,25 +13,29 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const Home = () => {
+const Home = ({ searchTerm }) => {
   const classes = useStyles()
 
   return (
     <>
       <Searchbar />
       <SearchResults />
-      <Paper className={classes.root}>
-        <Typography variant="h5" component="h3">
-          Welcome to MTG Card Rank
-        </Typography>
-        <Typography component="p">
-          Start by searching for a particular list. eg. "standard", "edh", "The
-          best cards in magic"
-        </Typography>
-      </Paper>
-      <FeaturedList />
+      {!searchTerm && (
+        <Paper className={classes.root}>
+          <Typography variant="h5" component="h3">
+            Welcome to MTG Card Rank
+          </Typography>
+          <Typography component="p">
+            Start by searching for a particular list. eg. "standard", "edh",
+            "The best cards in magic"
+          </Typography>
+        </Paper>
+      )}
+      {!searchTerm && <FeaturedList />}
     </>
   )
 }
 
-export default Home
+const mapStateToProps = ({ app: { searchTerm } }) => ({ searchTerm })
+
+export default connect(mapStateToProps)(Home)

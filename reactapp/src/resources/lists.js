@@ -17,14 +17,16 @@ export const allFields = {
     type: fieldTypes.string,
     isEditable: true,
     label: 'Title',
-    isRequired: true
+    isRequired: true,
+    defaultValue: ''
   },
   description: {
     name: 'description',
     type: fieldTypes.multiline,
     isEditable: true,
     label: 'Description',
-    isRequired: true
+    isRequired: true,
+    defaultValue: ''
   },
   cards: {
     name: 'cards',
@@ -42,15 +44,17 @@ export const allFields = {
     isEditable: true,
     label: 'Cards',
     isRequired: true,
-    initialValue: []
+    defaultValue: []
   },
   keywords: {
     name: 'keywords',
+    label: 'Keywords',
     type: fieldTypes.array,
     arrayOf: fieldTypes.string,
-    initialValue: [],
+    defaultValue: [],
     helpText:
-      'Enter in a keyword that is used for searching. eg. "time" and "warp" for Time Warp'
+      'Enter in keywords that are used for searching. eg. "time" and "warp" for Time Warp',
+    isEditable: true
   },
   labels: {
     name: 'labels',
@@ -67,7 +71,7 @@ export const allFields = {
     ],
     isEditable: true,
     label: 'Labels',
-    initialValue: [],
+    defaultValue: [],
     helpText: 'Click on a label to add it to your list'
   },
   createdAt: {
