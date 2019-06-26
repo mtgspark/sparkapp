@@ -10,8 +10,10 @@ import {
   ListItemText,
   ListItemAvatar,
   Typography,
-  Button
+  Button,
+  Chip
 } from '@material-ui/core'
+import moment from 'moment'
 
 const useCardRowStyles = makeStyles({
   media: {},
@@ -90,16 +92,26 @@ const SingleListView = ({ listId }) => {
     return 'Error!'
   }
 
-  const { title, description, cards } = result
+  const { title, description, cards, createdAt, createdBy, labels } = result
 
   return (
     <>
       <Grid container className={classes.root} spacing={2}>
         <Grid item xs={8} align="left">
-          <Typography component="h1">{title}</Typography>
+          <Typography variant="h1" style={{ fontSize: '3rem' }}>
+            {title}
+          </Typography>
+          <Typography component="p" style={{ margin: '1rem 0' }}>
+            Created on {moment(createdAt).toLocaleString()} by {createdBy}
+          </Typography>
           <Typography gutterBottom={true} component="p">
             {description}
           </Typography>
+          <div>
+            {labels
+              ? labels.map(label => <Chip key={label} label={label} />)
+              : '(no labels)'}
+          </div>
         </Grid>
         <Grid item xs={4} align="right">
           <Link to={`/lists/${listId}/edit`}>

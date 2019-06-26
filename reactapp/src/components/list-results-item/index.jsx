@@ -5,13 +5,17 @@ import TableCell from '@material-ui/core/TableCell'
 import TableRow from '@material-ui/core/TableRow'
 import Moment from 'moment'
 import { makeStyles } from '@material-ui/core/styles'
+import { Chip } from '@material-ui/core'
 
 const mapDispatchToProps = { push }
 
 const ListsResultItem = ({
   id,
   title,
+  labels,
   description,
+  createdAt,
+  createdBy,
   modifiedAt,
   modifiedBy,
   push
@@ -28,9 +32,15 @@ const ListsResultItem = ({
       <TableCell>
         <strong>{title}</strong>
       </TableCell>
-      <TableCell>{description}</TableCell>
-      <TableCell>{modifiedBy}</TableCell>
-      <TableCell align="right">{Moment(modifiedAt).fromNow()}</TableCell>
+      <TableCell>
+        {labels !== null && labels.length
+          ? labels.map(label => <Chip key={label} label={label} />)
+          : '(none)'}
+      </TableCell>
+      <TableCell>{modifiedBy || createdBy}</TableCell>
+      <TableCell align="right">
+        {Moment(modifiedAt || createdAt).fromNow()}
+      </TableCell>
     </TableRow>
   )
 }

@@ -12,10 +12,10 @@ const ListResults = ({ lists }) => (
     <Table>
       <TableHead>
         <TableRow>
-          <TableCell>List</TableCell>
-          <TableCell>Description</TableCell>
-          <TableCell align="right">Author</TableCell>
-          <TableCell align="right">Last edit</TableCell>
+          <TableCell>Title</TableCell>
+          <TableCell>Labels</TableCell>
+          <TableCell>Author</TableCell>
+          <TableCell>Last edit</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
