@@ -54,7 +54,8 @@ export const allFields = {
   },
   labels: {
     name: 'labels',
-    type: fieldTypes.checkboxes,
+    type: fieldTypes.array,
+    arrayOf: fieldTypes.string,
     options: [
       'edh', // todo: store in firestore
       'modern',

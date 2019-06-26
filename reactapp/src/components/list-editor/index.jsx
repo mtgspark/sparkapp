@@ -43,13 +43,47 @@ const convertFieldsIntoFirebaseDoc = fields =>
       {}
     )
 
+const addOrRemoveOptionFromFieldValue = (currentValue, clickedValue) => {
+  if (currentValue.includes(clickedValue)) {
+    return currentValue.filter(
+      valueUnderTest => valueUnderTest !== clickedValue
+    )
+  }
+  return currentValue.concat([clickedValue])
+}
+
 const ArrayInput = ({ name, meta, value, onChange }) => {
   if (meta.arrayOf instanceof Array) {
     if (meta.arrayOf[0] === fieldTypes.object) {
       return <EditableListOfCards fieldName={name} />
     }
+  } else if (meta.arrayOf === fieldTypes.string) {
+    if (meta.options) {
+      return (
+        <div>
+          {meta.options
+            ? meta.options.map(optionValue => (
+                <Chip
+                  key={optionValue}
+                  label={optionValue}
+                  color={
+                    meta.value && meta.value.includes(optionValue)
+                      ? 'primary'
+                      : 'default'
+                  }
+                  onClick={() =>
+                    onChange(
+                      addOrRemoveOptionFromFieldValue(meta.value, optionValue)
+                    )
+                  }
+                />
+              ))
+            : null}
+          <hr />
+        </div>
+      )
+    }
   }
-  return 'Unknown array input'
 }
 
 const ListEditor = ({
@@ -90,29 +124,6 @@ const ListEditor = ({
                   margin="normal"
                 />
                 <span>{fieldDetails.helpText}</span>
-              </React.Fragment>
-            )
-          case fieldTypes.checkboxes:
-            return (
-              <React.Fragment key={fieldName}>
-                <InputLabel>{fieldDetails.label}</InputLabel>
-                <span>{fieldDetails.helpText}</span>
-                {fieldDetails.options
-                  ? fieldDetails.options.map(optionValue => (
-                      <Chip
-                        key={optionValue}
-                        label={optionValue}
-                        color={
-                          fieldDetails.value &&
-                          fieldDetails.value.includes(optionValue)
-                            ? 'primary'
-                            : 'default'
-                        }
-                        onClick={() => saveFieldValue(fieldName, optionValue)}
-                      />
-                    ))
-                  : null}
-                <hr />
               </React.Fragment>
             )
           case fieldTypes.array:
