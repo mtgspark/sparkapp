@@ -13,7 +13,7 @@ import {
   Button,
   Chip
 } from '@material-ui/core'
-import moment from 'moment'
+import FormattedDate from '../formatted-date'
 
 const useCardRowStyles = makeStyles({
   media: {},
@@ -111,13 +111,13 @@ const SingleListView = ({ listId }) => {
             {title}
           </Typography>
           <Typography component="p" style={{ margin: '1rem 0' }}>
-            Created on{' '}
-            {createdAt ? moment(createdAt).toLocaleString() : '(unknown)'} by{' '}
+            Created{' '}
+            {createdAt ? <FormattedDate date={createdAt} /> : '(unknown)'} by{' '}
             {createdBy ? createdBy.username : '(unknown)'}
           </Typography>
           {modifiedBy && (
             <Typography component="p" style={{ margin: '1rem 0' }}>
-              Last modified on {moment(modifiedAt).toLocaleString()} by{' '}
+              Last modified <FormattedDate date={modifiedAt} /> by{' '}
               {modifiedBy ? modifiedBy.username : '(unknown)'}
             </Typography>
           )}
@@ -137,9 +137,14 @@ const SingleListView = ({ listId }) => {
         </Grid>
       </Grid>
       <List className={classes.root}>
-        {cards.map((card, idx) => (
-          <CardRow key={card.scryfallCardId} {...card} entryId={idx + 1} />
-        ))}
+        {cards
+          .sort(
+            ({ ranking: rankingA }, { ranking: rankingB }) =>
+              rankingA - rankingB
+          )
+          .map((card, idx) => (
+            <CardRow key={card.scryfallCardId} {...card} entryId={idx + 1} />
+          ))}
       </List>
     </>
   )
