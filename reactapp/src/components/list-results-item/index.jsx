@@ -3,24 +3,13 @@ import { push } from 'connected-react-router'
 import { connect } from 'react-redux'
 import TableCell from '@material-ui/core/TableCell'
 import TableRow from '@material-ui/core/TableRow'
-import Moment from 'moment'
 import { makeStyles } from '@material-ui/core/styles'
 import { Chip } from '@material-ui/core'
 import FormattedDate from '../formatted-date'
 
 const mapDispatchToProps = { push }
 
-const ListsResultItem = ({
-  id,
-  title,
-  labels,
-  description,
-  createdAt,
-  createdBy,
-  modifiedAt,
-  modifiedBy,
-  push
-}) => {
+const ListsResultItem = ({ id, title, labels, createdAt, createdBy, push }) => {
   const useStyles = makeStyles({
     tableRow: {
       cursor: 'pointer'

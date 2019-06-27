@@ -6,7 +6,11 @@ import useDatabase from '../../hooks/useDatabase'
 const SearchResults = ({ searchTerm }) => {
   if (!searchTerm) return null
 
-  const [isLoading, isErrored, results] = useDatabase('lists', null, searchTerm)
+  const [isLoading, isErrored, results] = useDatabase('lists', null, {
+    field: 'keywords',
+    operator: 'array-contains',
+    value: searchTerm
+  })
 
   if (isLoading || isErrored) return null
 

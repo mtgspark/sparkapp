@@ -48,7 +48,7 @@ const mapReferences = async doc => {
 export default (
   collectionName,
   documentId = null,
-  searchTerm = '',
+  searchObj = null,
   useRefs = true
 ) => {
   const [isLoading, setIsLoading] = useState(false)
@@ -81,9 +81,9 @@ export default (
         return
       }
 
-      if (searchTerm) {
+      if (searchObj) {
         query = await collection
-          .where('keywords', 'array-contains', searchTerm)
+          .where(searchObj.field, searchObj.operator, searchObj.value)
           .get()
       } else {
         query = await collection.get()
@@ -108,7 +108,7 @@ export default (
 
   useEffect(() => {
     getData()
-  }, [searchTerm])
+  }, [])
 
   return [isLoading, isErrored, results]
 }

@@ -14,6 +14,7 @@ import {
   Chip
 } from '@material-ui/core'
 import FormattedDate from '../formatted-date'
+import CommentList from '../comment-list'
 
 const useCardRowStyles = makeStyles({
   media: {},
@@ -146,6 +147,7 @@ const SingleListView = ({ listId }) => {
             <CardRow key={card.scryfallCardId} {...card} entryId={idx + 1} />
           ))}
       </List>
+      <CommentList listId={listId} />
     </>
   )
 }
