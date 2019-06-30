@@ -67,6 +67,12 @@ export default (
         const doc = await collection.doc(documentId).get()
         const data = await doc.data()
 
+        if (!data) {
+          setIsLoading(false)
+          setResults(null)
+          return
+        }
+
         const docsWithDates = mapDates({
           ...data,
           id: documentId

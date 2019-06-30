@@ -1,6 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import useDatabase from '../../hooks/useDatabase'
+import CreateProfileForm from '../create-profile-form'
+import UsernameEditor from '../username-editor'
 
 const mapStateToProps = ({ firebase: { auth } }) => ({ auth })
 
@@ -18,11 +20,13 @@ const AccountSummary = ({ auth }) => {
     return 'Loading your details...'
   }
 
-  if (didLoadingRecordFail || !record) {
-    return 'Failed to load your details. Do you exist? :)'
+  if (didLoadingRecordFail) {
+    return 'Failed to load your details. Please try again'
   }
 
-  console.log('Record', record)
+  if (!record) {
+    return <CreateProfileForm userId={auth.uid} />
+  }
 
   return (
     <>
@@ -33,6 +37,8 @@ const AccountSummary = ({ auth }) => {
       Are you an editor: {record.isEditor ? 'Yes' : 'No'}
       <br />
       Are you an admin: {record.isAdmin ? 'Yes' : 'No'}
+      <hr />
+      <UsernameEditor userId={record.id} record={record} />
     </>
   )
 }

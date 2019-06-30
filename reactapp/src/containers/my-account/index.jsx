@@ -8,8 +8,6 @@ const MyAccount = () => (
     <h1>Your account</h1>
     <hr />
     <AccountSummary />
-    <hr />
-    <UsernameEditor />
   </>
 )
 
