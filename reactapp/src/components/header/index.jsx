@@ -48,6 +48,11 @@ const navItems = [
     label: 'Logout',
     url: routes.logout,
     requiresAuth: true
+  },
+  {
+    label: 'Admin',
+    url: routes.admin,
+    requiresAuth: true
   }
 ]
 
