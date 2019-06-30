@@ -1,6 +1,7 @@
 import React from 'react'
 import CreateListForm from '../../components/create-list-form'
 import withRedirectOnNotAuth from '../../hocs/withRedirectOnNotAuth'
+import withEditorsOnly from '../../hocs/withEditorsOnly'
 
 const CreateList = () => (
   <>
@@ -9,4 +10,4 @@ const CreateList = () => (
   </>
 )
 
-export default withRedirectOnNotAuth(CreateList)
+export default withRedirectOnNotAuth(withEditorsOnly(CreateList))

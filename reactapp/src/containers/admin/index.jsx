@@ -3,29 +3,9 @@ import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import { connect } from 'react-redux'
 import withRedirectOnNotAuth from '../../hocs/withRedirectOnNotAuth'
+import withAdminsOnly from '../../hocs/withAdminsOnly'
 import useDatabaseBackup from '../../hooks/useDatabaseBackup'
 import useDatabaseRestore from '../../hooks/useDatabaseRestore'
-import useDatabase from '../../hooks/useDatabase'
-
-const IsAdmin = ({ uid }) => {
-  const [isFetching, isErrored, result] = useDatabase('users', uid)
-
-  if (isFetching) {
-    return 'Fetching your user details...'
-  }
-
-  if (isErrored) {
-    return 'Failed to fetch your user details. Do you exist in the users collection and have permission to read it?'
-  }
-
-  if (!result) {
-    return 'DB returned no result which is odd'
-  }
-
-  const { isAdmin } = result
-
-  return isAdmin ? 'Yes' : 'No'
-}
 
 const mapStateToProps = ({ firebase: { auth } }) => ({ auth })
 
@@ -39,9 +19,6 @@ const AdminInfo = connect(mapStateToProps)(({ auth }) => {
   return (
     <ul>
       <li>User ID: {uid}</li>
-      <li>
-        isAdmin: <IsAdmin uid={uid} />
-      </li>
     </ul>
   )
 })
@@ -139,4 +116,4 @@ const Admin = () => (
   </>
 )
 
-export default connect(null)(withRedirectOnNotAuth(Admin))
+export default connect(null)(withRedirectOnNotAuth(withAdminsOnly(Admin)))
