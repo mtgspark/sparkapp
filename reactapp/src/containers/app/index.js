@@ -10,6 +10,7 @@ import PageFooter from '../../components/footer'
 import CreateList from '../create-list'
 import EditList from '../edit-list'
 import ViewList from '../view-list'
+import MyAccount from '../my-account'
 import Admin from '../admin'
 import { Container } from '@material-ui/core'
 import * as routes from '../../routes'
@@ -33,6 +34,7 @@ const App = () =>
             <Route exact path={routes.viewListWithVar} component={ViewList} />
             <Route exact path={routes.editListWithVar} component={EditList} />
             <Route exact path={routes.admin} component={Admin} />
+            <Route exact path={routes.myAccount} component={MyAccount} />
           </Switch>
         </Container>
       </main>

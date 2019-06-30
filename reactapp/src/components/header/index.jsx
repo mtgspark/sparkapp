@@ -35,6 +35,11 @@ const navItems = [
     requiresAuth: true
   },
   {
+    label: 'Your Account',
+    url: routes.myAccount,
+    requiresAuth: true
+  },
+  {
     label: 'Login',
     url: routes.login,
     requiresNotAuth: true
