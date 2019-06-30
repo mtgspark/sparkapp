@@ -69,7 +69,7 @@ export default (
 
         const docsWithDates = mapDates({
           ...data,
-          id: data.id
+          id: documentId
         })
 
         const mappedDoc = useRefs
