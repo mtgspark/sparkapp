@@ -22,12 +22,16 @@ const SingleCardForm = ({
 
   return (
     <Paper className={classes.paper}>
-      <strong>{cardName}</strong>
-      <figure className="card-wrapper text-center" align="center">
-        <img src={imageUrl} alt="mtg card" width="150" />
-      </figure>
-      <Grid container className={classes.root} spacing={2}>
-        <Grid item>
+      <Grid container className={classes.root}>
+        <Grid item xs={4}>
+          <figure className="card-wrapper text-center" align="center">
+            <img src={imageUrl} alt="mtg card" width="150" />
+          </figure>
+        </Grid>
+        <Grid item xs={8}>
+          <strong>{cardName}</strong>
+          <br />
+          <br />
           <TextField
             label="Card ranking"
             type="number"
@@ -38,7 +42,7 @@ const SingleCardForm = ({
               onChangeCardDetail('ranking', event.target.value)
             }
           />
-          <span>Number 1 to 10</span>
+          <br />
           <TextField
             label="Reason for ranking"
             type="text"

@@ -78,7 +78,7 @@ const AddCardForm = ({ field, saveFieldValue }) => {
         fullWidth
       />
       <TextField
-        label="Ranking (1 to 10)"
+        label="Ranking (1 to infinity)"
         onChange={event => updateFieldData('ranking', event.target.value)}
       />
       <TextField
