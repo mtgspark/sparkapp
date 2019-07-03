@@ -25,17 +25,15 @@ const UsernameEditor = ({ userId, record }) => {
 
   return (
     <>
-      <TextField
-        value={fieldValue ? fieldValue : record ? record.username : ''}
-        onChange={event => setFieldValue(event.target.value)}
-      />
+      Enter in your new name:{' '}
+      <TextField onChange={event => setFieldValue(event.target.value)} /> <br />
       <Button
         onClick={() =>
           save({
             username: fieldValue
           })
         }>
-        Change
+        Change Name
       </Button>
     </>
   )

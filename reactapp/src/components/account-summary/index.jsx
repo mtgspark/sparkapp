@@ -30,14 +30,7 @@ const AccountSummary = ({ auth }) => {
 
   return (
     <>
-      Your username: {record.username}
-      <br />
-      Your user ID: {record.id}
-      <br />
-      Are you an editor: {record.isEditor ? 'Yes' : 'No'}
-      <br />
-      Are you an admin: {record.isAdmin ? 'Yes' : 'No'}
-      <hr />
+      Hi, {record.username}!<h2>Change your name</h2>
       <UsernameEditor userId={record.id} record={record} />
     </>
   )
