@@ -25,7 +25,7 @@ const Home = ({ searchTerm }) => {
           <Typography variant="h5" component="h3">
             Welcome to MTG Card Rank
           </Typography>
-          <Typography component="p">
+          <Typography component="p" style={{ marginTop: '0.5rem' }}>
             Start by searching for a particular list. eg. "standard", "edh",
             "The best cards in magic"
           </Typography>

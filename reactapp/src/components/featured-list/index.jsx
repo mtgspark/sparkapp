@@ -26,8 +26,12 @@ const FeaturedList = () => {
 
   return (
     <>
-      <Typography as="h1">Featured List</Typography>
-      <SingleListView listId={listId} />
+      <Typography
+        variant="h1"
+        style={{ margin: '3rem 0', fontSize: '2rem', fontWeight: 'bold' }}>
+        Featured List
+      </Typography>
+      <SingleListView listId={listId} small />
     </>
   )
 }

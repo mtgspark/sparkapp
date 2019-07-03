@@ -7,7 +7,8 @@ import withRedirectOnAuth from '../../hocs/withRedirectOnAuth'
 
 const Login = ({ push }) => (
   <>
-    <h1>Login</h1>
+    <h1>Login or Sign Up</h1>
+    <p>Enter your details below to login or create a new account.</p>
     <LoginForm onSuccess={() => push(routes.home)} />
   </>
 )

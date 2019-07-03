@@ -20,7 +20,6 @@ const LoginForm = ({ onSuccess }) => {
 
   return (
     <>
-      Login form:
       <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={authInstance} />
     </>
   )

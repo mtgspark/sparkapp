@@ -80,7 +80,7 @@ const useSingleListViewStyles = makeStyles({
   media: {}
 })
 
-const SingleListView = ({ listId }) => {
+const SingleListView = ({ listId, small = false }) => {
   const classes = useSingleListViewStyles()
 
   const [isLoading, isErrored, result] = useDatabase('lists', listId)
@@ -108,7 +108,9 @@ const SingleListView = ({ listId }) => {
     <>
       <Grid container className={classes.root} spacing={2}>
         <Grid item xs={8} align="left">
-          <Typography variant="h1" style={{ fontSize: '3rem' }}>
+          <Typography
+            variant="h1"
+            style={{ fontSize: small ? '1.5rem' : '3rem' }}>
             {title}
           </Typography>
           <Typography component="p" style={{ margin: '1rem 0' }}>
@@ -132,9 +134,15 @@ const SingleListView = ({ listId }) => {
           </div>
         </Grid>
         <Grid item xs={4} align="right">
-          <Link to={`/lists/${listId}/edit`}>
-            <Button color="primary">Edit List</Button>
-          </Link>
+          {small ? (
+            <Link to={`/lists/${listId}`}>
+              <Button color="primary">View List</Button>
+            </Link>
+          ) : (
+            <Link to={`/lists/${listId}/edit`}>
+              <Button color="primary">Edit List</Button>
+            </Link>
+          )}
         </Grid>
       </Grid>
       <List className={classes.root}>

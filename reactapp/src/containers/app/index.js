@@ -18,7 +18,10 @@ import * as routes from '../../routes'
 const App = () =>
   window.location.href.includes('mtgcardrank') &&
   localStorage.getItem('sparky') !== 'yes' ? (
-    <div>Coming soon...</div>
+    <div>
+      Coming soon
+      <span onClick={() => localStorage.setItem('sparky', 'yes')}>...</span>
+    </div>
   ) : (
     <>
       <PageHeader />
