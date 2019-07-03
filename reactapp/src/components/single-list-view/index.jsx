@@ -15,6 +15,7 @@ import {
 } from '@material-ui/core'
 import FormattedDate from '../formatted-date'
 import CommentList from '../comment-list'
+import AddCommentForm from '../add-comment-form'
 
 const useCardRowStyles = makeStyles({
   media: {},
@@ -155,7 +156,10 @@ const SingleListView = ({ listId, small = false }) => {
             <CardRow key={card.scryfallCardId} {...card} entryId={idx + 1} />
           ))}
       </List>
+      <br />
       <CommentList listId={listId} />
+      <br />
+      <AddCommentForm listId={listId} />
     </>
   )
 }

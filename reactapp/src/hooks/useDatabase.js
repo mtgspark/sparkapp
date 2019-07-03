@@ -88,9 +88,19 @@ export default (
       }
 
       if (searchObj) {
-        query = await collection
-          .where(searchObj.field, searchObj.operator, searchObj.value)
-          .get()
+        if (searchObj.reference) {
+          const reference = firestore()
+            .collection(searchObj.reference.collection)
+            .doc(searchObj.reference.id)
+
+          query = await collection
+            .where(searchObj.field, searchObj.operator, reference)
+            .get()
+        } else {
+          query = await collection
+            .where(searchObj.field, searchObj.operator, searchObj.value)
+            .get()
+        }
       } else {
         query = await collection.get()
       }

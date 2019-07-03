@@ -5,9 +5,12 @@ import LoadingIndicator from '../loading'
 
 const CommentList = ({ listId }) => {
   const [isLoading, isErrored, comments] = useDatabase('comments', null, {
-    field: 'listId',
+    field: 'list',
     operator: '==',
-    value: listId
+    reference: {
+      collection: 'lists',
+      id: listId
+    }
   })
 
   if (isLoading) {

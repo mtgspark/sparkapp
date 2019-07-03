@@ -136,7 +136,6 @@ const PageHeader = ({ app: { isMenuOpen }, toggleMenu, closeMenu }) => {
       <Grid container>
         <Grid item xs={6} align="left">
           <Link to={routes.home} className={classes.logo}>
-            Spark
             <small className={classes.logoSmall}>MTG Card Rank</small>
           </Link>
         </Grid>
