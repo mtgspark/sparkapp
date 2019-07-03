@@ -10,39 +10,43 @@ const EditableListOfCards = ({ field, saveFieldValue }) =>
     'Waiting for field...'
   ) : (
     <>
-      {field.value.map(card => (
-        <EditCardForm
-          key={card.scryfallCardId}
-          {...card}
-          onChangeCardDetail={(fieldName, fieldValue) =>
-            saveFieldValue(
-              field.name,
-              field.value.map(cardUnderTest => {
-                if (cardUnderTest.scryfallCardId === card.scryfallCardId) {
-                  return {
-                    ...cardUnderTest,
-                    [fieldName]: fieldValue
+      {field.value
+        .sort(
+          ({ ranking: rankingA }, { ranking: rankingB }) => rankingA - rankingB
+        )
+        .map(card => (
+          <EditCardForm
+            key={card.scryfallCardId}
+            {...card}
+            onChangeCardDetail={(fieldName, fieldValue) =>
+              saveFieldValue(
+                field.name,
+                field.value.map(cardUnderTest => {
+                  if (cardUnderTest.scryfallCardId === card.scryfallCardId) {
+                    return {
+                      ...cardUnderTest,
+                      [fieldName]: fieldValue
+                    }
                   }
-                }
-                return cardUnderTest
-              })
-            )
-          }
-          onRemoveCard={cardDetails =>
-            saveFieldValue(
-              field.name,
-              field.value.filter(cardUnderTest => {
-                if (
-                  cardUnderTest.scryfallCardId === cardDetails.scryfallCardId
-                ) {
-                  return false
-                }
-                return true
-              })
-            )
-          }
-        />
-      ))}
+                  return cardUnderTest
+                })
+              )
+            }
+            onRemoveCard={cardDetails =>
+              saveFieldValue(
+                field.name,
+                field.value.filter(cardUnderTest => {
+                  if (
+                    cardUnderTest.scryfallCardId === cardDetails.scryfallCardId
+                  ) {
+                    return false
+                  }
+                  return true
+                })
+              )
+            }
+          />
+        ))}
       <AddCardForm fieldName={field.name} />
     </>
   )
