@@ -71,11 +71,7 @@ const AddCardForm = ({ field, saveFieldValue }) => {
   return (
     <Paper className={classes.paper}>
       <strong>Add Card</strong>
-      <img
-        src={newCardDetails.imageUrl}
-        width="100"
-        alt="Add card form search result"
-      />
+      <img src={newCardDetails.imageUrl} width="100" alt="" />
       <TextField
         label="Card name search"
         onChange={event => setSearchTerm(event.target.value)}
@@ -89,6 +85,7 @@ const AddCardForm = ({ field, saveFieldValue }) => {
         label="Reasons for rank"
         onChange={event => updateFieldData('reason', event.target.value)}
         fullWidth
+        multiline
       />
       <Button variant="contained" color="primary" onClick={() => onSubmit()}>
         Add Card
