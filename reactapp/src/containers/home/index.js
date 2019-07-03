@@ -26,8 +26,9 @@ const Home = ({ searchTerm }) => {
             Welcome to MTG Card Rank
           </Typography>
           <Typography component="p" style={{ marginTop: '0.5rem' }}>
-            Start by searching for a particular list. eg. "standard", "edh",
-            "The best cards in magic"
+            Start by searching for keywords above (eg. "competitive" for
+            competitive cards or "trample" for best tramplers in the game) or
+            click the menu to explore.
           </Typography>
         </Paper>
       )}
