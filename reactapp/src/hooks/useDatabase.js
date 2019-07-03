@@ -1,11 +1,7 @@
 import { useState, useEffect } from 'react'
 import { firestore } from 'firebase/app'
 
-const secondsToDate = seconds => {
-  const t = new Date(1970, 0, 1) // Epoch
-  t.setSeconds(seconds)
-  return t
-}
+const secondsToDate = seconds => new Date(seconds * 1000)
 
 const mapDates = doc => {
   const entries = Object.entries(doc)
