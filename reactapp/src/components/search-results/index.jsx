@@ -1,16 +1,17 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import ListResults from '../list-results'
-import useDatabase from '../../hooks/useDatabase'
+import useDatabaseSearch from '../../hooks/useDatabaseSearch'
 
 const SearchResults = ({ searchTerm }) => {
   if (!searchTerm) return null
 
-  const [isLoading, isErrored, results] = useDatabase('lists', null, {
-    field: 'keywords',
-    operator: 'array-contains',
-    value: searchTerm
-  })
+  const [isLoading, isErrored, results] = useDatabaseSearch(
+    'lists',
+    'keywords',
+    'array-contains',
+    searchTerm
+  )
 
   if (isLoading || isErrored) return null
 
