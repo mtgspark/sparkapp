@@ -16,6 +16,8 @@ import {
 import FormattedDate from '../formatted-date'
 import CommentList from '../comment-list'
 import AddCommentForm from '../add-comment-form'
+import VotesList from '../votes-list'
+import AddVoteForm from '../add-vote-form'
 
 const useCardRowStyles = makeStyles({
   media: {},
@@ -157,9 +159,20 @@ const SingleListView = ({ listId, small = false }) => {
           ))}
       </List>
       <br />
-      <CommentList listId={listId} />
-      <br />
-      <AddCommentForm listId={listId} />
+      <Grid container>
+        <Grid item xs={6}>
+          <h2>Comments</h2>
+          <CommentList listId={listId} />
+          <h3>Add Comment</h3>
+          <AddCommentForm listId={listId} />
+        </Grid>
+        <Grid item xs={6}>
+          <h2>Votes</h2>
+          <VotesList listId={listId} />
+          <h3>Add Vote</h3>
+          <AddVoteForm listId={listId} />
+        </Grid>
+      </Grid>
     </>
   )
 }

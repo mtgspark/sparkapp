@@ -4,8 +4,10 @@ import { TextField, Button } from '@material-ui/core'
 import useDatabaseSave from '../../hooks/useDatabaseSave'
 import useDatabaseDocument from '../../hooks/useDatabaseDocument'
 import withEditorsOnly from '../../hocs/withEditorsOnly'
+import useDatabase from '../../hooks/useDatabase'
+import LoadingIndicator from '../loading'
 
-const AddCommentForm = ({ listId, auth }) => {
+const AddVoteForm = ({ listId, auth }) => {
   if (!auth.uid) {
     return 'Not logged in - not good'
   }
@@ -13,24 +15,49 @@ const AddCommentForm = ({ listId, auth }) => {
   const userId = auth.uid
 
   const [textFieldValue, setTextFieldValue] = useState('')
-  const [isSaving, didSaveSucceedOrFail, save] = useDatabaseSave('comments')
+  const [
+    isLoadingExistingVote,
+    isErroredExistingVote,
+    existingVote
+  ] = useDatabase('votes', null, {
+    field: 'createdBy',
+    operator: '==',
+    reference: {
+      collection: 'users',
+      id: auth.uid
+    }
+  })
+  const [isSaving, didSaveSucceedOrFail, save] = useDatabaseSave('votes')
   const [userDocument] = useDatabaseDocument('users', userId)
   const [listDocument] = useDatabaseDocument('lists', listId)
 
+  if (isLoadingExistingVote) {
+    return <LoadingIndicator />
+  }
+
+  if (isErroredExistingVote) {
+    return 'Error checking if you already voted'
+  }
+
+  if (existingVote.length > 0) {
+    return 'You have already voted for this list.'
+  }
+
   if (isSaving) {
-    return 'Adding your comment...'
+    return <LoadingIndicator />
   }
 
   if (didSaveSucceedOrFail === true) {
-    return 'Comment added!'
+    return 'Vote added!'
   }
 
   if (didSaveSucceedOrFail === false) {
-    return 'Error adding your comment. Please try again.'
+    return 'Error adding your vote. Please try again.'
   }
 
   return (
     <>
+      Enter in a vote (number 1 to 10):{' '}
       <TextField
         multiline
         value={textFieldValue}
@@ -41,7 +68,7 @@ const AddCommentForm = ({ listId, auth }) => {
         onClick={() =>
           save({
             list: listDocument,
-            comment: textFieldValue,
+            vote: textFieldValue,
             createdBy: userDocument,
             createdAt: new Date()
           })
@@ -54,4 +81,4 @@ const AddCommentForm = ({ listId, auth }) => {
 
 const mapStateToProps = ({ firebase: { auth } }) => ({ auth })
 
-export default withEditorsOnly(connect(mapStateToProps)(AddCommentForm))
+export default withEditorsOnly(connect(mapStateToProps)(AddVoteForm))
