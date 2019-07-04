@@ -2,6 +2,22 @@ import { useState, useEffect } from 'react'
 import firebase from 'firebase/app'
 import 'firebase/firestore'
 
+const convertReferencesToValues = recordWithReferences =>
+  Object.entries(recordWithReferences)
+    .map(([key, value]) => {
+      if (value.id) {
+        return [key, `ref:${value.path}`]
+      }
+      return [key, value]
+    })
+    .reduce(
+      (newObj, [key, value]) => ({
+        ...newObj,
+        [key]: value
+      }),
+      {}
+    )
+
 export default collectionName => {
   const [isLoading, setIsLoading] = useState(null)
   const [isErrored, setIsErrored] = useState(null)
@@ -24,7 +40,9 @@ export default collectionName => {
         .collection(collectionName)
         .get()
 
-      const resultDocs = result.docs.map(doc => ({ ...doc.data(), id: doc.id }))
+      const resultDocs = result.docs
+        .map(doc => ({ ...doc.data(), id: doc.id }))
+        .map(convertReferencesToValues)
 
       setIsLoading(false)
       setIsErrored(false)
@@ -41,6 +59,8 @@ export default collectionName => {
   useEffect(() => {
     getData()
   }, [collectionName])
+
+  console.log('results', results)
 
   return [isLoading, isErrored, isSuccess, results]
 }

@@ -1,10 +1,52 @@
 import { useState, useEffect } from 'react'
-import firebase from 'firebase/app'
+import firebase, { firestore } from 'firebase/app'
 import 'firebase/firestore'
 
 const removeIdFromDocData = docData =>
   Object.entries(docData)
     .filter(([key]) => key !== 'id')
+    .reduce(
+      (newObj, [key, value]) => ({
+        ...newObj,
+        [key]: value
+      }),
+      {}
+    )
+
+const mapRefValuesToRefs = docWithRefValues =>
+  Object.entries(docWithRefValues)
+    .map(([key, value]) => {
+      if (typeof value === 'string' && value.includes('ref')) {
+        const brokenUp = value.split('/')
+        const collectionName = brokenUp[0].split(':')[1] // remove ref
+        const documentId = brokenUp[1]
+
+        const doc = firestore()
+          .collection(collectionName)
+          .doc(documentId)
+
+        return [key, doc]
+      }
+      return [key, value]
+    })
+    .reduce(
+      (newObj, [key, value]) => ({
+        ...newObj,
+        [key]: value
+      }),
+      {}
+    )
+
+const secondsToDate = seconds => new Date(seconds * 1000)
+
+const mapTimestampsToDates = docWithTimestamps =>
+  Object.entries(docWithTimestamps)
+    .map(([key, value]) => {
+      if (value.seconds) {
+        return [key, secondsToDate(value.seconds)]
+      }
+      return [key, value]
+    })
     .reduce(
       (newObj, [key, value]) => ({
         ...newObj,
@@ -40,7 +82,14 @@ export default (collectionName, restoreDataJson) => {
             .firestore()
             .collection(collectionName)
             .doc(docData.id)
-            .set(removeIdFromDocData(docData), { merge: true })
+            .set(
+              mapTimestampsToDates(
+                mapRefValuesToRefs(removeIdFromDocData(docData))
+              ),
+              {
+                merge: true
+              }
+            )
         })
       )
 
