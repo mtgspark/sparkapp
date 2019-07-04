@@ -23,7 +23,7 @@ const useCardRowStyles = makeStyles({
     height: 'auto'
   },
   cardRanking: {
-    fontSize: '1rem',
+    fontSize: '1.5rem',
     lineHeight: '1'
   },
   cardRankingValue: {
@@ -44,7 +44,7 @@ const CardRow = ({ ranking, imageUrl, cardName, reason }) => {
   return (
     <>
       <Grid container>
-        <Grid item xs={8} lg={2}>
+        <Grid item xs={6} lg={2}>
           <img
             className={classes.media}
             src={imageUrl}
@@ -52,27 +52,29 @@ const CardRow = ({ ranking, imageUrl, cardName, reason }) => {
             width="100%"
           />
         </Grid>
-        <Grid item xs={4} lg={10}>
+        <Grid item xs={6} lg={10} style={{ padding: '1rem' }}>
           <Typography
             className={classes.cardRanking}
             gutterBottom
             component="p">
             <span className={classes.cardRankingValue}>#{ranking}</span>
           </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <Typography gutterBottom component="h2" variant="h3">
+          <Typography
+            gutterBottom
+            component="h2"
+            variant="h3"
+            style={{ fontSize: '1rem' }}>
             {cardName}
           </Typography>
-          <>
-            {reason ? (
-              <Typography className={classes.reason} component="p" variant="h6">
-                {reason}
-              </Typography>
-            ) : (
-              ''
-            )}
-          </>
+        </Grid>
+        <Grid item xs={12}>
+          {reason ? (
+            <Typography className={classes.reason} component="p" variant="h6">
+              {reason}
+            </Typography>
+          ) : (
+            ''
+          )}
         </Grid>
       </Grid>
     </>
