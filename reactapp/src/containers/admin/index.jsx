@@ -6,6 +6,7 @@ import withRedirectOnNotAuth from '../../hocs/withRedirectOnNotAuth'
 import withAdminsOnly from '../../hocs/withAdminsOnly'
 import useDatabaseBackup from '../../hooks/useDatabaseBackup'
 import useDatabaseRestore from '../../hooks/useDatabaseRestore'
+import AdminUserManagement from '../../components/admin-user-management'
 
 const mapStateToProps = ({ firebase: { auth } }) => ({ auth })
 
@@ -41,7 +42,6 @@ const DatabaseBackup = () => {
 
   return (
     <>
-      <h2>Database Backup</h2>
       <TextField
         label="Collection name (eg. lists)"
         value={textFieldValue || ''}
@@ -82,7 +82,6 @@ const DatabaseRestore = () => {
 
   return (
     <>
-      <h2>Database Restore</h2>
       <TextField
         label="Collection name (eg. lists)"
         value={textFieldValue || ''}
@@ -110,9 +109,14 @@ const Admin = () => (
     <hr />
     <AdminInfo />
     <hr />
+    <h2>Database Backup</h2>
     <DatabaseBackup />
     <hr />
+    <h2>Database Restore</h2>
     <DatabaseRestore />
+    <hr />
+    <h2>Admin User Management</h2>
+    <AdminUserManagement />
   </>
 )
 

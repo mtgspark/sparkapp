@@ -1,6 +1,5 @@
 import React from 'react'
 import withRedirectOnNotAuth from '../../hocs/withRedirectOnNotAuth'
-import UsernameEditor from '../../components/username-editor'
 import AccountSummary from '../../components/account-summary'
 
 const MyAccount = () => (
