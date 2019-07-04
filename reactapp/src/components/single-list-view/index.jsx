@@ -114,17 +114,7 @@ const SingleListView = ({ listId, small = false }) => {
       <Typography variant="h1" style={{ fontSize: small ? '1.5rem' : '3rem' }}>
         {title}
       </Typography>
-      <Typography component="p" style={{ margin: '1rem 0' }}>
-        Created {createdAt ? <FormattedDate date={createdAt} /> : '(unknown)'}{' '}
-        by {createdBy ? createdBy.username : '(unknown)'}
-      </Typography>
-      {modifiedBy && (
-        <Typography component="p" style={{ margin: '1rem 0' }}>
-          Last modified <FormattedDate date={modifiedAt} /> by{' '}
-          {modifiedBy ? modifiedBy.username : '(unknown)'}
-        </Typography>
-      )}
-      <Typography gutterBottom={true} component="p">
+      <Typography style={{ margin: '1rem 0' }} component="p">
         {description}
       </Typography>
       <div>
@@ -132,7 +122,7 @@ const SingleListView = ({ listId, small = false }) => {
           ? labels.map(label => <Chip key={label} label={label} />)
           : '(no labels)'}
       </div>
-      <List className={classes.root}>
+      <List style={{ marginTop: '2rem' }} className={classes.root}>
         {cards
           .sort(
             ({ ranking: rankingA }, { ranking: rankingB }) =>
@@ -154,6 +144,16 @@ const SingleListView = ({ listId, small = false }) => {
           </Link>
         )}
       </div>
+      <Typography component="p" style={{ margin: '1rem 0' }}>
+        Created {createdAt ? <FormattedDate date={createdAt} /> : '(unknown)'}{' '}
+        by {createdBy ? createdBy.username : '(unknown)'}
+      </Typography>
+      {modifiedBy && (
+        <Typography component="p" style={{ margin: '1rem 0' }}>
+          Last modified <FormattedDate date={modifiedAt} /> by{' '}
+          {modifiedBy ? modifiedBy.username : '(unknown)'}
+        </Typography>
+      )}
       <Grid container>
         <Grid item xs={6}>
           <h2>Comments</h2>
