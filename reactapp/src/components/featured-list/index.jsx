@@ -21,7 +21,7 @@ const FeaturedList = () => {
   }
 
   const {
-    listId: { id: listId }
+    list: { id: listId }
   } = featuredList
 
   return (

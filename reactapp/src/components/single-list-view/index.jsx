@@ -9,6 +9,7 @@ import CommentList from '../comment-list'
 import AddCommentForm from '../add-comment-form'
 import VotesList from '../votes-list'
 import AddVoteForm from '../add-vote-form'
+import FeatureListButton from '../feature-list-button'
 
 const useCardRowStyles = makeStyles({
   media: {},
@@ -154,6 +155,7 @@ const SingleListView = ({ listId, small = false }) => {
           {modifiedBy ? modifiedBy.username : '(unknown)'}
         </Typography>
       )}
+      <FeatureListButton listId={listId} />
       <Grid container>
         <Grid item xs={6}>
           <h2>Comments</h2>
