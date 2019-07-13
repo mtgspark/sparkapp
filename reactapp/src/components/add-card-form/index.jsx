@@ -6,6 +6,7 @@ import { updateEditorFieldValue } from '../../modules/editor'
 import { TextField, Button, Paper } from '@material-ui/core'
 import { allFields } from '../../resources/lists'
 import useScryfall from '../../hooks/useScryfall'
+import CardImage from '../card-image'
 
 const getNewCardDetailsInitialState = fieldName =>
   Object.keys(allFields[fieldName].arrayOf[1]).reduce(
@@ -71,7 +72,7 @@ const AddCardForm = ({ field, saveFieldValue }) => {
   return (
     <Paper className={classes.paper}>
       <strong>Add Card</strong>
-      <img src={newCardDetails.imageUrl} width="100" alt="" />
+      <CardImage imageUrl={newCardDetails.imageUrl} />
       <TextField
         label="Card name search"
         onChange={event => setSearchTerm(event.target.value)}

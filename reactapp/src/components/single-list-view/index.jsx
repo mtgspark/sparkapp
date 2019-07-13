@@ -10,6 +10,7 @@ import AddCommentForm from '../add-comment-form'
 import VotesList from '../votes-list'
 import AddVoteForm from '../add-vote-form'
 import FeatureListButton from '../feature-list-button'
+import CardImage from '../card-image'
 
 const useCardRowStyles = makeStyles({
   media: {},
@@ -39,19 +40,14 @@ const useCardRowStyles = makeStyles({
   }
 })
 
-const CardRow = ({ ranking, imageUrl, cardName, reason }) => {
+const CardRow = ({ scryfallCardId, ranking, imageUrl, cardName, reason }) => {
   const classes = useCardRowStyles()
 
   return (
     <>
       <Grid container>
         <Grid item xs={6} lg={2}>
-          <img
-            className={classes.media}
-            src={imageUrl}
-            alt={cardName}
-            width="100%"
-          />
+          <CardImage imageUrl={imageUrl} />
         </Grid>
         <Grid item xs={6} lg={10} style={{ padding: '1rem' }}>
           <Typography

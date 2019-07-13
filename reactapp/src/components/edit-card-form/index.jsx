@@ -1,6 +1,7 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { TextField, Button, Paper, Grid } from '@material-ui/core'
+import CardImage from '../card-image'
 
 const useStyles = makeStyles({
   paper: {
@@ -25,7 +26,7 @@ const SingleCardForm = ({
       <Grid container className={classes.root}>
         <Grid item xs={4}>
           <figure className="card-wrapper text-center" align="center">
-            <img src={imageUrl} alt="mtg card" width="150" />
+            <CardImage imageUrl={imageUrl} />
           </figure>
         </Grid>
         <Grid item xs={8}>
