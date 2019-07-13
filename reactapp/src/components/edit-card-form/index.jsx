@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { TextField, Button, Paper, Grid } from '@material-ui/core'
 import CardImage from '../card-image'
+import useScryfall from '../../hooks/useScryfall'
 
 const useStyles = makeStyles({
   paper: {
@@ -19,7 +20,18 @@ const SingleCardForm = ({
   onChangeCardDetail,
   onRemoveCard
 }) => {
+  const [searchScryfallCardId, setSearchScryfallCardId] = useState('')
   const classes = useStyles()
+
+  const [isFetching, isErrored, responseJson] = useScryfall(
+    searchScryfallCardId
+  )
+
+  if (responseJson.image_uris) {
+    if (responseJson.image_uris.normal !== imageUrl) {
+      onChangeCardDetail('imageUrl', responseJson.image_uris.normal)
+    }
+  }
 
   return (
     <Paper className={classes.paper}>
@@ -44,6 +56,7 @@ const SingleCardForm = ({
             }
           />
           <br />
+          <br />
           <TextField
             label="Reason for ranking"
             type="text"
@@ -56,6 +69,9 @@ const SingleCardForm = ({
           <br />
           <Button onClick={() => onRemoveCard({ scryfallCardId })}>
             Delete
+          </Button>
+          <Button onClick={() => setSearchScryfallCardId(scryfallCardId)}>
+            Refresh Image
           </Button>
         </Grid>
       </Grid>
