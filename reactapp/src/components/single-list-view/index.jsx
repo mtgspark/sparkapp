@@ -11,6 +11,7 @@ import VotesList from '../votes-list'
 import AddVoteForm from '../add-vote-form'
 import FeatureListButton from '../feature-list-button'
 import CardImage from '../card-image'
+import * as routes from '../../routes'
 
 const useCardRowStyles = makeStyles({
   media: {},
@@ -40,7 +41,7 @@ const useCardRowStyles = makeStyles({
   }
 })
 
-const CardRow = ({ scryfallCardId, ranking, imageUrl, cardName, reason }) => {
+const CardRow = ({ ranking, imageUrl, cardName, reason }) => {
   const classes = useCardRowStyles()
 
   return (
@@ -109,7 +110,9 @@ const SingleListView = ({ listId, small = false }) => {
   return (
     <>
       <Typography variant="h1" style={{ fontSize: small ? '1.5rem' : '3rem' }}>
-        {title}
+        <Link to={routes.viewListWithVar.replace(':listId', listId)}>
+          {title}
+        </Link>
       </Typography>
       <Typography style={{ margin: '1rem 0' }} component="p">
         {description}
@@ -151,21 +154,25 @@ const SingleListView = ({ listId, small = false }) => {
           {modifiedBy ? modifiedBy.username : '(unknown)'}
         </Typography>
       )}
-      <FeatureListButton listId={listId} />
-      <Grid container>
-        <Grid item xs={6}>
-          <h2>Comments</h2>
-          <CommentList listId={listId} />
-          <h3>Add Comment</h3>
-          <AddCommentForm listId={listId} />
-        </Grid>
-        <Grid item xs={6}>
-          <h2>Votes</h2>
-          <VotesList listId={listId} />
-          <h3>Add Vote</h3>
-          <AddVoteForm listId={listId} />
-        </Grid>
-      </Grid>
+      {!small && (
+        <>
+          <FeatureListButton listId={listId} />
+          <Grid container>
+            <Grid item xs={6}>
+              <h2>Comments</h2>
+              <CommentList listId={listId} />
+              <h3>Add Comment</h3>
+              <AddCommentForm listId={listId} />
+            </Grid>
+            <Grid item xs={6}>
+              <h2>Votes</h2>
+              <VotesList listId={listId} />
+              <h3>Add Vote</h3>
+              <AddVoteForm listId={listId} />
+            </Grid>
+          </Grid>
+        </>
+      )}
     </>
   )
 }
