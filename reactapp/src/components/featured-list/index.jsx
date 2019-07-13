@@ -16,7 +16,7 @@ const FeaturedList = () => {
     return <LoadingIndicator />
   }
 
-  if (isErrored || !featuredList || !featuredList.listId) {
+  if (isErrored || !featuredList || !featuredList.list) {
     return 'Failed to get featured list!'
   }
 
