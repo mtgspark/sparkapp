@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { inDevelopment } from '../environment'
 
 const scryFallApiUrl = 'https://api.scryfall.com'
 const cardByIdEndpoint = 'cards/'
@@ -32,19 +33,30 @@ const useScryfall = (scryfallCardId = null, cardNameSearchTerm = '') => {
     }
 
     if (cardNameSearchTerm in cardCacheBySearchTerm) {
+      if (inDevelopment())
+        console.log(
+          `useScryfall: Card name search term ${cardNameSearchTerm} in cache`,
+          cardCacheBySearchTerm[cardNameSearchTerm]
+        )
       setResponseJson(cardCacheBySearchTerm[cardNameSearchTerm])
       return
     }
 
     if (scryfallCardId in cardCacheById) {
-      setResponseJson(cardCacheById[scryfallCardId])
+      if (inDevelopment())
+        console.log(
+          `useScryfall: Card ID ${scryfallCardId} in cache`,
+          cardCacheById[scryfallCardId]
+        )
+      setResponseJson()
       return
     }
 
     const doFetch = () => {
       const onDone = json => {
-        const bestSearchResult = json.data[0]
+        const bestSearchResult = json instanceof Array ? json.data[0] : json
 
+        // Store in cache
         cardCacheById[bestSearchResult.id] = bestSearchResult
         if (cardNameSearchTerm) {
           cardCacheBySearchTerm[cardNameSearchTerm] = bestSearchResult
