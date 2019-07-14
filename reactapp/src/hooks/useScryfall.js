@@ -54,7 +54,7 @@ const useScryfall = (scryfallCardId = null, cardNameSearchTerm = '') => {
 
     const doFetch = () => {
       const onDone = json => {
-        const bestSearchResult = json instanceof Array ? json.data[0] : json
+        const bestSearchResult = json.data ? json.data[0] : json
 
         // Store in cache
         cardCacheById[bestSearchResult.id] = bestSearchResult
