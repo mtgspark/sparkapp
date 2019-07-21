@@ -107,18 +107,20 @@ export default (
             .collection(searchObj.reference.collection)
             .doc(searchObj.reference.id)
 
-          query = await collection.where(
+          query = collection.where(
             searchObj.field,
             searchObj.operator,
             reference
           )
         } else {
-          query = await collection.where(
+          query = collection.where(
             searchObj.field,
             searchObj.operator,
             searchObj.value
           )
         }
+      } else {
+        query = collection
       }
 
       const results = await query.get()

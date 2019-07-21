@@ -3,7 +3,7 @@ import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'connected-react-router'
 import firebase from 'firebase/app'
-import './firebase'
+import { loggedInUserId } from './firebase'
 import ReactReduxFirebaseProvider from 'react-redux-firebase/lib/ReactReduxFirebaseProvider'
 import store, { history } from './store'
 import App from './containers/app'
@@ -19,7 +19,10 @@ Sentry.init({
 })
 
 history.listen(location => {
-  trackAction(actions.NAVIGATE, location)
+  trackAction(actions.NAVIGATE, {
+    location,
+    userId: loggedInUserId.uid
+  })
 })
 
 const target = document.querySelector('#root')

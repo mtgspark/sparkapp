@@ -8,7 +8,7 @@ const LoginForm = ({ onSuccess }) => {
   const uiConfig = {
     signInFlow: 'popup',
     callbacks: {
-      signInSuccessWithAuthResult: () => onSuccess()
+      signInSuccessWithAuthResult: onSuccess
     },
     signInOptions: [
       firebaseAuth.EmailAuthProvider.PROVIDER_ID,

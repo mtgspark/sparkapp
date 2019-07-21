@@ -23,15 +23,13 @@ export const roles = {
   ADMIN: 'ADMIN'
 }
 
-let loggedInUserId = null
+export let loggedInUserId = null
 
 auth.onAuthStateChanged(user => {
   if (user) {
     loggedInUserId = user
 
-    trackAction(actions.LOGIN, {
-      userId: loggedInUserId.uid
-    })
+    // cannot track login here - it gets called each page load
   } else {
     trackAction(actions.LOGOUT, {
       userId: loggedInUserId.uid
