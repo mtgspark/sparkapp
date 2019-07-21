@@ -21,7 +21,7 @@ Sentry.init({
 history.listen(location => {
   trackAction(actions.NAVIGATE, {
     location,
-    userId: loggedInUserId.uid
+    userId: loggedInUserId ? loggedInUserId.uid : null
   })
 })
 
