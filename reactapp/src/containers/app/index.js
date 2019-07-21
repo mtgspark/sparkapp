@@ -12,6 +12,7 @@ import EditList from '../edit-list'
 import ViewList from '../view-list'
 import MyAccount from '../my-account'
 import Admin from '../admin'
+import PrivacyPolicy from '../privacy-policy'
 import { Container } from '@material-ui/core'
 import * as routes from '../../routes'
 
@@ -38,6 +39,11 @@ const App = () =>
             <Route exact path={routes.editListWithVar} component={EditList} />
             <Route exact path={routes.admin} component={Admin} />
             <Route exact path={routes.myAccount} component={MyAccount} />
+            <Route
+              exact
+              path={routes.privacyPolicy}
+              component={PrivacyPolicy}
+            />
           </Switch>
         </Container>
       </main>
