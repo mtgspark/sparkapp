@@ -75,7 +75,7 @@ const NavigationLink = props => (
 const useStyles = makeStyles({
   header: {
     padding: '1rem 1rem',
-    borderBottom: '3px solid #260b36',
+    borderBottom: '1px solid #260b36',
     marginBottom: '4rem',
     background: 'linear-gradient(20deg, #c31432, #240b36)',
     // boxShadow: '0 1px 3px rgba(0, 0, 0, 0.2)',
