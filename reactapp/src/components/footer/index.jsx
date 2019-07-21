@@ -23,7 +23,8 @@ const PageFooter = ({ auth }) => {
         ? `You are logged in`
         : 'You are not logged in'}
       <br />
-      <Link to={routes.admin}>&copy; Spark</Link>
+      <Link to={routes.admin}>&copy; Spark</Link> &ndash;{' '}
+      <Link to={routes.privacyPolicy}>Privacy Policy</Link>
     </footer>
   )
 }
