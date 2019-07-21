@@ -10,6 +10,7 @@ import store, { history } from './store'
 import App from './containers/app'
 import { trackAction, actions } from './analytics'
 import { inDevelopment } from './environment'
+import { changeSearchTerm } from './modules/app'
 
 import 'sanitize.css/sanitize.css'
 import './assets/css/theme.css'
@@ -26,6 +27,8 @@ history.listen(location => {
     location,
     userId: loggedInUserId ? loggedInUserId.uid : null
   })
+
+  store.dispatch(changeSearchTerm())
 })
 
 const target = document.querySelector('#root')

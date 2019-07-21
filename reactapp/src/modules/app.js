@@ -60,6 +60,10 @@ export const changeSearchTerm = searchTerm => dispatch => {
     }
   })
 
+  if (!searchTerm) {
+    return
+  }
+
   trackAction(actions.CHANGE_SEARCH_TERM, {
     searchTerm
   })

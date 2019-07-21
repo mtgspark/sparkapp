@@ -21,6 +21,7 @@ import MenuIcon from '@material-ui/icons/Menu'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import * as routes from '../../routes'
 import withAuthProfile from '../../hocs/withAuthProfile'
+import Searchbar from '../../components/searchbar'
 
 const navItems = [
   {
@@ -157,6 +158,7 @@ const PageHeader = ({ isMenuOpen, openMenu, closeMenu }) => {
         </Grid>
       </Grid>
       <DrawerContainer closeMenu={closeMenu} isMenuOpen={isMenuOpen} />
+      <Searchbar />
     </header>
   )
 }

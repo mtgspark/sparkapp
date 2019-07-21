@@ -3,8 +3,6 @@ import { connect } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
-import Searchbar from '../../components/searchbar'
-import SearchResults from '../../components/search-results'
 import FeaturedList from '../../components/featured-list'
 
 const useStyles = makeStyles(theme => ({
@@ -18,8 +16,6 @@ const Home = ({ searchTerm }) => {
 
   return (
     <>
-      <Searchbar />
-      <SearchResults />
       {!searchTerm && (
         <Paper className={classes.root}>
           <Typography variant="h5" component="h3">
