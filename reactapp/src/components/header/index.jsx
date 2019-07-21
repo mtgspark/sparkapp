@@ -68,7 +68,7 @@ const NavigationLink = props => (
 
 const useStyles = makeStyles({
   header: {
-    padding: '1rem 2rem',
+    padding: '0.5rem 0.5rem',
     marginBottom: '2rem'
   },
   logo: {
@@ -76,7 +76,9 @@ const useStyles = makeStyles({
     fontWeight: '600',
     lineHeight: '1',
     textDecoration: 'none !important',
-    color: 'black'
+    color: 'black',
+    display: 'block',
+    padding: '1.5rem 0 0 1rem'
   },
   logoSmall: {
     display: 'block',

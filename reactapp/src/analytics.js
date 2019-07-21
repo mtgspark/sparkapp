@@ -62,7 +62,7 @@ const actionDetails = {
   [actions.FOCUS_SEARCH]: {
     category: categories.LISTS
   },
-  [actions.ENTER_SEARCH_TERM]: {
+  [actions.CHANGE_SEARCH_TERM]: {
     category: categories.LISTS
   },
 

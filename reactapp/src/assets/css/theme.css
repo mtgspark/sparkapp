@@ -32,3 +32,7 @@ main.main {
 button:disabled {
   opacity: 0.5;
 }
+
+a {
+  color: inherit;
+}
