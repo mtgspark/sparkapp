@@ -50,7 +50,6 @@ const AddVoteForm = ({ listId, auth }) => {
   }
 
   if (existingVote.length > 0) {
-    console.log({ existingVote })
     return 'You have already voted for this list.'
   }
 
