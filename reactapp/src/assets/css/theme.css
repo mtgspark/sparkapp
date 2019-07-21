@@ -34,5 +34,6 @@ button:disabled {
 }
 
 a {
-  color: inherit;
+  color: #240b36;
+  text-decoration: none;
 }

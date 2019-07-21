@@ -102,6 +102,9 @@ const useStyles = makeStyles({
     color: 'inherit',
     textDecoration: 'none'
     // todo: fix appearance if link in menu
+  },
+  listItemIcon: {
+    color: '#240b36'
   }
 })
 
@@ -125,7 +128,7 @@ const DrawerContainer = withAuthProfile(({ auth, isMenuOpen, closeMenu }) => {
                 variant="inherit"
                 to={url}>
                 <Typography component="div" style={{ display: 'flex' }}>
-                  <ListItemIcon>
+                  <ListItemIcon className={classes.listItemIcon}>
                     <ChevronRightIcon />
                   </ListItemIcon>
                   {label}
