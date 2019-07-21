@@ -5,12 +5,21 @@ import { push } from 'connected-react-router'
 import * as routes from '../../routes'
 import LoginForm from '../../components/login-form'
 import withRedirectOnAuth from '../../hocs/withRedirectOnAuth'
+import { trackAction, actions } from '../../analytics'
 
 const Login = ({ push }) => (
   <>
     <h1>Login or Sign Up</h1>
     <p>Enter your details below to login or create a new account.</p>
-    <LoginForm onSuccess={() => push(routes.home)} />
+    <LoginForm
+      onSuccess={auth => {
+        trackAction(actions.LOGIN, {
+          userId: auth.user.uid
+        })
+
+        push(routes.home)
+      }}
+    />
     <p>
       You can read our <Link to={routes.privacyPolicy}>Privacy Policy</Link>{' '}
       here.

@@ -19,14 +19,24 @@ const AddVoteForm = ({ listId, auth }) => {
     isLoadingExistingVote,
     isErroredExistingVote,
     existingVote
-  ] = useDatabase('votes', null, {
-    field: 'createdBy',
-    operator: '==',
-    reference: {
-      collection: 'users',
-      id: auth.uid
+  ] = useDatabase('votes', null, [
+    {
+      field: 'createdBy',
+      operator: '==',
+      reference: {
+        collection: 'users',
+        id: auth.uid
+      }
+    },
+    {
+      field: 'list',
+      operator: '==',
+      reference: {
+        collection: 'lists',
+        id: listId
+      }
     }
-  })
+  ])
   const [isSaving, didSaveSucceedOrFail, save] = useDatabaseSave('votes')
   const [userDocument] = useDatabaseDocument('users', userId)
   const [listDocument] = useDatabaseDocument('lists', listId)
@@ -40,6 +50,7 @@ const AddVoteForm = ({ listId, auth }) => {
   }
 
   if (existingVote.length > 0) {
+    console.log({ existingVote })
     return 'You have already voted for this list.'
   }
 
