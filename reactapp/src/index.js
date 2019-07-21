@@ -26,9 +26,7 @@ const target = document.querySelector('#root')
 
 const rrfProps = {
   firebase,
-  config: {
-    userProfile: 'users'
-  },
+  config: {},
   dispatch: store.dispatch
 }
 
