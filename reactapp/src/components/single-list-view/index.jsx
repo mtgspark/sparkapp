@@ -12,6 +12,7 @@ import AddVoteForm from '../add-vote-form'
 import FeatureListButton from '../feature-list-button'
 import CardImage from '../card-image'
 import * as routes from '../../routes'
+import withAuthProfile from '../../hocs/withAuthProfile'
 
 const useCardRowStyles = makeStyles({
   media: {},
@@ -83,7 +84,7 @@ const useSingleListViewStyles = makeStyles({
   media: {}
 })
 
-const SingleListView = ({ listId, small = false }) => {
+const SingleListView = ({ listId, auth, small = false }) => {
   const classes = useSingleListViewStyles()
 
   const [isLoading, isErrored, result] = useDatabase('lists', listId)
@@ -138,11 +139,11 @@ const SingleListView = ({ listId, small = false }) => {
           <Link to={`/lists/${listId}`}>
             <Button color="primary">View List</Button>
           </Link>
-        ) : (
+        ) : auth && auth.uid === createdBy.id ? (
           <Link to={`/lists/${listId}/edit`}>
             <Button color="primary">Edit List</Button>
           </Link>
-        )}
+        ) : null}
       </div>
       <Typography component="p" style={{ margin: '1rem 0' }}>
         Created {createdAt ? <FormattedDate date={createdAt} /> : '(unknown)'}{' '}
@@ -177,4 +178,4 @@ const SingleListView = ({ listId, small = false }) => {
   )
 }
 
-export default SingleListView
+export default withAuthProfile(SingleListView)

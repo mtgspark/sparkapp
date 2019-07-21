@@ -45,4 +45,7 @@ const FeatureListButton = ({ listId, auth }) => {
 
 const mapStateToProps = ({ firebase: { auth } }) => ({ auth })
 
-export default withEditorsOnly(connect(mapStateToProps)(FeatureListButton))
+export default withEditorsOnly(
+  connect(mapStateToProps)(FeatureListButton),
+  false
+)

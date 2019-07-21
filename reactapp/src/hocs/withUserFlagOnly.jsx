@@ -5,7 +5,7 @@ import useDatabase from '../hooks/useDatabase'
 
 const mapStateToProps = ({ firebase: { auth } }) => ({ auth })
 
-export default (Component, whichFlagName) =>
+export default (Component, whichFlagName, showMustLoginMessage = true) =>
   connect(mapStateToProps)(({ auth, ...otherProps }) => {
     if (!whichFlagName) {
       return 'Need flag name to restrict access'
@@ -17,7 +17,11 @@ export default (Component, whichFlagName) =>
     }
 
     if (!auth.uid) {
-      return 'You need to log in to do this'
+      if (showMustLoginMessage) {
+        return 'You need to log in to do this'
+      } else {
+        return null
+      }
     }
 
     const [isLoading, isErrored, user] = useDatabase('users', auth.uid)
