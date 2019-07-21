@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { Route, Switch } from 'react-router-dom'
+import { Container } from '@material-ui/core'
 import Home from '../home'
 import Login from '../login'
 import Logout from '../logout'
@@ -13,7 +14,6 @@ import ViewList from '../view-list'
 import MyAccount from '../my-account'
 import Admin from '../admin'
 import PrivacyPolicy from '../privacy-policy'
-import { Container } from '@material-ui/core'
 import * as routes from '../../routes'
 
 const RouteWithMeta = ({ meta, ...routeProps }) => {
