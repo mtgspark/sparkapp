@@ -21,7 +21,10 @@ const mapDates = doc => {
 
 const getDataFromReference = async record => {
   const result = await record.get()
-  return result.data()
+  return {
+    ...result.data(),
+    id: record.id
+  }
 }
 
 const mapReferences = async doc => {
