@@ -84,26 +84,48 @@ export default (
       }
 
       if (searchObj) {
-        if (searchObj.reference) {
+        if (searchObj instanceof Array) {
+          query = searchObj.reduce((queryChain, searchObjChild) => {
+            let value
+
+            if (searchObjChild.reference) {
+              value = firestore()
+                .collection(searchObjChild.reference.collection)
+                .doc(searchObjChild.reference.id)
+            } else {
+              value = searchObjChild.value
+            }
+
+            return queryChain.where(
+              searchObjChild.field,
+              searchObjChild.operator,
+              value
+            )
+          }, collection)
+        } else if (searchObj.reference) {
           const reference = firestore()
             .collection(searchObj.reference.collection)
             .doc(searchObj.reference.id)
 
-          query = await collection
-            .where(searchObj.field, searchObj.operator, reference)
-            .get()
+          query = await collection.where(
+            searchObj.field,
+            searchObj.operator,
+            reference
+          )
         } else {
-          query = await collection
-            .where(searchObj.field, searchObj.operator, searchObj.value)
-            .get()
+          query = await collection.where(
+            searchObj.field,
+            searchObj.operator,
+            searchObj.value
+          )
         }
-      } else {
-        query = await collection.get()
       }
+
+      const results = await query.get()
 
       setIsLoading(false)
 
-      const docs = query.docs
+      const docs = results.docs
         .map(doc => ({ ...doc.data(), id: doc.id }))
         .map(mapDates)
       const docsWithReferences = useRefs
