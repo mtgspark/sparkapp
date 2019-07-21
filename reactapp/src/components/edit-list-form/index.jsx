@@ -6,6 +6,8 @@ import LoadingIcon from '../../components/loading'
 import ListEditor from '../list-editor'
 import useDatabase from '../../hooks/useDatabase'
 import useDatabaseSave from '../../hooks/useDatabaseSave'
+import withAuthProfile from '../../hocs/withAuthProfile'
+import { trackAction, actions } from '../../analytics'
 
 const useStyles = makeStyles(theme => ({
   success: {
@@ -78,9 +80,10 @@ const EditListFormStatus = ({
   )
 }
 
-const EditListForm = ({ listId }) => {
+const EditListForm = ({ listId, auth }) => {
   const [isFetching, didFetchFail, result] = useDatabase('lists', listId)
   const [isSaving, isSuccessOrFail, save] = useDatabaseSave('lists', listId)
+  const userId = auth.uid
 
   return (
     <>
@@ -94,10 +97,21 @@ const EditListForm = ({ listId }) => {
       {isFetching ? (
         <LoadingIcon />
       ) : (
-        <ListEditor listId={listId} fieldsFromServer={result} saveList={save} />
+        <ListEditor
+          listId={listId}
+          fieldsFromServer={result}
+          saveList={async fields => {
+            await save(fields)
+
+            trackAction(actions.EDIT_LIST, {
+              listId,
+              userId
+            })
+          }}
+        />
       )}
     </>
   )
 }
 
-export default EditListForm
+export default withAuthProfile(EditListForm)

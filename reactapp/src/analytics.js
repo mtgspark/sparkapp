@@ -16,14 +16,17 @@ export const actions = {
   LOGIN: 'Login',
   LOGOUT: 'Logout',
   SIGNUP: 'SignUp',
+  CHANGE_USERNAME: 'ChangeUsername',
 
   // SEARCH
   FOCUS_SEARCH: 'FocusSearch',
   CHANGE_SEARCH_TERM: 'ChangeSearchTerm',
 
-  // DOCUMENTS
-  CREATE_DOCUMENT: 'CreateDocument',
-  EDIT_DOCUMENT: 'EditDocument'
+  // LISTS
+  CREATE_LIST: 'CreateList',
+  EDIT_LIST: 'EditList',
+  VOTE_ON_LIST: 'VoteOnList',
+  COMMENT_ON_LIST: 'CommentOnList'
 }
 
 const actionDetails = {
@@ -50,6 +53,9 @@ const actionDetails = {
   [actions.SIGNUP]: {
     category: categories.AUTH
   },
+  [actions.CHANGE_USERNAME]: {
+    category: categories.AUTH
+  },
 
   // SEARCH
 
@@ -62,10 +68,16 @@ const actionDetails = {
 
   // LISTS
 
-  [actions.CREATE_DOCUMENT]: {
+  [actions.CREATE_LIST]: {
     category: categories.LISTS
   },
-  [actions.EDIT_DOCUMENT]: {
+  [actions.EDIT_LIST]: {
+    category: categories.LISTS
+  },
+  [actions.COMMENT_ON_LIST]: {
+    category: categories.LISTS
+  },
+  [actions.VOTE_ON_LIST]: {
     category: categories.LISTS
   }
 }

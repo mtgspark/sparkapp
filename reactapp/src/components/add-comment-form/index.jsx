@@ -4,6 +4,7 @@ import { TextField, Button } from '@material-ui/core'
 import useDatabaseSave from '../../hooks/useDatabaseSave'
 import useDatabaseDocument from '../../hooks/useDatabaseDocument'
 import withEditorsOnly from '../../hocs/withEditorsOnly'
+import { trackAction, actions } from '../../analytics'
 
 const AddCommentForm = ({ listId, auth }) => {
   if (!auth.uid) {
@@ -38,14 +39,19 @@ const AddCommentForm = ({ listId, auth }) => {
       />
       <br />
       <Button
-        onClick={() =>
-          save({
+        onClick={async () => {
+          const [documentId] = await save({
             list: listDocument,
             comment: textFieldValue,
             createdBy: userDocument,
             createdAt: new Date()
           })
-        }>
+
+          trackAction(actions.COMMENT_ON_LIST, {
+            listId: documentId,
+            userId
+          })
+        }}>
         Add
       </Button>
     </>

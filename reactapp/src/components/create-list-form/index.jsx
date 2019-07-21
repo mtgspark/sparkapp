@@ -1,9 +1,12 @@
 import React from 'react'
 import ListEditor from '../list-editor'
 import useDatabaseSave from '../../hooks/useDatabaseSave'
+import withAuthProfile from '../../hocs/withAuthProfile'
+import { trackAction, actions } from '../../analytics'
 
-const CreateListForm = () => {
+const CreateListForm = ({ auth }) => {
   const [isSaving, isSuccess, save] = useDatabaseSave('lists')
+  const userId = auth.uid
 
   if (isSaving) {
     return 'Creating...'
@@ -13,7 +16,18 @@ const CreateListForm = () => {
     return 'List created successfully!'
   }
 
-  return <ListEditor saveList={save} />
+  return (
+    <ListEditor
+      saveList={async fields => {
+        const [documentId] = await save(fields)
+
+        trackAction(actions.CREATE_LIST, {
+          listId: documentId,
+          userId
+        })
+      }}
+    />
+  )
 }
 
-export default CreateListForm
+export default withAuthProfile(CreateListForm)

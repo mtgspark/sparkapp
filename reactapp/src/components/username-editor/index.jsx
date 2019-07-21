@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import useDatabaseSave from '../../hooks/useDatabaseSave'
+import { trackAction, actions } from '../../analytics'
 
 const UsernameEditor = ({ userId, record }) => {
   if (!userId) {
@@ -28,11 +29,16 @@ const UsernameEditor = ({ userId, record }) => {
       Enter in your new name:{' '}
       <TextField onChange={event => setFieldValue(event.target.value)} /> <br />
       <Button
-        onClick={() =>
-          save({
+        onClick={async () => {
+          await save({
             username: fieldValue
           })
-        }>
+
+          trackAction(actions.CHANGE_USERNAME, {
+            userId,
+            newUsername: fieldValue
+          })
+        }}>
         Change Name
       </Button>
     </>

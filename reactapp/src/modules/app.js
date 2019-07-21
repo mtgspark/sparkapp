@@ -10,7 +10,6 @@ const CLOSE_MENU = 'CLOSE_MENU'
 const CHANGE_SEARCH_TERM = 'CHANGE_SEARCH_TERM'
 
 export default (state = initialState, action) => {
-  console.log('action', state, action)
   switch (action.type) {
     case OPEN_MENU:
       return {
