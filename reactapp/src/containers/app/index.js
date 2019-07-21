@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Route, Switch } from 'react-router-dom'
 import Home from '../home'
 import Login from '../login'
@@ -16,6 +16,14 @@ import PrivacyPolicy from '../privacy-policy'
 import { Container } from '@material-ui/core'
 import * as routes from '../../routes'
 
+const RouteWithMeta = ({ meta, ...routeProps }) => {
+  useEffect(() => {
+    document.title = `${meta.title} - MTG Card Rank`
+  }, [meta])
+
+  return <Route {...routeProps} />
+}
+
 const App = () =>
   window.location.href.includes('mtgcardrank') &&
   localStorage.getItem('sparky') !== 'yes' ? (
@@ -29,20 +37,73 @@ const App = () =>
       <main className="main">
         <Container maxWidth="lg">
           <Switch>
-            <Route exact path={routes.home} component={Home} />
-            <Route exact path={routes.login} component={Login} />
-            <Route exact path={routes.logout} component={Logout} />
-            <Route exact path={routes.lists} component={Lists} />
-            <Route exact path={routes.card} component={Card} />
-            <Route exact path={routes.createList} component={CreateList} />
-            <Route exact path={routes.viewListWithVar} component={ViewList} />
-            <Route exact path={routes.editListWithVar} component={EditList} />
-            <Route exact path={routes.admin} component={Admin} />
-            <Route exact path={routes.myAccount} component={MyAccount} />
-            <Route
+            <RouteWithMeta
+              exact
+              path={routes.home}
+              component={Home}
+              meta={{
+                title: 'Rank different Magic The Gathering cards with lists'
+              }}
+            />
+            <RouteWithMeta
+              exact
+              path={routes.login}
+              component={Login}
+              meta={{ title: 'Log in to manage your lists, vote and comment' }}
+            />
+            <RouteWithMeta
+              exact
+              path={routes.logout}
+              component={Logout}
+              meta={{ title: 'Logging you out' }}
+            />
+            <RouteWithMeta
+              exact
+              path={routes.lists}
+              component={Lists}
+              meta={{ title: 'Browse the lists of Magic The Gathering cards' }}
+            />
+            <RouteWithMeta
+              exact
+              path={routes.card}
+              component={Card}
+              meta={{ title: 'View a single card' }}
+            />
+            <RouteWithMeta
+              exact
+              path={routes.createList}
+              component={CreateList}
+              meta={{ title: 'Create a new list' }}
+            />
+            <RouteWithMeta
+              exact
+              path={routes.viewListWithVar}
+              component={ViewList}
+              meta={{ title: 'View a list of Magic The Gathering cards' }}
+            />
+            <RouteWithMeta
+              exact
+              path={routes.editListWithVar}
+              component={EditList}
+              meta={{ title: 'Edit your list' }}
+            />
+            <RouteWithMeta
+              exact
+              path={routes.admin}
+              component={Admin}
+              meta={{ title: 'Admins only area' }}
+            />
+            <RouteWithMeta
+              exact
+              path={routes.myAccount}
+              component={MyAccount}
+              meta={{ title: 'View details about your account' }}
+            />
+            <RouteWithMeta
               exact
               path={routes.privacyPolicy}
               component={PrivacyPolicy}
+              meta={{ title: 'Our privacy policy' }}
             />
           </Switch>
         </Container>
