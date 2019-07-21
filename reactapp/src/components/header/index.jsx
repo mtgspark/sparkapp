@@ -91,12 +91,15 @@ const useStyles = makeStyles({
   logo: {
     fontSize: '1.5rem',
     fontWeight: '600',
-    lineHeight: '1',
+    lineHeight: '1.2',
     textDecoration: 'none !important',
     color: 'white',
     display: 'block',
-    padding: '1rem 0',
-    textTransform: 'uppercase'
+    padding: '1rem',
+    textTransform: 'uppercase',
+    ['@media (min-width: 960px)']: {
+      padding: '1rem 0'
+    }
   },
   menuToggleIcon: {
     width: '4rem',
