@@ -2,6 +2,7 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore'
 import 'firebase/database'
+import { trackAction, actions } from './analytics'
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -21,3 +22,21 @@ export const logout = () => auth.signOut()
 export const roles = {
   ADMIN: 'ADMIN'
 }
+
+let loggedInUserId = null
+
+auth.onAuthStateChanged(user => {
+  if (user) {
+    loggedInUserId = user
+
+    trackAction(actions.LOGIN, {
+      userId: loggedInUserId.uid
+    })
+  } else {
+    trackAction(actions.LOGOUT, {
+      userId: loggedInUserId.uid
+    })
+
+    loggedInUserId = null
+  }
+})

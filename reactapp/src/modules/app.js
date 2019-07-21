@@ -1,18 +1,21 @@
+import { trackAction, actions } from '../analytics'
+
 const initialState = {
   isMenuOpen: false,
   searchTerm: ''
 }
 
-const TOGGLE_MENU = 'TOGGLE_MENU'
+const OPEN_MENU = 'OPEN_MENU'
 const CLOSE_MENU = 'CLOSE_MENU'
 const CHANGE_SEARCH_TERM = 'CHANGE_SEARCH_TERM'
 
 export default (state = initialState, action) => {
+  console.log('action', state, action)
   switch (action.type) {
-    case TOGGLE_MENU:
+    case OPEN_MENU:
       return {
         ...state,
-        isMenuOpen: !state.isMenuOpen
+        isMenuOpen: true
       }
 
     case CLOSE_MENU:
@@ -34,17 +37,31 @@ export default (state = initialState, action) => {
 
 // ACTIONS
 
-export const toggleMenu = () => ({
-  type: TOGGLE_MENU
-})
+export const openMenu = () => dispatch => {
+  dispatch({
+    type: OPEN_MENU
+  })
 
-export const closeMenu = () => ({
-  type: CLOSE_MENU
-})
+  trackAction(actions.OPEN_NAV_MENU)
+}
 
-export const changeSearchTerm = searchTerm => ({
-  type: CHANGE_SEARCH_TERM,
-  payload: {
+export const closeMenu = () => dispatch => {
+  dispatch({
+    type: CLOSE_MENU
+  })
+
+  trackAction(actions.CLOSE_NAV_MENU)
+}
+
+export const changeSearchTerm = searchTerm => dispatch => {
+  dispatch({
+    type: CHANGE_SEARCH_TERM,
+    payload: {
+      searchTerm
+    }
+  })
+
+  trackAction(actions.CHANGE_SEARCH_TERM, {
     searchTerm
-  }
-})
+  })
+}

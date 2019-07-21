@@ -2,7 +2,10 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { toggleMenu, closeMenu } from '../../modules/app'
+import {
+  openMenu as openMenuAction,
+  closeMenu as closeMenuAction
+} from '../../modules/app'
 import { makeStyles } from '@material-ui/core/styles'
 import {
   Grid,
@@ -128,7 +131,7 @@ const DrawerContainer = withAuthProfile(({ auth, isMenuOpen, closeMenu }) => {
   )
 })
 
-const PageHeader = ({ app: { isMenuOpen }, toggleMenu, closeMenu }) => {
+const PageHeader = ({ isMenuOpen, openMenu, closeMenu }) => {
   const classes = useStyles()
 
   return (
@@ -140,7 +143,7 @@ const PageHeader = ({ app: { isMenuOpen }, toggleMenu, closeMenu }) => {
           </Link>
         </Grid>
         <Grid item xs={6} align="right">
-          <Button onClick={() => toggleMenu()}>
+          <Button onClick={() => openMenu()}>
             <MenuIcon className={classes.menuToggleIcon} />
             <span hidden>Menu</span>
           </Button>
@@ -151,17 +154,15 @@ const PageHeader = ({ app: { isMenuOpen }, toggleMenu, closeMenu }) => {
   )
 }
 
-const mapStateToProps = ({ app, lists, analytics }) => ({
-  app,
-  lists,
-  analytics
+const mapStateToProps = ({ app: { isMenuOpen } }) => ({
+  isMenuOpen
 })
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      toggleMenu,
-      closeMenu
+      openMenu: openMenuAction,
+      closeMenu: closeMenuAction
     },
     dispatch
   )

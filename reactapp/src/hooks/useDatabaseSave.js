@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import firebase from 'firebase/app'
 import 'firebase/firestore'
+import { trackAction, actions } from '../analytics'
+import store from '../store'
 
 export default (collectionName, documentId = null) => {
   const [isSaving, setIsSaving] = useState(false)
@@ -21,6 +23,19 @@ export default (collectionName, documentId = null) => {
 
       setIsSuccess(true)
       setIsSaving(false)
+
+      trackAction(
+        documentId ? actions.EDIT_DOCUMENT : actions.CREATE_DOCUMENT,
+        {
+          userId: store.getState().firebase.auth.uid,
+          collection: collectionName,
+          ...(documentId
+            ? {
+                documentId
+              }
+            : {})
+        }
+      )
     } catch (err) {
       setIsSuccess(false)
       setIsSaving(false)
