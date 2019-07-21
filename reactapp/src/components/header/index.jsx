@@ -74,26 +74,34 @@ const NavigationLink = props => (
 
 const useStyles = makeStyles({
   header: {
-    padding: '0.5rem 0.5rem',
-    marginBottom: '2rem'
+    padding: '1rem 1rem',
+    borderBottom: '3px solid #260b36',
+    marginBottom: '4rem',
+    background: 'linear-gradient(20deg, #c31432, #240b36)',
+    // boxShadow: '0 1px 3px rgba(0, 0, 0, 0.2)',
+    ['@media (min-width: 600px)']: {
+      padding: '2rem 2rem'
+    }
+  },
+  gridColSearchbar: {
+    ['@media (max-width: 959px)']: {
+      order: '3'
+    }
   },
   logo: {
     fontSize: '1.5rem',
     fontWeight: '600',
     lineHeight: '1',
     textDecoration: 'none !important',
-    color: 'black',
+    color: 'white',
     display: 'block',
-    padding: '1.5rem 0 0 1rem'
-  },
-  logoSmall: {
-    display: 'block',
-    fontSize: '1rem',
+    padding: '1rem 0',
     textTransform: 'uppercase'
   },
   menuToggleIcon: {
     width: '4rem',
-    height: '3rem'
+    height: '3rem',
+    fill: 'white'
   },
   menuList: {
     width: '280px'
@@ -145,12 +153,21 @@ const PageHeader = ({ isMenuOpen, openMenu, closeMenu }) => {
   return (
     <header className={classes.header}>
       <Grid container>
-        <Grid item xs={6} align="left">
+        <Grid item xs={8} md={4} lg={4} align="left">
           <Link to={routes.home} className={classes.logo}>
-            <small className={classes.logoSmall}>MTG Card Rank</small>
+            MTG Card Rank
           </Link>
         </Grid>
-        <Grid item xs={6} align="right">
+        <Grid
+          item
+          xs={12}
+          md={6}
+          lg={4}
+          className={classes.gridColSearchbar}
+          align="center">
+          <Searchbar />
+        </Grid>
+        <Grid item xs={4} md={2} lg={4} align="right">
           <Button onClick={() => openMenu()}>
             <MenuIcon className={classes.menuToggleIcon} />
             <span hidden>Menu</span>
@@ -158,7 +175,6 @@ const PageHeader = ({ isMenuOpen, openMenu, closeMenu }) => {
         </Grid>
       </Grid>
       <DrawerContainer closeMenu={closeMenu} isMenuOpen={isMenuOpen} />
-      <Searchbar />
     </header>
   )
 }

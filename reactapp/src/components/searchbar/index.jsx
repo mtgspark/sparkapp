@@ -10,10 +10,13 @@ const SearchBar = ({ searchTerm, changeSearchTerm }) => {
     root: {
       padding: '2px 2px 2px 24px',
       borderRadius: '3rem',
-      margin: '0 auto 3rem auto',
+      margin: '1rem auto 0 auto',
       display: 'flex',
       alignItems: 'center',
-      maxWidth: 600
+      maxWidth: 600,
+      ['@media (min-width: 600px)']: {
+        marginTop: '0'
+      }
     },
     input: {
       padding: 10,
