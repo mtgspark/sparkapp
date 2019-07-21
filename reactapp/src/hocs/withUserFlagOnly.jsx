@@ -17,7 +17,7 @@ export default (Component, whichFlagName) =>
     }
 
     if (!auth.uid) {
-      return 'Not logged in (should wrap this component in redirect on not auth HOC)'
+      return 'You need to log in to do this'
     }
 
     const [isLoading, isErrored, user] = useDatabase('users', auth.uid)
