@@ -57,11 +57,6 @@ const navItems = [
     label: 'Admin',
     url: routes.admin,
     requiresAuth: true
-  },
-  {
-    label: 'Privacy Policy',
-    url: routes.privacyPolicy,
-    requiresAuth: false
   }
 ]
 
