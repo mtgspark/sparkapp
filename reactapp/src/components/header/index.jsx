@@ -118,7 +118,7 @@ const DrawerContainer = withAuthProfile(({ auth, isMenuOpen, closeMenu }) => {
                 color="primary"
                 variant="inherit"
                 to={url}>
-                <Typography component="div">
+                <Typography component="div" style={{ display: 'flex' }}>
                   <ListItemIcon>
                     <ChevronRightIcon />
                   </ListItemIcon>
