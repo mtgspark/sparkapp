@@ -14,7 +14,7 @@ const Login = ({ push }) => (
     <LoginForm
       onSuccess={auth => {
         trackAction(actions.LOGIN, {
-          userId: auth.user.uid
+          userId: auth.user ? auth.user.uid : 'unknown'
         })
 
         push(routes.home)

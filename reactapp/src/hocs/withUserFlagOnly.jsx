@@ -12,7 +12,7 @@ export default (Component, whichFlagName) =>
     }
 
     // On fresh load of a page we wait until firebase gets back to us
-    if (!auth.isLoaded) {
+    if (!auth || !auth.isLoaded) {
       return <LoadingIndicator />
     }
 

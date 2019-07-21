@@ -28,13 +28,7 @@ export let loggedInUserId = null
 auth.onAuthStateChanged(user => {
   if (user) {
     loggedInUserId = user
-
-    // cannot track login here - it gets called each page load
   } else {
-    trackAction(actions.LOGOUT, {
-      userId: loggedInUserId.uid
-    })
-
     loggedInUserId = null
   }
 })

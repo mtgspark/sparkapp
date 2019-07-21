@@ -83,9 +83,11 @@ const actionDetails = {
 }
 
 export const trackAction = (name, payload) => {
-  const { category } = actionDetails[name]
+  if (inDevelopment()) {
+    return
+  }
 
-  if (inDevelopment()) console.log(`analytics: ${category}.${name}`, payload)
+  const { category } = actionDetails[name]
 
   window.gtag('event', name, {
     event_category: category,
