@@ -16,9 +16,17 @@ import PrivacyPolicy from '../privacy-policy'
 import { Container } from '@material-ui/core'
 import * as routes from '../../routes'
 
-const RouteWithMeta = ({ meta, ...routeProps }) => {
+const defaultTitle = 'Rank different Magic The Gathering cards with lists'
+const defaultDescription =
+  'A web app that allows anyone to rank Magic The Gathering cards by any metric they want. Other users can commit and rate your lists to determine the best list of cards.'
+
+const RouteWithMeta = ({ meta = {}, ...routeProps }) => {
   useEffect(() => {
-    document.title = `${meta.title} - MTG Card Rank`
+    document.title = `${meta.title || defaultTitle} &mdash; MTG Card Rank`
+
+    document
+      .querySelector('meta[name="description"]')
+      .setAttribute('content', meta.description || defaultDescription)
   }, [meta])
 
   return <Route {...routeProps} />
@@ -37,14 +45,7 @@ const App = () =>
       <main className="main">
         <Container maxWidth="lg">
           <Switch>
-            <RouteWithMeta
-              exact
-              path={routes.home}
-              component={Home}
-              meta={{
-                title: 'Rank different Magic The Gathering cards with lists'
-              }}
-            />
+            <RouteWithMeta exact path={routes.home} component={Home} />
             <RouteWithMeta
               exact
               path={routes.login}
